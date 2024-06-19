@@ -72,12 +72,7 @@ const QuestPage = () => {
             </h2>
           </span>
         </div>
-        <Container>
-          <div className="flex justify-between items-center">
-            <div className="rounded bg-[#242D32] h-10 min-w-[170px]"></div>
-            <div className="rounded bg-[#242D32] h-10 min-w-[170px]"></div>
-          </div>
-        </Container>
+     
         <Container>
           <div className="flex justify-between font-manrope font-medium text-xs items-center">
             <span className="flex items-center gap-4">

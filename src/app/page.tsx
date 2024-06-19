@@ -10,17 +10,17 @@ export default function Home() {
           alt="home1"
           width={200}
           height={200}
-          className="absolute top-40 right-0 w-[228px] h-[251px] z-10"
+          className="absolute top-[8%] right-0 w-auto h-auto z-10"
         />
         <Image
           src="/img/Home.png"
           alt="home"
           width={500}
           height={500}
-          className="absolute top-[-120px] w-[550px] h-[600px] z-20"
+          className="absolute top-[-25%] w-auto h-auto z-20"
         />
-        <div className="bg-custom-gradient absolute top-[360px] w-full h-[100px] z-30"></div>
-        <div className="absolute top-[470px] left-0 w-full z-30  flex flex-col items-center gap-3 text-center">
+        <div className="bg-custom-gradient absolute top-[40%] w-full h-[100px] z-30"></div>
+        <div className="absolute top-[50%] left-0 w-full z-30  flex flex-col items-center gap-3 text-center">
           <div className="flex justify-center gap-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -18,7 +18,7 @@ const config: Config = {
       },
       backgroundImage: {
         "custom-gradient":
-          "linear-gradient(0deg, #1C2327 0%, #1C2226 27%, rgba(27, 33, 37, 0.00) 100%)",
+        "linear-gradient(0deg, #1C2327 0%, #1C2226 27%, rgba(27, 33, 37, 0.00) 100%)",
       },
       colors: {
         primary: "#1C2327",

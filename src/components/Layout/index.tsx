@@ -7,7 +7,7 @@ interface LayoutProp {
 }
 export const Layout = ({ children }: LayoutProp) => {
   return (
-    <div className="min-h-full bg-[#1C2327]">
+    <div className="flex flex-col justify-between h-auto bg-[#1C2327]">
       <Header />
       {children}
       <Navbar />
