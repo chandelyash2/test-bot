@@ -6,7 +6,7 @@ export default function Home() {
     <Layout>
       <div className="relative h-screen">
         <Image
-          src="/img/Home1.png"
+          src="/img/Home_1.png"
           alt="home1"
           width={200}
           height={200}
