@@ -202,7 +202,7 @@ const FriendsPage = () => {
               </svg>
             </Button>
           </div>
-          <Button className="text-white bg-[#00ACE6] w-full rounded mt-44">Invite a Friend</Button>
+          <Button className="text-white bg-[#00ACE6] w-full rounded mt-[10%]">Invite a Friend</Button>
         </div>
       </Container>
     </Layout>
