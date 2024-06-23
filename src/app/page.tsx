@@ -1,10 +1,19 @@
+'use client'
+import { Flash } from "@/components/Flash";
 import { Layout } from "@/components/Layout";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [loader, setLoader] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoader(false);
+    }, 3000);
+  }, []);
   return (
     <Layout>
-      <div className="relative h-screen">
+     {!loader&& <div className="relative h-screen">
         <Image
           src="/img/Home_1.png"
           alt="home1"
@@ -58,7 +67,8 @@ export default function Home() {
             decisions, and leading hunts.
           </p>
         </div>
-      </div>
+      </div>}
+      {loader && <Flash />}
     </Layout>
   );
 }

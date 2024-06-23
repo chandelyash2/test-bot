@@ -27,7 +27,7 @@ export const SpecialMineBox = ({
     <>
       <div
         className={twMerge(
-          "relative min-w-[174px] border border-[#5C666C] rounded flex flex-col gap-1 justify-center items-center p-3 ",
+          "relative min-w-[154px] border border-[#5C666C] rounded flex flex-col gap-1 justify-center items-center p-3 ",
           locked ? "bg[#242D32]/50 z-1" : " bg-[#242D32]"
         )}
         onClick={() => setBuyCard(true)}

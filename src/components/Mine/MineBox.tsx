@@ -18,7 +18,7 @@ export const MineBox = ({
   return (
     <div
       className={twMerge(
-        "relative min-w-[174px] border border-[#5C666C] rounded flex flex-col gap-1 justify-center items-center p-3 ",
+        "relative min-w-[154px] border border-[#5C666C] rounded flex flex-col gap-1 justify-center items-center p-3 ",
         locked ? "bg[#2E3A41]/50 z-1" : " bg-[#2E3A41]"
       )}
     >
