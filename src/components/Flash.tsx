@@ -11,7 +11,7 @@ export const Flash = () => {
         width={200}
         height={200}
         alt="flash"
-        className="mt-20"
+        className="mt-[10%]"
       />
       <Spinner color="secondary" />
       <h4>Loading...</h4>

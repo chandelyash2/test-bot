@@ -20,7 +20,7 @@ export default function Home() {
             <img
               src="/img/Home_1.png"
               alt="home1"
-              className="w-[208px] h-[201px] mt-[30%] ml-[30%]"
+              className="w-[208px] h-[201px] mt-[31%] md:mt-[18%] ml-[24%] md:ml-[14%]"
             />
             <div className="absolute w-[275px] h-[352px] top-0">
               <img
@@ -29,7 +29,7 @@ export default function Home() {
                 className="h-auto w-auto z-10"
               />
             </div>
-            <div className="bg-custom-gradient relative bottom-[2%] w-full h-[50px] z-30"></div>
+            <div className="bottom-[3%] bg-custom-gradient w-full h-[50px] z-30"></div>
             <div className="flex items-center justify-between p-2">
               <span>
                 <svg
