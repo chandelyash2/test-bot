@@ -16,7 +16,7 @@ export default function Home() {
     <>
       {!loader && (
         <Layout>
-          <div className="relative h-screen flex flex-col items-center">
+          <div className="relative flex flex-col items-center">
             <img
               src="/img/Home_1.png"
               alt="home1"
@@ -26,7 +26,7 @@ export default function Home() {
               <img
                 src="/img/Home.png"
                 alt="home"
-                className=" h-auto w-auto z-10"
+                className="h-auto w-auto z-10"
               />
             </div>
             <div className="bg-custom-gradient relative bottom-[2%] w-full h-[50px] z-30"></div>

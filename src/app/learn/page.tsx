@@ -78,7 +78,7 @@ const LearnPage = () => {
   return (
     <Layout>
       <Container>
-        <div className={twMerge("flex flex-col gap-4 pb-[140px] pt-4 h-full")}>
+        <div className={twMerge("flex flex-col gap-4 pb-[140px] pt-4")}>
           <div className="flex items-center">
             <Button
               className={twMerge(

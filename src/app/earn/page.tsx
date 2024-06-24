@@ -10,7 +10,7 @@ const EarnPage = () => {
   return (
     <Layout>
       <Container>
-        <div className="relative flex flex-col items-center gap-4 -4 h-screen mt-6">
+        <div className="relative flex flex-col items-center gap-4 mt-6">
           <h2 className="text-2xl font-istok font-bold">Earn More Coins!</h2>
           <p className="font-manrope w-[80%] text-center">
             Receive rewards and improve your rank for each invited friend{" "}

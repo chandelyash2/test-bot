@@ -8,7 +8,7 @@ const FriendsPage = () => {
   return (
     <Layout>
       <Container>
-        <div className="flex flex-col items-center gap-4 pb-[120px] py-4 h-screen">
+        <div className="flex flex-col items-center gap-4 pb-[120px] py-4">
           <h2 className="text-2xl font-istok font-bold">Invite Friends</h2>
           <p className="font-manrope w-[80%] text-center">
             Receive rewards and improve your rank for each invited friend
