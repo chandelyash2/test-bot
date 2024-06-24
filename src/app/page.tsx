@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { Flash } from "@/components/Flash";
 import { Layout } from "@/components/Layout";
@@ -15,23 +16,21 @@ export default function Home() {
     <>
       {!loader && (
         <Layout>
-          <div className="relative h-screen">
-            <Image
+          <div className="relative h-screen flex flex-col items-center">
+            <img
               src="/img/Home_1.png"
               alt="home1"
-              width={200}
-              height={200}
-              className="absolute top-[13%] right-3 w-auto h-auto z-10"
+              className="w-[208px] h-[201px] mt-[30%] ml-[30%]"
             />
-            <Image
-              src="/img/Home.png"
-              alt="home"
-              width={500}
-              height={500}
-              className="absolute top-[-25%] w-auto h-auto z-20"
-            />
-            <div className="bg-custom-gradient absolute top-[35%] w-full h-[100px] z-30"></div>
-            <div className="absolute top-[50%] left-0  flex items-center justify-between p-2">
+            <div className="absolute w-[275px] h-[352px] top-0">
+              <img
+                src="/img/Home.png"
+                alt="home"
+                className=" h-auto w-auto z-10"
+              />
+            </div>
+            <div className="bg-custom-gradient relative bottom-[2%] w-full h-[50px] z-30"></div>
+            <div className="flex items-center justify-between p-2">
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
