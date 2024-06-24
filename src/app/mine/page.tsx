@@ -12,7 +12,7 @@ const MinePage = () => {
   return (
     <Layout>
       <Container>
-        <div className="flex flex-col gap-4 pb-[120px] py-4 h-screen">
+        <div className="flex flex-col gap-4 pb-[120px] pt-4 h-screen">
           <div className="flex items-center ">
             <Button
               className={twMerge(

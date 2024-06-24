@@ -78,7 +78,7 @@ const LearnPage = () => {
       <Container>
         <div
           className={twMerge(
-            "flex flex-col gap-4 pb-[120px] py-4",
+            "flex flex-col gap-4 pb-[140px] pt-4",
             active === "Nimbi Quest" ? "h-full" : "h-screen"
           )}
         >
