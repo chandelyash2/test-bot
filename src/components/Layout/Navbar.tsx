@@ -51,7 +51,7 @@ export const Navbar = () => {
 
   return (
     <div className="fixed left-0 bottom-4 w-full px-4">
-      <div className="p-3 flex border border-gray-400 rounded-xl justify-between items-center bg-[#242D32]">
+      <div className="p-2 flex border border-gray-400 rounded-xl justify-between items-center bg-[#242D32]">
         {navList.map((nav) => (
           <Link
             href={nav.link}

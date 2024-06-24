@@ -204,10 +204,10 @@ const QuestPage = () => {
         </Container>
         <Image
           src="/img/Quest.png"
-          width={400}
-          height={300}
+          width={200}
+          height={200}
           alt="quest"
-          className="h-[500px]"
+          className="h-[350px] w-full"
         />
         <Container>
           <div className="flex justify-between font-manrope font-medium text-xs items-center">
