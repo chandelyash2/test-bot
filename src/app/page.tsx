@@ -21,16 +21,16 @@ export default function Home() {
               alt="home1"
               width={200}
               height={200}
-              className="absolute top-[10%] right-3 w-auto h-auto z-10"
+              className="absolute top-[13%] right-3 w-auto h-auto z-10"
             />
             <Image
               src="/img/Home.png"
               alt="home"
               width={500}
               height={500}
-              className="absolute top-[-20%] w-auto h-auto z-20"
+              className="absolute top-[-25%] w-auto h-auto z-20"
             />
-            <div className="bg-custom-gradient absolute top-[28%] w-full h-[100px] z-30"></div>
+            <div className="bg-custom-gradient absolute top-[35%] w-full h-[100px] z-30"></div>
             <div className="absolute top-[50%] left-0  flex items-center justify-between p-2">
               <span>
                 <svg
