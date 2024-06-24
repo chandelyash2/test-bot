@@ -3,6 +3,7 @@ import { Layout } from "@/components/Layout";
 import { Progress } from "@nextui-org/react";
 import Image from "next/image";
 import Boost from "../../../public/svg/Boost.svg";
+import Link from "next/link";
 const QuestPage = () => {
   return (
     <Layout>
@@ -72,7 +73,7 @@ const QuestPage = () => {
             </h2>
           </span>
         </div>
-     
+
         <Container>
           <div className="flex justify-between font-manrope font-medium text-xs items-center">
             <span className="flex items-center gap-4">
@@ -226,10 +227,10 @@ const QuestPage = () => {
               </svg>
               <h2 className="font-bold font-istok text-lg">145/2500</h2>
             </span>
-            <span className="flex items-center gap-2">
+            <Link href="/boost" className="flex items-center gap-2">
               <h2 className="font-bold font-istok text-xs">Boost</h2>
               <Image src={Boost} alt="boost" />
-            </span>
+            </Link>
           </div>
         </Container>
       </div>
