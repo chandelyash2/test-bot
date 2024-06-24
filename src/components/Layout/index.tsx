@@ -8,7 +8,7 @@ interface LayoutProp {
 export const Layout = ({ children }: LayoutProp) => {
   return (
     <div className="flex flex-col justify-between h-auto bg-[#1C2327]">
-      <Header />
+      {/* <Header /> */}
       {children}
       <Navbar />
     </div>

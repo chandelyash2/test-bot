@@ -20,7 +20,7 @@ export const Flash = () => {
         width={200}
         height={200}
         alt="flash"
-        className="w-full"
+        className="w-full absolute bottom-0"
       />
     </div>
   );

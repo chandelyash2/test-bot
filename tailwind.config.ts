@@ -23,6 +23,7 @@ const config: Config = {
       colors: {
         primary: "#1C2327",
         secondary: "#8BC1C9",
+        nimbi: "#00ACE6",
       },
     },
   },
