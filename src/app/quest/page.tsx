@@ -1,10 +1,53 @@
+"use client";
 import { Container } from "@/components/Container";
 import { Layout } from "@/components/Layout";
 import { Progress } from "@nextui-org/react";
 import Image from "next/image";
 import Boost from "../../../public/svg/Boost.svg";
 import Link from "next/link";
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+import { debounce } from "lodash";
+
+interface User {
+  _id: string;
+  userName: string;
+  rank: number;
+  balance: number;
+  boost: number;
+  boostUsed: number;
+}
 const QuestPage = () => {
+  const [userInfo, setUserInfo] = useState<User | null>();
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+  const fetchUserInfo = async () => {
+    const user = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+      {
+        params: {
+          _id: "668c21fc43ee453ced8961e0",
+        },
+      }
+    );
+    setUserInfo(user.data);
+  };
+  const updateUser = async (count: number, boost: number) => {
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+      _id: userInfo?._id,
+      balance: count,
+      boostUsed: boost,
+    });
+  };
+  const debouncedUpdateUser = useCallback(
+    debounce((newBalance, boost) => {
+      updateUser(newBalance, boost);
+    }, 1000), // Adjust the debounce delay as needed
+    []
+  );
+
   return (
     <Layout>
       <div className="flex flex-col gap-4 pb-[120px]">
@@ -77,7 +120,7 @@ const QuestPage = () => {
         <Container>
           <div className="flex justify-between font-manrope font-medium text-xs items-center">
             <span className="flex items-center gap-4">
-              <h4>Rank 5/5</h4>
+              <h4>Rank {userInfo?.rank}/5</h4>
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +179,7 @@ const QuestPage = () => {
           </div>
           <Progress
             aria-label="Loading..."
-            value={60}
+            value={userInfo?.rank}
             className="max-w-md mt-4"
             color="secondary"
           />
@@ -199,7 +242,9 @@ const QuestPage = () => {
                   </clipPath>
                 </defs>
               </svg>
-              <h2 className="font-istok text-3xl font-semibold">4 000 748</h2>
+              <h2 className="font-istok text-3xl font-semibold">
+                {userInfo?.balance}
+              </h2>
             </span>
           </div>
         </Container>
@@ -209,6 +254,18 @@ const QuestPage = () => {
           height={200}
           alt="quest"
           className="h-[350px] w-full"
+          onClick={async () => {
+            if (userInfo?.balance !== undefined) {
+              setUserInfo({
+                ...userInfo,
+                balance: userInfo.balance + 2,
+                boostUsed: userInfo.boostUsed - 1,
+              });
+              debouncedUpdateUser(userInfo.balance + 2, userInfo.boostUsed - 1);
+            } else {
+              console.log("userInfo or userInfo.balance is undefined");
+            }
+          }}
         />
         <Container>
           <div className="flex justify-between font-manrope font-medium text-xs items-center">
@@ -225,7 +282,9 @@ const QuestPage = () => {
                   fill="#00ACE6"
                 />
               </svg>
-              <h2 className="font-bold font-istok text-lg">145/2500</h2>
+              <h2 className="font-bold font-istok text-lg">
+                {userInfo?.boostUsed}/{userInfo?.boost}
+              </h2>
             </span>
             <Link href="/boost" className="flex items-center gap-2">
               <h2 className="font-bold font-istok text-xs">Boost</h2>
