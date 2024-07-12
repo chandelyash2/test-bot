@@ -1,49 +1,87 @@
 import { Button } from "@nextui-org/react";
-import React from "react";
+import axios from "axios";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface EarnMoreProp {
   setEarnmore: (value: boolean) => void;
+  userStreak: Streak;
+  fetchStreakInfo: () => void;
 }
 
 const array = [
   {
     name: "Day1",
-    value: "500",
-    active: true,
+    value: 500,
+    day: 1,
   },
   {
     name: "Day2",
-    value: "1K",
-    active: true,
+    value: 1000,
+    day: 2,
   },
   {
     name: "Day3",
-    value: "2.5K",
-    active: false,
+    value: 2500,
+    day: 3,
   },
   {
     name: "Day4",
-    value: "5K",
-    active: false,
+    value: 5000,
+    day: 4,
   },
   {
     name: "Day5",
-    value: "15K",
-    active: false,
+    value: 15000,
+    day: 5,
   },
   {
     name: "Day6",
-    value: "25K",
-    active: false,
+    value: 25000,
+    day: 6,
   },
   {
     name: "Day7",
-    value: "100K",
-    active: false,
+    value: 50000,
+    day: 7,
   },
 ];
-export const EarnMore = ({ setEarnmore }: EarnMoreProp) => {
+export interface Streak {
+  _id: string;
+  day: number;
+  upcoming: number;
+  user: string;
+  updatedAt: string;
+}
+export const EarnMore = ({
+  setEarnmore,
+  userStreak,
+  fetchStreakInfo,
+}: EarnMoreProp) => {
+  const updateStreak = async (value:number) => {
+    if (userStreak?._id) {
+      const output = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/updateStreak`,
+        {
+          _id: userStreak._id,
+          day: userStreak.day + 1,
+          upcoming: userStreak.upcoming + 1,
+        }
+      );
+      if (output.data) {
+        fetchStreakInfo();
+      }
+    }
+  };
+  const parsedDatetime = moment(userStreak?.updatedAt);
+
+  // Add 24 hours to the parsed datetime
+  const expirationDatetime = parsedDatetime.add(24, "hours");
+  const currentDatetime = moment();
+  const disabled =
+    userStreak?.day == 0 ? true : currentDatetime.isAfter(expirationDatetime);
+
   return (
     <div className="fixed bottom-0 z-10 min-h-[300px] w-full left-0 bg-[#1C2327] flex flex-col items-center border-t border-[#54C7EE] rounded-t p-2 gap-6">
       <span
@@ -72,15 +110,22 @@ export const EarnMore = ({ setEarnmore }: EarnMoreProp) => {
       </p>
       <div className="grid grid-cols-3 gap-4">
         {array.map((item) => (
-          <div
+          <Button
             className={twMerge(
-              "font-istok py-1 w-20 border flex flex-col gap-1 items-center text-xs rounded",
-              item.active ? "bg-[#334047] border-[#00ACE6]" : "bg-[#242D32]"
+              "font-istok w-20 flex flex-col gap-1 h-20 items-center text-xs rounded",
+              item.day <= userStreak.day
+                ? "bg-[#334047] border border-[#00ACE6]"
+                : "bg-[#242D32]",
+              disabled &&
+                item.day === userStreak?.upcoming &&
+                "border border-yellow-400"
             )}
             key={item.name}
+            isDisabled={!disabled}
+            onClick={()=>updateStreak(item.value)}
           >
             <h4>{item.name}</h4>
-            {item.active ? (
+            {item.day === userStreak?.day ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -182,10 +227,16 @@ export const EarnMore = ({ setEarnmore }: EarnMoreProp) => {
               </svg>
             )}
             <h4>{item.value}</h4>
-          </div>
+          </Button>
         ))}
       </div>
-      <Button isDisabled className="w-full text-white rounded bg-[#5C666C] mb-6">Come back tomorrow</Button>
+      <Button
+        className="w-full text-white rounded bg-[#5C666C] mb-6"
+        onClick={() => setEarnmore(false)}
+        isDisabled={disabled}
+      >
+        Come back tomorrow
+      </Button>
     </div>
   );
 };

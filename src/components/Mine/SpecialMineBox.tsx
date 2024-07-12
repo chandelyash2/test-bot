@@ -21,7 +21,7 @@ export const SpecialMineBox = ({
   img,
 }: SpecialMineBoxProp) => {
   const [buyCard, setBuyCard] = useState(false);
-  console.log(buyCard, "BUY");
+
 
   return (
     <>
@@ -94,7 +94,7 @@ export const SpecialMineBox = ({
             <span className="text-[10px] text-gray-300">Required</span>
           )}
         </h2>
-        {locked && (
+        {!locked && (
           <div className="absolute inset-0 flex justify-center items-center  bg-black/50 z-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"

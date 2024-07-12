@@ -3,11 +3,15 @@ import { Container } from "@/components/Container";
 import { Layout } from "@/components/Layout";
 import { MineBox } from "@/components/Mine/MineBox";
 import { SpecialMineBox } from "@/components/Mine/SpecialMineBox";
+import { CMSModal } from "@/context";
 import { Button } from "@nextui-org/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const MinePage = () => {
+  const { userInfo } = useContext(CMSModal);
+  console.log(userInfo, "INGOOOO");
+
   const [active, setActive] = useState("Basic");
   return (
     <Layout>
@@ -37,31 +41,38 @@ const MinePage = () => {
             <div className="grid grid-cols-2 gap-2">
               <MineBox
                 color="text-[#00ACE6]"
+                value={1}
+                price={2}
+                ranking="Unlocked"
+                locked={userInfo?.rank === 1}
+              />
+              <MineBox
+                color="text-[#00ACE6]"
                 value={10}
                 price={25}
-                ranking="Unlocked"
-                locked={false}
+                ranking={userInfo?.rank > 1 ? "Unlocked" : "Mid Ranking "}
+                locked={userInfo?.rank > 1}
               />
               <MineBox
                 color="text-[#9D4EDD]"
                 value={20}
                 price={55}
                 ranking="Mid Ranking"
-                locked={false}
+                locked={userInfo?.rank >= 2}
               />
               <MineBox
                 color="text-orange-400"
                 value={20}
                 price={55}
                 ranking="Mid Ranking"
-                locked={false}
+                locked={userInfo?.rank >= 3}
               />
               <MineBox
                 color="text-[#00ACE6]"
                 value={20}
                 price={55}
                 ranking="Mid Ranking"
-                locked={true}
+                locked={userInfo?.rank >= 3}
               />
             </div>
           ) : (
@@ -71,7 +82,7 @@ const MinePage = () => {
                 value="+11,5"
                 price="825"
                 ranking="Alpha Ranking"
-                locked={false}
+                locked={userInfo?.rank >= 4}
                 img="/img/Mine1.png"
               />
               <SpecialMineBox
@@ -79,7 +90,7 @@ const MinePage = () => {
                 value="+11,5"
                 price="1M"
                 ranking="10 Friends"
-                locked={true}
+                locked={userInfo?.rank >= 4}
                 img="/img/Mine2.png"
               />
             </div>

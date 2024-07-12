@@ -1,12 +1,42 @@
 "use client";
 import { Container } from "@/components/Container";
-import { EarnMore } from "@/components/Earn/EarnMore";
+import { EarnMore, Streak } from "@/components/Earn/EarnMore";
 import { Layout } from "@/components/Layout";
+import axios from "axios";
+import moment from "moment";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const EarnPage = () => {
   const [earnMore, setEarnmore] = useState(false);
+  const [userStreak, setUserStreak] = useState<Streak>({
+    _id: "",
+    day: 0,
+    upcoming: 0,
+    user: "",
+    updatedAt: "",
+  });
+  useEffect(() => {
+    fetchStreakInfo();
+  }, []);
+  const fetchStreakInfo = async () => {
+    const user = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/userStreak`,
+      {
+        params: {
+          _id: "66901306bd0a3a833763dfef",
+        },
+      }
+    );
+    setUserStreak(user.data);
+  };
+  const parsedDatetime = moment(userStreak?.updatedAt);
+
+  // Add 24 hours to the parsed datetime
+  const expirationDatetime = parsedDatetime.add(24, "hours");
+  const currentDatetime = moment();
+  const disabled =
+    userStreak?.day == 0 ? true : currentDatetime.isAfter(expirationDatetime);
   return (
     <Layout>
       <Container>
@@ -101,47 +131,51 @@ const EarnPage = () => {
             >
               <h4 className="font-semibold font-roboto">Daily Rewards</h4>
               <div className="bg-[#242D32] rounded flex p-2 justify-between items-center">
-                <Image
-                  src="/img/Calendar.png"
-                  width={50}
-                  height={50}
-                  alt="calendar"
-                />
-                <div>
-                  <h4>Today’s reward</h4>
-                  <p className="flex items-center gap-1 text-xs font-manrope">
+                <div className="flex gap-2 items-center">
+                  <Image
+                    src="/img/Calendar.png"
+                    width={50}
+                    height={50}
+                    alt="calendar"
+                  />
+                  <div>
+                    <h4>Today’s reward</h4>
+                    <p className="flex items-center gap-1 text-xs font-manrope">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="8"
+                        height="9"
+                        viewBox="0 0 8 9"
+                        fill="none"
+                      >
+                        <circle cx="4" cy="4.23108" r="4" fill="#00ACE6" />
+                      </svg>
+                      +5 000
+                      <span className="font-roboto">
+                        For you and for your friend
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                {!disabled && (
+                  <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="8"
-                      height="9"
-                      viewBox="0 0 8 9"
+                      width="20"
+                      height="21"
+                      viewBox="0 0 20 21"
                       fill="none"
                     >
-                      <circle cx="4" cy="4.23108" r="4" fill="#00ACE6" />
+                      <path
+                        d="M4.16663 10.2311L8.33329 14.3978L15.8333 6.06442"
+                        stroke="#1B8E3B"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
                     </svg>
-                    +5 000
-                    <span className="font-roboto">
-                      For you and for your friend
-                    </span>
-                  </p>
-                </div>
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="21"
-                    viewBox="0 0 20 21"
-                    fill="none"
-                  >
-                    <path
-                      d="M4.16663 10.2311L8.33329 14.3978L15.8333 6.06442"
-                      stroke="#1B8E3B"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </span>
+                  </span>
+                )}
               </div>
             </div>
             <div className="w-full flex flex-col gap-1">
@@ -241,7 +275,13 @@ const EarnPage = () => {
             </div>
           </div>
         </div>
-        {earnMore && <EarnMore setEarnmore={setEarnmore} />}
+        {earnMore && (
+          <EarnMore
+            setEarnmore={setEarnmore}
+            userStreak={userStreak}
+            fetchStreakInfo={fetchStreakInfo}
+          />
+        )}
       </Container>
     </Layout>
   );
