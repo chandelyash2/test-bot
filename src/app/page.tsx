@@ -34,7 +34,9 @@ export default function Home() {
     <>
       {!loader && (
         <Layout>
-      
+          <pre>
+            {user?.id} user{user?.first_name}
+          </pre>
           <div className="relative flex flex-col items-center">
             <img
               src="/img/Home_1.png"
