@@ -3,6 +3,7 @@ import { Inter, Istok_Web, Manrope, Roboto } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/client";
 import { CMSContext } from "@/context";
+import { TelegramProvider } from "@/lib/TelegramProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +30,9 @@ export default function RootLayout({
       <body
         className={`${manrope.className} ${istok.className} ${inter.className} ${roboto.className} `}
       >
-        <CMSContext>{children}</CMSContext>
+        <CMSContext>
+          <TelegramProvider>{children}</TelegramProvider>
+        </CMSContext>
       </body>
     </html>
   );
