@@ -59,6 +59,15 @@ export const EarnMore = ({
   userStreak,
   fetchStreakInfo,
 }: EarnMoreProp) => {
+  useEffect(() => {
+    // Add a Tailwind CSS class to the body
+    document.body.classList.add("overflow-hidden");
+
+    // Optional: Clean up by removing the class when the component is unmounted
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, []);
   const updateStreak = async (value: number) => {
     if (userStreak?._id) {
       const output = await axios.post(
