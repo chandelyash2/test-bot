@@ -2,11 +2,14 @@
 "use client";
 import { Flash } from "@/components/Flash";
 import { Layout } from "@/components/Layout";
-import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [loader, setLoader] = useState(true);
+  const router = usePathname();
+  console.log(router, "ROUTERRR");
+
   useEffect(() => {
     setTimeout(() => {
       setLoader(false);
