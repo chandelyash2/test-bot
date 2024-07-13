@@ -101,7 +101,7 @@ export default function Home() {
               alt="home1"
               width={300}
               height={300}
-              className="absolute top-[-20px]"
+              className="absolute top-[-40px]"
             />
 
             <div className="relative top-[40%]">
