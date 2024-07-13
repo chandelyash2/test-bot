@@ -48,7 +48,7 @@ const array = [
 ];
 
 export default function Home() {
-  const [active, setActive] = useState(0);  
+  const [active, setActive] = useState(0);
   const { user } = useTelegram();
   const [loader, setLoader] = useState(true);
   const [userInfo, setUserInfo] = useState({
@@ -95,15 +95,6 @@ export default function Home() {
     <>
       {!loader && (
         <Layout>
-          {user ? (
-            <>
-              <span>{userInfo.firstName}</span>
-              <span>{userInfo.id}</span>
-            </>
-          ) : (
-            <div>Make sure web app is opened from telegram client</div>
-          )}
-
           <div className="absolute flex flex-col items-center h-full top-0">
             <Image
               src={array[active].img}
@@ -180,11 +171,11 @@ export default function Home() {
                             </defs>
                           </svg>
                           <h2 className="font-istok font-bold text-2xl">
-                         {item.name}
+                            {item.name}
                           </h2>
                         </div>
                         <span className="text-blue-500 font-manrope font-semibold">
-                    {item.value}
+                          {item.value}
                         </span>
                         <p className="font-manrope w-[70%] text-sm">
                           The Luna wolf is the leader of the group, responsible
