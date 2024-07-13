@@ -20,7 +20,11 @@ export default function Home() {
   const createUser = async () => {
     const userData = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
-      user
+      {
+        userId: user?.id,
+        firstName: user?.first_name,
+        lastName: user?.last_name,
+      }
     );
     console.log(userData.data, "USERDATTATA");
   };
@@ -35,7 +39,11 @@ export default function Home() {
       {!loader && (
         <Layout>
           <pre>
-            {user?.id} user{user?.first_name}
+            {user ? (
+              user.first_name
+            ) : (
+              <div>Make sure web app is opened from telegram client</div>
+            )}
           </pre>
           <div className="relative flex flex-col items-center">
             <img
