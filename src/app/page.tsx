@@ -11,20 +11,19 @@ export default function Home() {
   const { user, webApp } = useTelegram();
   console.log(user, "user");
   const [loader, setLoader] = useState(true);
-  const router = usePathname();
-  console.log(router, "ROUTERRR");
-  useEffect(() => {
-    if (user) {
-      createUser();
-    }
-  }, [user?.id]);
-  const createUser = async () => {
-    const userData = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
-      user
-    );
-    console.log(userData.data, "USERDATTATA");
-  };
+
+  // useEffect(() => {
+  //   if (user) {
+  //     createUser();
+  //   }
+  // }, [user?.id]);
+  // const createUser = async () => {
+  //   const userData = await axios.post(
+  //     `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
+  //     user
+  //   );
+  //   console.log(userData.data, "USERDATTATA");
+  // };
 
   // useEffect(() => {
   //   setTimeout(() => {
@@ -32,11 +31,24 @@ export default function Home() {
   //   }, 3000);
   // }, []);
   return (
-    <>
-      {!loader && (
+    <Layout>
+      <div>
+        {user ? (
+          <div>
+            <h1>Welcome {user?.username}</h1>
+            User data:
+            <pre>{JSON.stringify(user, null, 2)}</pre>
+            Eniter Web App data:
+            <pre>{JSON.stringify(webApp, null, 2)}</pre>
+          </div>
+        ) : (
+          <div>Make sure web app is opened from telegram client</div>
+        )}
+      </div>
+      {/* {!loader && (
         <Layout>
           <pre>{JSON.stringify(user, null, 2)}</pre>
-          {/* <div className="relative flex flex-col items-center">
+          <div className="relative flex flex-col items-center">
             <img
               src="/img/Home_1.png"
               alt="home1"
@@ -135,11 +147,11 @@ export default function Home() {
                 </svg>
               </span>
             </div>
-          </div> */}
+          </div>
         </Layout>
-      )}
-      {loader && <Flash />}
-    </>
+      )} */}
+      {/* {loader && <Flash />} */}
+    </Layout>
   );
 }
 
