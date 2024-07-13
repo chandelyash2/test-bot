@@ -2,13 +2,29 @@
 "use client";
 import { Flash } from "@/components/Flash";
 import { Layout } from "@/components/Layout";
+import { TelegramProvider, useTelegram } from "@/lib/TelegramProvider";
+import axios from "axios";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+  const { user, webApp } = useTelegram();
+  console.log(user, "user");
   const [loader, setLoader] = useState(true);
   const router = usePathname();
   console.log(router, "ROUTERRR");
+  useEffect(() => {
+    if (user) {
+      createUser();
+    }
+  }, [user?.id]);
+  const createUser = async () => {
+    const userData = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
+      user
+    );
+    console.log(userData.data, "USERDATTATA");
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -19,6 +35,7 @@ export default function Home() {
     <>
       {!loader && (
         <Layout>
+          <pre>{JSON.stringify(user, null, 2)}</pre>
           <div className="relative flex flex-col items-center">
             <img
               src="/img/Home_1.png"
@@ -125,3 +142,11 @@ export default function Home() {
     </>
   );
 }
+
+const WithTelegramProvider = () => {
+  return (
+    <TelegramProvider>
+      <Home />
+    </TelegramProvider>
+  );
+};
