@@ -12,40 +12,27 @@ export default function Home() {
   console.log(user, "user");
   const [loader, setLoader] = useState(true);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     createUser();
-  //   }
-  // }, [user?.id]);
-  // const createUser = async () => {
-  //   const userData = await axios.post(
-  //     `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
-  //     user
-  //   );
-  //   console.log(userData.data, "USERDATTATA");
-  // };
+  useEffect(() => {
+    if (user) {
+      createUser();
+    }
+  }, [user?.id]);
+  const createUser = async () => {
+    const userData = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
+      user
+    );
+    console.log(userData.data, "USERDATTATA");
+  };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setLoader(false);
-  //   }, 3000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoader(false);
+    }, 5000);
+  }, []);
   return (
-    <Layout>
-      <div>
-        {user ? (
-          <div>
-            <h1>Welcome {user?.username}</h1>
-            User data:
-            <pre>{JSON.stringify(user, null, 2)}</pre>
-            Eniter Web App data:
-            <pre>{JSON.stringify(webApp, null, 2)}</pre>
-          </div>
-        ) : (
-          <div>Make sure web app is opened from telegram client</div>
-        )}
-      </div>
-      {/* {!loader && (
+    <>
+      {!loader && (
         <Layout>
           <pre>{JSON.stringify(user, null, 2)}</pre>
           <div className="relative flex flex-col items-center">
@@ -149,9 +136,9 @@ export default function Home() {
             </div>
           </div>
         </Layout>
-      )} */}
-      {/* {loader && <Flash />} */}
-    </Layout>
+      )}
+      {loader && <Flash />}
+    </>
   );
 }
 
