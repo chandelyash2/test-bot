@@ -6,7 +6,7 @@ export async function POST(req, res) {
   try {
     const body = await req.json();
     const { message } = body;
-
+    console.log("recieved mesagae", message);
     if (message) {
       const chatId = message.chat.id;
       const userId = message.from.id;
