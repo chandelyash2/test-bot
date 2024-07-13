@@ -34,7 +34,7 @@ export default function Home() {
     <>
       {!loader && (
         <Layout>
-          <pre>{JSON.stringify(user, null, 2)}</pre>
+      
           <div className="relative flex flex-col items-center">
             <img
               src="/img/Home_1.png"
