@@ -26,17 +26,17 @@ export default function Home() {
     console.log(userData.data, "USERDATTATA");
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoader(false);
-    }, 3000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoader(false);
+  //   }, 3000);
+  // }, []);
   return (
     <>
       {!loader && (
         <Layout>
           <pre>{JSON.stringify(user, null, 2)}</pre>
-          <div className="relative flex flex-col items-center">
+          {/* <div className="relative flex flex-col items-center">
             <img
               src="/img/Home_1.png"
               alt="home1"
@@ -135,7 +135,7 @@ export default function Home() {
                 </svg>
               </span>
             </div>
-          </div>
+          </div> */}
         </Layout>
       )}
       {loader && <Flash />}
