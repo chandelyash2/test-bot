@@ -40,7 +40,7 @@ const EarnPage = () => {
   return (
     <Layout>
       <Container>
-        <div className="relative flex flex-col items-center gap-4 mt-6 pb-[140px]">
+        <div className="relative flex flex-col items-center gap-4 mt-6 pb-[140px] ">
           <h2 className="text-2xl font-istok font-bold">Earn More Coins!</h2>
           <p className="font-manrope w-[80%] text-center">
             Receive rewards and improve your rank for each invited friend{" "}
@@ -275,13 +275,14 @@ const EarnPage = () => {
             </div>
           </div>
         </div>
-        {earnMore && (
-          <EarnMore
-            setEarnmore={setEarnmore}
-            userStreak={userStreak}
-            fetchStreakInfo={fetchStreakInfo}
-          />
-        )}
+          {earnMore && (
+            <EarnMore
+              setEarnmore={setEarnmore}
+              userStreak={userStreak}
+              fetchStreakInfo={fetchStreakInfo}
+            />
+          )}
+
       </Container>
     </Layout>
   );

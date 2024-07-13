@@ -110,10 +110,10 @@ export default function Home() {
               alt="home1"
               width={300}
               height={300}
-              className="absolute top-0"
+              className="absolute top-[-20px]"
             />
 
-            <div className="relative top-[50%]">
+            <div className="relative top-[40%]">
               <div className="bg-custom-gradient w-full h-[50px] z-30"></div>
               <div className="flex items-center justify-between p-2">
                 <span
