@@ -3,6 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { User } from "../Quest";
 
 interface EarnMoreProp {
   setEarnmore: (value: boolean) => void;
@@ -59,7 +60,15 @@ export const EarnMore = ({
   userStreak,
   fetchStreakInfo,
 }: EarnMoreProp) => {
+  const [userData, setUserData] = useState<User>();
+
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const data = localStorage.getItem("userData");
+      if (data) {
+        setUserData(JSON.parse(data));
+      }
+    }
     // Add a Tailwind CSS class to the body
     document.body.classList.add("overflow-hidden");
 
@@ -68,6 +77,7 @@ export const EarnMore = ({
       document.body.classList.remove("overflow-hidden");
     };
   }, []);
+
   const updateStreak = async (value: number) => {
     if (userStreak?._id) {
       const output = await axios.post(
@@ -79,10 +89,27 @@ export const EarnMore = ({
         }
       );
       if (output.data) {
+        await updateUser(value);
+
         fetchStreakInfo();
       }
     }
   };
+  const updateUser = async (value: number) => {
+    try {
+      const user = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/updateUser`,
+        {
+          _id: userData?._id,
+          balance: userData?.balance && userData?.balance + value,
+        }
+      );
+      localStorage.setItem("userData", JSON.stringify(user.data));
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
   const parsedDatetime = moment(userStreak?.updatedAt);
 
   // Add 24 hours to the parsed datetime
@@ -92,8 +119,8 @@ export const EarnMore = ({
     userStreak?.day == 0 ? true : currentDatetime.isAfter(expirationDatetime);
 
   return (
-    <div className="absolute h-screen w-full top-0 left-0 bg-black bg-opacity-25 backdrop-blur-sm z-[999] overflow-hidden">
-      <div className="absolute bottom-0 z-[999] min-h-[300px] w-full left-0 bg-[#1C2327] flex flex-col items-center border-t border-[#54C7EE] rounded-t p-2 gap-6 overflow-hidden">
+    <div className="fixed h-screen w-full top-0 left-0 bg-black bg-opacity-25 backdrop-blur-sm z-[999] overflow-hidden">
+      <div className="fixed bottom-0 z-[999] min-h-[300px] w-full left-0 bg-[#1C2327] flex flex-col items-center border-t border-[#54C7EE] rounded-t p-2 gap-6 overflow-hidden">
         <span
           className="absolute top-4 right-4 cursor-pointer"
           onClick={() => setEarnmore(false)}

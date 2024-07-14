@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 
 interface BuyCardProp {
   setBuyCard: (value: boolean) => void;
+  
 }
 export const BuyCard = ({ setBuyCard }: BuyCardProp) => {
   useEffect(() => {

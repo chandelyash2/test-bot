@@ -7,13 +7,13 @@ import { createContext } from "react";
 export const CMSModal = createContext<any>(null);
 
 export const CMSContext = ({ children }: { children: React.ReactNode }) => {
-  const [userInfo, setUserInfo] = useState<User>();
+  const [userData, setUserData] = useState<User>();
 
   return (
     <CMSModal.Provider
       value={{
-        userInfo,
-        setUserInfo,
+        userData,
+        setUserData,
       }}
     >
       {children}

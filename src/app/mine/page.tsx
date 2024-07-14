@@ -3,16 +3,30 @@ import { Container } from "@/components/Container";
 import { Layout } from "@/components/Layout";
 import { MineBox } from "@/components/Mine/MineBox";
 import { SpecialMineBox } from "@/components/Mine/SpecialMineBox";
+import { User } from "@/components/Quest";
 import { CMSModal } from "@/context";
 import { Button } from "@nextui-org/react";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
+
+
+
+
 const MinePage = () => {
-  const { userInfo } = useContext(CMSModal);
-  console.log(userInfo, "INGOOOO");
+  const [userData, setUserData] = useState<any>();
 
   const [active, setActive] = useState("Basic");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const data = localStorage.getItem("userData");
+      if (data) {
+        setUserData(JSON.parse(data));
+      }
+    }
+  }, []);
+
   return (
     <Layout>
       <Container>
@@ -39,41 +53,11 @@ const MinePage = () => {
           </div>
           {active === "Basic" ? (
             <div className="grid grid-cols-2 gap-2">
-              <MineBox
-                color="text-[#00ACE6]"
-                value={1}
-                price={2}
-                ranking="Unlocked"
-                locked={userInfo?.rank === 1}
-              />
-              <MineBox
-                color="text-[#00ACE6]"
-                value={10}
-                price={25}
-                ranking={userInfo?.rank > 1 ? "Unlocked" : "Mid Ranking "}
-                locked={userInfo?.rank > 1}
-              />
-              <MineBox
-                color="text-[#9D4EDD]"
-                value={20}
-                price={55}
-                ranking="Mid Ranking"
-                locked={userInfo?.rank >= 2}
-              />
-              <MineBox
-                color="text-orange-400"
-                value={20}
-                price={55}
-                ranking="Mid Ranking"
-                locked={userInfo?.rank >= 3}
-              />
-              <MineBox
-                color="text-[#00ACE6]"
-                value={20}
-                price={55}
-                ranking="Mid Ranking"
-                locked={userInfo?.rank >= 3}
-              />
+              <MineBox color="text-[#00ACE6]" locked={userData?.rank === 1} />
+              <MineBox color="text-[#00ACE6]" locked={userData?.rank > 1} />
+              <MineBox color="text-[#9D4EDD]" locked={userData?.rank >= 2} />
+              <MineBox color="text-orange-400" locked={userData?.rank >= 3} />
+              <MineBox color="text-[#00ACE6]" locked={userData?.rank >= 3} />
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-2">
@@ -82,7 +66,7 @@ const MinePage = () => {
                 value="+11,5"
                 price="825"
                 ranking="Alpha Ranking"
-                locked={userInfo?.rank >= 4}
+                locked={userData?.rank >= 4}
                 img="/img/Mine1.png"
               />
               <SpecialMineBox
@@ -90,7 +74,7 @@ const MinePage = () => {
                 value="+11,5"
                 price="1M"
                 ranking="10 Friends"
-                locked={userInfo?.rank >= 4}
+                locked={userData?.rank >= 4}
                 img="/img/Mine2.png"
               />
             </div>

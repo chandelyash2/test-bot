@@ -6,7 +6,7 @@ import Image from "next/image";
 import Boost from "../../../public/svg/Boost.svg";
 import Link from "next/link";
 import axios from "axios";
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { debounce } from "lodash";
 import { CMSModal } from "@/context";
 import QuestMine from "../../../public/svg/QuestMine.svg";
@@ -17,7 +17,9 @@ import Light from "../../../public/svg/Light.svg";
 
 export interface User {
   _id: string;
-  userName: string;
+  firstName: string;
+  lastName: string;
+  userId: string;
   rank: number;
   balance: number;
   boost: {
@@ -25,12 +27,22 @@ export interface User {
     total: number;
     lvl: number;
   };
+  tap: number;
+  mine: number;
 }
 
 const Quest = () => {
-  const { userInfo, setUserInfo } = useContext(CMSModal);
-  console.log(userInfo, "USERRRR");
 
+  const [userInfo, setUserInfo] = useState<any>();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const data = localStorage.getItem("userData");
+      if (data) {
+        setUserInfo(JSON.parse(data));
+      }
+    }
+  }, []);
   const updateUser = async (count: number, boost: number) => {
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
@@ -57,11 +69,11 @@ const Quest = () => {
   useEffect(() => {
     if (userInfo?.boost?.used < userInfo?.boost?.total) {
       const interval = setInterval(() => {
-        setUserInfo((prevUserInfo:any) => ({
-          ...prevUserInfo,
+        setUserInfo((prevuserData: any) => ({
+          ...prevuserData,
           boost: {
-            ...prevUserInfo.boost,
-            used: prevUserInfo.boost.used + 1,
+            ...prevuserData.boost,
+            used: prevuserData.boost.used + 1,
           },
         }));
       }, 1000);
@@ -70,12 +82,12 @@ const Quest = () => {
         clearInterval(interval);
       };
     }
-  }, [userInfo, setUserInfo]);
+  }, [userInfo]);
 
   const handleQuestClick = async () => {
     if (userInfo?.balance !== undefined) {
-      const newBalance = userInfo.balance + userInfo.rank;
-      const newBoostUsed = userInfo.boost.used - userInfo.rank;
+      const newBalance = userInfo.balance + userInfo.tap + 1;
+      const newBoostUsed = userInfo.boost.used - (userInfo.tap + 1);
 
       setUserInfo({
         ...userInfo,
@@ -88,7 +100,7 @@ const Quest = () => {
 
       debouncedUpdateUser(newBalance, newBoostUsed);
     } else {
-      console.log("userInfo or userInfo.balance is undefined");
+      console.log("userData or userData.balance is undefined");
     }
   };
 
@@ -98,7 +110,9 @@ const Quest = () => {
         <div className="flex items-center justify-between border-b border-[#5C666C] p-4">
           <span className="flex items-center gap-4">
             <Image src="/img/28.png" alt="avatar" width={40} height={40} />
-            <h2 className="font-inter font-bold font-sm">Tony Montana</h2>
+            <h2 className="font-inter font-bold font-sm">
+              {userInfo?.firstName} {userInfo?.lastName}
+            </h2>
           </span>
           <span className="flex items-center gap-2 p-3 bg-[#242D32]">
             <Image src={QuestMine} alt="quest" />

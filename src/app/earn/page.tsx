@@ -2,12 +2,15 @@
 import { Container } from "@/components/Container";
 import { EarnMore, Streak } from "@/components/Earn/EarnMore";
 import { Layout } from "@/components/Layout";
+import { User } from "@/components/Quest";
+import { CMSModal } from "@/context";
 import axios from "axios";
 import moment from "moment";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const EarnPage = () => {
+  const [userData, setUserData] = useState<User>();
   const [earnMore, setEarnmore] = useState(false);
   const [userStreak, setUserStreak] = useState<Streak>({
     _id: "",
@@ -16,20 +19,36 @@ const EarnPage = () => {
     user: "",
     updatedAt: "",
   });
+
   useEffect(() => {
-    fetchStreakInfo();
-  }, []);
-  const fetchStreakInfo = async () => {
-    const user = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/userStreak`,
-      {
-        params: {
-          _id: "66901306bd0a3a833763dfef",
-        },
+    if (typeof window !== "undefined") {
+      const data = localStorage.getItem("userData");
+      if (data) {
+        setUserData(JSON.parse(data));
       }
-    );
-    setUserStreak(user.data);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userData) {
+      fetchStreakInfo();
+    }
+  }, [userData]);
+
+  const fetchStreakInfo = async () => {
+    if (userData?._id) {
+      const user = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userStreak`,
+        {
+          params: {
+            _id: userData?._id,
+          },
+        }
+      );
+      setUserStreak(user.data);
+    }
   };
+
   const parsedDatetime = moment(userStreak?.updatedAt);
 
   // Add 24 hours to the parsed datetime
@@ -37,6 +56,7 @@ const EarnPage = () => {
   const currentDatetime = moment();
   const disabled =
     userStreak?.day == 0 ? true : currentDatetime.isAfter(expirationDatetime);
+
   return (
     <Layout>
       <Container>
@@ -183,8 +203,8 @@ const EarnPage = () => {
               <div className="bg-[#242D32] rounded flex p-2 justify-between items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="30"
-                  height="29"
+                  width="41"
+                  height="41"
                   viewBox="0 0 30 29"
                   fill="none"
                 >
@@ -194,7 +214,7 @@ const EarnPage = () => {
                   />
                 </svg>
                 <div>
-                  <h4>Follow our account on X</h4>
+                  <h4 className="text-left">Follow our account on X</h4>
                   <p className="flex items-center gap-1 text-xs font-manrope">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -229,8 +249,8 @@ const EarnPage = () => {
               <div className="bg-[#242D32] rounded flex p-2 justify-between items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="50"
-                  height="51"
+                  width="41"
+                  height="41"
                   viewBox="0 0 50 51"
                   fill="none"
                 >
@@ -275,14 +295,13 @@ const EarnPage = () => {
             </div>
           </div>
         </div>
-          {earnMore && (
-            <EarnMore
-              setEarnmore={setEarnmore}
-              userStreak={userStreak}
-              fetchStreakInfo={fetchStreakInfo}
-            />
-          )}
-
+        {earnMore && (
+          <EarnMore
+            setEarnmore={setEarnmore}
+            userStreak={userStreak}
+            fetchStreakInfo={fetchStreakInfo}
+          />
+        )}
       </Container>
     </Layout>
   );

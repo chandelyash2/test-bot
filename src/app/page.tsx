@@ -2,11 +2,12 @@
 "use client";
 import { Flash } from "@/components/Flash";
 import { Layout } from "@/components/Layout";
+import { CMSModal } from "@/context";
 import { TelegramProvider, useTelegram } from "@/lib/TelegramProvider";
 import axios from "axios";
 import Image from "next/image";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const array = [
   {
@@ -68,19 +69,20 @@ export default function Home() {
   }, [user]);
   useEffect(() => {
     createUser();
-  }, [userInfo]);
+  }, []);
 
   const createUser = async () => {
     try {
       const userData = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
         {
-          userId: userInfo.id,
+          userId: "7129429718",
           firstName: userInfo.firstName,
           lastName: userInfo.lastName,
         }
       );
       console.log("User Data:", userData.data); // Log the response data
+      localStorage.setItem("userData", JSON.stringify(userData.data));
     } catch (error) {
       console.error("Error creating user:", error);
     }

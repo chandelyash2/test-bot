@@ -22,7 +22,6 @@ export const SpecialMineBox = ({
 }: SpecialMineBoxProp) => {
   const [buyCard, setBuyCard] = useState(false);
 
-
   return (
     <>
       <div
@@ -30,7 +29,7 @@ export const SpecialMineBox = ({
           "relative min-w-[154px] border border-[#5C666C] rounded flex flex-col gap-1 justify-center items-center p-3 ",
           locked ? "bg[#242D32]/50 z-1" : " bg-[#242D32]"
         )}
-        onClick={() => setBuyCard(true)}
+        onClick={() => locked && setBuyCard(true)}
       >
         <Image src={img} width={100} height={100} alt="mine" />
         <h2 className="font-istok text-xl font-bold text-center">{name}</h2>
