@@ -16,6 +16,7 @@ import Dollar from "../../../public/svg/Dollar.svg";
 import Light from "../../../public/svg/Light.svg";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "../Flash";
+import { fetchUserInfo } from "@/lib/axios/user";
 
 export interface User {
   _id: string;
@@ -40,34 +41,29 @@ const Quest = () => {
 
   useEffect(() => {
     if (user) {
-      fetchUserInfo();
+      getUserInfo();
     }
   }, [user]);
 
-  const fetchUserInfo = async () => {
+  const getUserInfo = async () => {
     if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
+      const data = await fetchUserInfo(JSON.stringify(user.id));
       if (data.data) {
         setUserInfo(data.data);
       }
     }
   };
   const updateUser = async (count: number, boost: number) => {
-    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
-      userId: userInfo?.userId || user?.id,
-      balance: count,
-      boost: {
-        ...userInfo!.boost,
-        used: boost,
-      },
-    });
+    if (userInfo) {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+        userId: userInfo.userId,
+        balance: count,
+        boost: {
+          ...userInfo.boost,
+          used: boost,
+        },
+      });
+    }
   };
 
   const debouncedUpdateUser = useCallback(
@@ -120,7 +116,7 @@ const Quest = () => {
               <span className="flex items-center gap-4">
                 <Image src="/img/28.png" alt="avatar" width={40} height={40} />
                 <h2 className="font-inter font-bold font-sm">
-                  {userInfo?.firstName} {userInfo?.lastName}
+                  {userInfo.firstName} {userInfo.lastName}
                 </h2>
               </span>
               <span className="flex items-center gap-2 p-3 bg-[#242D32]">
@@ -156,7 +152,7 @@ const Quest = () => {
                 <span className="flex items-center gap-2">
                   <Image src={Dollar} alt="Dollar" />
                   <h2 className="font-istok text-3xl font-semibold">
-                    {userInfo?.balance}
+                    {userInfo.balance}
                   </h2>
                 </span>
               </div>
@@ -174,7 +170,7 @@ const Quest = () => {
                 <span className="flex items-center gap-2">
                   <Image src={Light} alt="Light" />
                   <h2 className="font-bold font-istok text-lg">
-                    {userInfo?.boost?.used}/{userInfo?.boost?.total}
+                    {userInfo.boost.used}/{userInfo.boost.total}
                   </h2>
                 </span>
                 <Link href="/boost" className="flex items-center gap-2">
