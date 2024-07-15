@@ -90,7 +90,6 @@ export const EarnMore = ({
       );
       if (output.data) {
         await updateUser(value);
-
         fetchStreakInfo();
       }
     }

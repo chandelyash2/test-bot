@@ -3,11 +3,10 @@ import { Container } from "@/components/Container";
 import { EarnMore, Streak } from "@/components/Earn/EarnMore";
 import { Layout } from "@/components/Layout";
 import { User } from "@/components/Quest";
-import { CMSModal } from "@/context";
 import axios from "axios";
 import moment from "moment";
 import Image from "next/image";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const EarnPage = () => {
   const [userData, setUserData] = useState<User>();

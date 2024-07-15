@@ -14,6 +14,7 @@ import Question from "../../../public/svg/Question.svg";
 import Nimbi from "../../../public/svg/Nimbi.svg";
 import Dollar from "../../../public/svg/Dollar.svg";
 import Light from "../../../public/svg/Light.svg";
+import { useTelegram } from "@/lib/TelegramProvider";
 
 export interface User {
   _id: string;
@@ -32,28 +33,33 @@ export interface User {
 }
 
 const Quest = () => {
+  const { user } = useTelegram();
 
   const [userInfo, setUserInfo] = useState<any>();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const data = localStorage.getItem("userData");
-      if (data) {
-        setUserInfo(JSON.parse(data));
-      }
+    if (user) {
+      setUserInfo({
+        id: JSON.stringify(user.id),
+        firstName: user.first_name,
+        lastName: user.last_name,
+      });
     }
-  }, []);
+  }, [user]);
+
   const updateUser = async (count: number, boost: number) => {
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
-        _id: userInfo._id,
-        balance: count,
-        boost: {
-          used: boost,
-          total: userInfo.boost.total,
-          lvl: userInfo.boost.lvl,
-        },
-      });
+      if (user) {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+          _id: userInfo._id,
+          balance: count,
+          boost: {
+            used: boost,
+            total: userInfo.boost.total,
+            lvl: userInfo.boost.lvl,
+          },
+        });
+      }
     } catch (error) {
       console.error("Error updating user:", error);
     }
