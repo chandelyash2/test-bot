@@ -81,7 +81,7 @@ export default function Home() {
           }
         );
         console.log("User Data:", userData.data); // Log the response data
-        localStorage.setItem("userData", JSON.stringify(userData.data));
+        localStorage.setItem("userData", JSON.stringify(user));
       }
     } catch (error) {
       console.error("Error creating user:", error);
