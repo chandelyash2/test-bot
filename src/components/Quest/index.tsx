@@ -39,7 +39,7 @@ const Quest = () => {
 
   useEffect(() => {
     if (user) {
-      fetchUserInfo();
+    fetchUserInfo();
     }
   }, [user]);
 
@@ -49,30 +49,25 @@ const Quest = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
         {
           params: {
-            userId: user?.id,
+            userId: user.id,
           },
         }
       );
       setUserInfo(data.data);
     }
   };
+  console.log(userInfo, "USERINFo");
 
   const updateUser = async (count: number, boost: number) => {
-    try {
-      if (user) {
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
-          userId: user?.id,
-          balance: count,
-          boost: {
-            used: boost,
-            total: userInfo.boost.total,
-            lvl: userInfo.boost.lvl,
-          },
-        });
-      }
-    } catch (error) {
-      console.error("Error updating user:", error);
-    }
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+      userId: userInfo?.userId || user?.id,
+      balance: count,
+      boost: {
+        used: boost,
+        total: userInfo?.boost.total,
+        lvl: userInfo?.boost.lvl,
+      },
+    });
   };
 
   const debouncedUpdateUser = useCallback(
@@ -103,6 +98,7 @@ const Quest = () => {
   const handleQuestClick = async () => {
     const newBalance = userInfo.balance + (userInfo.tap + 1);
     const newBoostUsed = userInfo.boost.used - (userInfo.tap + 1);
+    debouncedUpdateUser(newBalance, newBoostUsed);
 
     setUserInfo({
       ...userInfo,
@@ -112,8 +108,6 @@ const Quest = () => {
         used: newBoostUsed,
       },
     });
-
-    debouncedUpdateUser(newBalance, newBoostUsed);
   };
 
   return (
