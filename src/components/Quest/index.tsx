@@ -36,21 +36,25 @@ export interface User {
 
 const Quest = () => {
   const { user } = useTelegram();
-
   const [userInfo, setUserInfo] = useState<User>();
 
   useEffect(() => {
     if (user) {
-      getUserInfo();
+      fetchUserInfo();
     }
   }, [user]);
 
-  const getUserInfo = async () => {
+  const fetchUserInfo = async () => {
     if (user) {
-      const data = await fetchUserInfo(JSON.stringify(user.id));
-      if (data.data) {
-        setUserInfo(data.data);
-      }
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      setUserInfo(data.data);
     }
   };
   const updateUser = async (count: number, boost: number) => {
