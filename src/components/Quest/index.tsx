@@ -61,9 +61,8 @@ const Quest = () => {
       userId: userInfo?.userId || user?.id,
       balance: count,
       boost: {
+        ...userInfo.boost,
         used: boost,
-        total: userInfo?.boost.total,
-        lvl: userInfo?.boost.lvl,
       },
     });
   };
@@ -102,8 +101,8 @@ const Quest = () => {
       ...userInfo,
       balance: newBalance,
       boost: {
+        ...userInfo.boost,
         used: newBoostUsed,
-        total:2500
       },
     });
   };
