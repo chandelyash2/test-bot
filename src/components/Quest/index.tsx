@@ -56,8 +56,6 @@ const Quest = () => {
       setUserInfo(data.data);
     }
   };
-  console.log(userInfo, "USERINFo");
-
   const updateUser = async (count: number, boost: number) => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
       userId: userInfo?.userId || user?.id,
