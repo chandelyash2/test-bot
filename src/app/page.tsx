@@ -66,10 +66,8 @@ export default function Home() {
         lastName: user.last_name,
       });
     }
-  }, [user]);
-  useEffect(() => {
     createUser();
-  }, []);
+  }, [user]);
 
   const createUser = async () => {
     try {
