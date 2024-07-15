@@ -39,11 +39,6 @@ const Quest = () => {
 
   useEffect(() => {
     if (user) {
-      setUserInfo({
-        id: JSON.stringify(user.id),
-        firstName: user.first_name,
-        lastName: user.last_name,
-      });
       fetchUserInfo();
     }
   }, [user]);
