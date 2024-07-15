@@ -6,6 +6,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { User } from "./Quest";
+import { useTelegram } from "@/lib/TelegramProvider";
 
 const tapLvls = [
   {
@@ -30,15 +31,29 @@ const tapLvls = [
   },
 ];
 export const Boost = () => {
-  const [userInfo, setUserInfo] = useState<User>();
+  const { user } = useTelegram();
+
+  const [userInfo, setUserInfo] = useState<any>();
 
   useEffect(() => {
-    const storedUserData = JSON.parse(
-      localStorage.getItem("userData") as string
-    );
-    setUserInfo(storedUserData);
-  }, []);
+    if (user) {
+      fetchUserInfo();
+    }
+  }, [user]);
 
+  const fetchUserInfo = async () => {
+    if (user) {
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      setUserInfo(data.data);
+    }
+  };
   const findPrice = () => {
     if (!userInfo) return 0;
     const nextTapLevel = tapLvls.find((item) => item.tap === userInfo.tap + 1);
@@ -46,23 +61,19 @@ export const Boost = () => {
   };
 
   const collectTap = async () => {
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/increaseTap`,
-        {
-          _id: userInfo?._id,
-          price: findPrice(),
-        }
-      );
-      if (response.data.message) {
-        toast.error(response.data.message);
-      } else {
-        toast.success("Tap Collected");
-        localStorage.setItem("userData", JSON.stringify(response.data.user));
-        setUserInfo(response.data.user);
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/increaseTap`,
+      {
+        userId: userInfo?.userId || user?.id,
+        price: findPrice(),
       }
-    } catch (error) {
-      toast.error("An error occurred while collecting the tap");
+    );
+    if (response.data.message) {
+      toast.error(response.data.message);
+    } else {
+      toast.success("Tap Collected");
+      localStorage.setItem("userData", JSON.stringify(response.data.user));
+      setUserInfo(response.data.user);
     }
   };
   return (

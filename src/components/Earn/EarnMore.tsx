@@ -4,6 +4,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { User } from "../Quest";
+import { useTelegram } from "@/lib/TelegramProvider";
 
 interface EarnMoreProp {
   setEarnmore: (value: boolean) => void;
@@ -60,15 +61,11 @@ export const EarnMore = ({
   userStreak,
   fetchStreakInfo,
 }: EarnMoreProp) => {
-  const [userData, setUserData] = useState<User>();
+  const { user } = useTelegram();
+
+  const [userData, setUserData] = useState<any>();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const data = localStorage.getItem("userData");
-      if (data) {
-        setUserData(JSON.parse(data));
-      }
-    }
     // Add a Tailwind CSS class to the body
     document.body.classList.add("overflow-hidden");
 
@@ -78,6 +75,24 @@ export const EarnMore = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      fetchUserInfo();
+    }
+  }, [user]);
+  const fetchUserInfo = async () => {
+    if (user) {
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      setUserData(data.data);
+    }
+  };
   const updateStreak = async (value: number) => {
     if (userStreak?._id) {
       const output = await axios.post(
@@ -95,18 +110,10 @@ export const EarnMore = ({
     }
   };
   const updateUser = async (value: number) => {
-    try {
-      const user = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/updateUser`,
-        {
-          _id: userData?._id,
-          balance: userData?.balance && userData?.balance + value,
-        }
-      );
-      localStorage.setItem("userData", JSON.stringify(user.data));
-    } catch (error) {
-      console.error("Error updating user:", error);
-    }
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+      userId: userData.userId || user?.id,
+      balance: userData.balance && userData.balance + value,
+    });
   };
 
   const parsedDatetime = moment(userStreak?.updatedAt);
