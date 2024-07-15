@@ -131,6 +131,7 @@ const Quest = () => {
             </h2>
           </span>
         </div>
+        <p>{userInfo.firstName}</p>
 
         <Container>
           <div className="flex justify-between font-manrope font-medium text-xs items-center">
