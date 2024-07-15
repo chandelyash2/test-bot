@@ -42,7 +42,7 @@ const Quest = () => {
     if (user) {
       fetchUserInfo();
     }
-  }, [user]);
+  }, []);
 
   const fetchUserInfo = async () => {
     if (user) {
@@ -54,25 +54,25 @@ const Quest = () => {
           },
         }
       );
-      setUserInfo(data.data);
+      if (data.data) {
+        setUserInfo(data.data);
+      }
     }
   };
-  const updateUser = async (count: number, boost: number) => {
-    if (userInfo) {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
-        userId: userInfo.userId,
-        balance: count,
-        boost: {
-          ...userInfo.boost,
-          used: boost,
-        },
-      });
-    }
+  const updateUser = async (count: number, boost: number, user: User) => {
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+      userId: user.userId,
+      balance: count,
+      boost: {
+        ...user.boost,
+        used: boost,
+      },
+    });
   };
 
   const debouncedUpdateUser = useCallback(
-    debounce((newBalance, boost) => {
-      updateUser(newBalance, boost);
+    debounce((newBalance, boost, user) => {
+      updateUser(newBalance, boost, user);
     }, 300), // Adjust the debounce delay as needed
     []
   );
@@ -99,7 +99,7 @@ const Quest = () => {
     if (userInfo) {
       const newBalance = userInfo.balance + (userInfo.tap + 1);
       const newBoostUsed = userInfo.boost.used - (userInfo.tap + 1);
-      debouncedUpdateUser(newBalance, newBoostUsed);
+      debouncedUpdateUser(newBalance, newBoostUsed, userInfo);
       setUserInfo({
         ...userInfo,
         balance: newBalance,
@@ -174,7 +174,7 @@ const Quest = () => {
                 <span className="flex items-center gap-2">
                   <Image src={Light} alt="Light" />
                   <h2 className="font-bold font-istok text-lg">
-                    {userInfo.boost.used}/{userInfo.boost.total}
+                    {userInfo.boost?.used}/{userInfo.boost?.total}
                   </h2>
                 </span>
                 <Link href="/boost" className="flex items-center gap-2">
