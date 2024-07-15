@@ -3,12 +3,14 @@ import { Container } from "@/components/Container";
 import { EarnMore, Streak } from "@/components/Earn/EarnMore";
 import { Layout } from "@/components/Layout";
 import { User } from "@/components/Quest";
+import { useTelegram } from "@/lib/TelegramProvider";
 import axios from "axios";
 import moment from "moment";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const EarnPage = () => {
+  const { user } = useTelegram();
   const [userData, setUserData] = useState<User>();
   const [earnMore, setEarnmore] = useState(false);
   const [userStreak, setUserStreak] = useState<Streak>({
@@ -18,33 +20,45 @@ const EarnPage = () => {
     user: "",
     updatedAt: "",
   });
-
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const data = localStorage.getItem("userData");
-      if (data) {
-        setUserData(JSON.parse(data));
-      }
-    }
+    // if (user) {
+    fetchUserInfo();
+    // }
   }, []);
-
-  useEffect(() => {
-    if (userData) {
-      fetchStreakInfo();
+  const fetchUserInfo = async () => {
+    // if (user) {
+    const data = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+      {
+        params: {
+          userId: "7129429718",
+        },
+      }
+    );
+    if (data.data) {
+      setUserData(data.data);
     }
+    // }
+  };
+  useEffect(() => {
+    fetchStreakInfo();
   }, [userData]);
-
+  
   const fetchStreakInfo = async () => {
-    if (userData?._id) {
+    console.log(userData, "UserData");
+
+    if (userData) {
       const user = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/userStreak`,
         {
           params: {
-            _id: userData?._id,
+            _id: userData._id,
           },
         }
       );
-      setUserStreak(user.data);
+      if (user.data) {
+        setUserStreak(user.data);
+      }
     }
   };
 

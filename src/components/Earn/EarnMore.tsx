@@ -3,8 +3,8 @@ import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { User } from "../Quest";
 import { useTelegram } from "@/lib/TelegramProvider";
+import { User } from "../Quest";
 
 interface EarnMoreProp {
   setEarnmore: (value: boolean) => void;
@@ -62,7 +62,6 @@ export const EarnMore = ({
   fetchStreakInfo,
 }: EarnMoreProp) => {
   const { user } = useTelegram();
-
   const [userData, setUserData] = useState<any>();
 
   useEffect(() => {
@@ -74,7 +73,6 @@ export const EarnMore = ({
       document.body.classList.remove("overflow-hidden");
     };
   }, []);
-
   useEffect(() => {
     if (user) {
       fetchUserInfo();
@@ -90,11 +88,13 @@ export const EarnMore = ({
           },
         }
       );
-      setUserData(data.data);
+      if (data.data) {
+        setUserData(data.data);
+      }
     }
   };
   const updateStreak = async (value: number) => {
-    if (userStreak?._id) {
+    if (userStreak) {
       const output = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/updateStreak`,
         {
@@ -111,7 +111,7 @@ export const EarnMore = ({
   };
   const updateUser = async (value: number) => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
-      userId: userData.userId || user?.id,
+      userId: userData.userId,
       balance: userData.balance && userData.balance + value,
     });
   };

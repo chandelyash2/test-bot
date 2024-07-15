@@ -6,9 +6,8 @@ import Image from "next/image";
 import Boost from "../../../public/svg/Boost.svg";
 import Link from "next/link";
 import axios from "axios";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { debounce } from "lodash";
-import { CMSModal } from "@/context";
 import QuestMine from "../../../public/svg/QuestMine.svg";
 import Question from "../../../public/svg/Question.svg";
 import Nimbi from "../../../public/svg/Nimbi.svg";
@@ -16,7 +15,6 @@ import Dollar from "../../../public/svg/Dollar.svg";
 import Light from "../../../public/svg/Light.svg";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "../Flash";
-import { fetchUserInfo } from "@/lib/axios/user";
 
 export interface User {
   _id: string;
@@ -42,7 +40,7 @@ const Quest = () => {
     if (user) {
       fetchUserInfo();
     }
-  }, []);
+  }, [user]);
 
   const fetchUserInfo = async () => {
     if (user) {
