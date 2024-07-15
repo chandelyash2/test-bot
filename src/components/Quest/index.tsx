@@ -63,17 +63,15 @@ const Quest = () => {
   };
   const updateUser = async (count: number, boost: number) => {
     try {
-      if (user) {
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
-          _id: userInfo._id,
-          balance: count,
-          boost: {
-            used: boost,
-            total: userInfo.boost.total,
-            lvl: userInfo.boost.lvl,
-          },
-        });
-      }
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+        _id: userInfo._id,
+        balance: count,
+        boost: {
+          used: boost,
+          total: userInfo.boost.total,
+          lvl: userInfo.boost.lvl,
+        },
+      });
     } catch (error) {
       console.error("Error updating user:", error);
     }
