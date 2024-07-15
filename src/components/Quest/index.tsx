@@ -130,7 +130,7 @@ const Quest = () => {
             </h2>
           </span>
         </div>
-        <p>{userInfo.firstName ? user?.first_name : "No data"}</p>
+        <p>{userInfo.firstName ? userInfo?.first_name : "No data"}</p>
 
         <Container>
           <div className="flex justify-between font-manrope font-medium text-xs items-center">
