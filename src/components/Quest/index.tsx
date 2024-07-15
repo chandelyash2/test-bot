@@ -44,9 +44,23 @@ const Quest = () => {
         firstName: user.first_name,
         lastName: user.last_name,
       });
+      fetchUserInfo();
     }
   }, [user]);
 
+  const fetchUserInfo = async () => {
+    if (user) {
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user?.id,
+          },
+        }
+      );
+      setUserInfo(data.data);
+    }
+  };
   const updateUser = async (count: number, boost: number) => {
     try {
       if (user) {

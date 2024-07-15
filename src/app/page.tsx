@@ -71,7 +71,7 @@ export default function Home() {
 
   const createUser = async () => {
     try {
-      if (user) {
+      if (user?.id) {
         const userData = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
           {
