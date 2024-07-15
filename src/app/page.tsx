@@ -2,12 +2,11 @@
 "use client";
 import { Flash } from "@/components/Flash";
 import { Layout } from "@/components/Layout";
-import { CMSModal } from "@/context";
 import { TelegramProvider, useTelegram } from "@/lib/TelegramProvider";
 import axios from "axios";
 import Image from "next/image";
 
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const array = [
   {
@@ -51,20 +50,9 @@ const array = [
 export default function Home() {
   const [active, setActive] = useState(0);
   const { user } = useTelegram();
-  const [loader, setLoader] = useState(true);
-  const [userInfo, setUserInfo] = useState({
-    id: "",
-    firstName: "",
-    lastName: "",
-  });
 
   useEffect(() => {
     if (user) {
-      setUserInfo({
-        id: JSON.stringify(user.id),
-        firstName: user.first_name,
-        lastName: user.last_name,
-      });
       createUser();
     }
   }, [user]);
@@ -81,23 +69,19 @@ export default function Home() {
           }
         );
         console.log("User Data:", userData.data); // Log the response data
-        localStorage.setItem("userData", JSON.stringify(user));
       }
     } catch (error) {
       console.error("Error creating user:", error);
     }
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoader(false);
-    }, 3000);
-  }, []);
   return (
     <>
-      {!loader && (
+      {user ? (
         <Layout>
-          <p>{user?.first_name} {user?.last_name}</p>
+          <p>
+            {user?.first_name} {user?.last_name}
+          </p>
           <div className="absolute flex flex-col items-center h-full top-0">
             <Image
               src={array[active].img}
@@ -220,8 +204,9 @@ export default function Home() {
             </div>
           </div>
         </Layout>
+      ) : (
+        <Flash />
       )}
-      {loader && <Flash />}
     </>
   );
 }
