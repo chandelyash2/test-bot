@@ -38,24 +38,30 @@ const Quest = () => {
   const [userInfo, setUserInfo] = useState<any>();
 
   useEffect(() => {
-    if (user) {
-      fetchUserInfo();
+    const storedData = localStorage.getItem("userData");
+    if (storedData) {
+      setUserInfo(storedData);
     }
-  }, [user]);
+  }, []);
+  // useEffect(() => {
+  //   if (user) {
+  //     fetchUserInfo();
+  //   }
+  // }, [user]);
 
-  const fetchUserInfo = async () => {
-    if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
-      setUserInfo(data.data);
-    }
-  };
+  // const fetchUserInfo = async () => {
+  //   if (user) {
+  //     const data = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+  //       {
+  //         params: {
+  //           userId: user.id,
+  //         },
+  //       }
+  //     );
+  //     setUserInfo(data.data);
+  //   }
+  // };
   const updateUser = async (count: number, boost: number) => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
       userId: userInfo?.userId || user?.id,
@@ -110,6 +116,7 @@ const Quest = () => {
   return (
     <Layout>
       <div className="flex flex-col gap-4 pb-[120px]">
+        <p>{userInfo.firstName}</p>
         <div className="flex items-center justify-between border-b border-[#5C666C] p-4">
           <span className="flex items-center gap-4">
             <Image src="/img/28.png" alt="avatar" width={40} height={40} />
