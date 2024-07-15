@@ -97,7 +97,7 @@ export default function Home() {
     <>
       {!loader && (
         <Layout>
-          <p>{user?.first_name}</p>
+          <p>{user?.first_name} {user?.last_name}</p>
           <div className="absolute flex flex-col items-center h-full top-0">
             <Image
               src={array[active].img}
