@@ -39,7 +39,7 @@ const Quest = () => {
 
   useEffect(() => {
     if (user) {
-    fetchUserInfo();
+      fetchUserInfo();
     }
   }, [user]);
 
@@ -102,8 +102,8 @@ const Quest = () => {
       ...userInfo,
       balance: newBalance,
       boost: {
-        ...userInfo.boost,
         used: newBoostUsed,
+        total:2500
       },
     });
   };
