@@ -116,7 +116,6 @@ const Quest = () => {
   return (
     <Layout>
       <div className="flex flex-col gap-4 pb-[120px]">
-        <p>{userInfo.firstName}</p>
         <div className="flex items-center justify-between border-b border-[#5C666C] p-4">
           <span className="flex items-center gap-4">
             <Image src="/img/28.png" alt="avatar" width={40} height={40} />
@@ -131,7 +130,7 @@ const Quest = () => {
             </h2>
           </span>
         </div>
-        <p>{userInfo.firstName}</p>
+        <p>{userInfo.firstName ? user?.first_name : "No data"}</p>
 
         <Container>
           <div className="flex justify-between font-manrope font-medium text-xs items-center">
