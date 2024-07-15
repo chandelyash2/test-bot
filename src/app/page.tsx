@@ -65,22 +65,24 @@ export default function Home() {
         firstName: user.first_name,
         lastName: user.last_name,
       });
+      createUser();
     }
-    createUser();
   }, [user]);
 
   const createUser = async () => {
     try {
-      const userData = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
-        {
-          userId: userInfo.id,
-          firstName: userInfo.firstName,
-          lastName: userInfo.lastName,
-        }
-      );
-      console.log("User Data:", userData.data); // Log the response data
-      localStorage.setItem("userData", JSON.stringify(userData.data));
+      if (user) {
+        const userData = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
+          {
+            userId: user.id,
+            firstName: user.first_name,
+            lastName: user.last_name,
+          }
+        );
+        console.log("User Data:", userData.data); // Log the response data
+        localStorage.setItem("userData", JSON.stringify(userData.data));
+      }
     } catch (error) {
       console.error("Error creating user:", error);
     }
@@ -95,6 +97,7 @@ export default function Home() {
     <>
       {!loader && (
         <Layout>
+          <p>{user?.first_name}</p>
           <div className="absolute flex flex-col items-center h-full top-0">
             <Image
               src={array[active].img}
