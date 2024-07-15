@@ -56,6 +56,7 @@ const Quest = () => {
       setUserInfo(data.data);
     }
   };
+  
   const updateUser = async (count: number, boost: number) => {
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
@@ -98,23 +99,19 @@ const Quest = () => {
   }, [userInfo]);
 
   const handleQuestClick = async () => {
-    if (userInfo?.balance !== undefined) {
-      const newBalance = userInfo.balance + userInfo.tap + 1;
-      const newBoostUsed = userInfo.boost.used - (userInfo.tap + 1);
+    const newBalance = userInfo.balance + (userInfo.tap + 1);
+    const newBoostUsed = userInfo.boost.used - (userInfo.tap + 1);
 
-      setUserInfo({
-        ...userInfo,
-        balance: newBalance,
-        boost: {
-          ...userInfo.boost,
-          used: newBoostUsed,
-        },
-      });
+    setUserInfo({
+      ...userInfo,
+      balance: newBalance,
+      boost: {
+        ...userInfo.boost,
+        used: newBoostUsed,
+      },
+    });
 
-      debouncedUpdateUser(newBalance, newBoostUsed);
-    } else {
-      console.log("userData or userData.balance is undefined");
-    }
+    debouncedUpdateUser(newBalance, newBoostUsed);
   };
 
   return (
