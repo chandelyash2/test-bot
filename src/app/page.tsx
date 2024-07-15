@@ -76,7 +76,7 @@ export default function Home() {
       const userData = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
         {
-          userId: "7129429718",
+          userId: userInfo.id,
           firstName: userInfo.firstName,
           lastName: userInfo.lastName,
         }
