@@ -21,12 +21,12 @@ const EarnPage = () => {
     updatedAt: "",
   });
   useEffect(() => {
-    // if (user) {
+    if (user) {
     fetchUserInfo();
-    // }
+    }
   }, []);
   const fetchUserInfo = async () => {
-    // if (user) {
+    if (user) {
     const data = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
       {
@@ -38,7 +38,7 @@ const EarnPage = () => {
     if (data.data) {
       setUserData(data.data);
     }
-    // }
+    }
   };
   useEffect(() => {
     fetchStreakInfo();
