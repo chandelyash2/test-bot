@@ -10,12 +10,16 @@ import { useCallback, useEffect, useState } from "react";
 import { debounce } from "lodash";
 import QuestMine from "../../../public/svg/QuestMine.svg";
 import Question from "../../../public/svg/Question.svg";
-import Nimbi from "../../../public/svg/Nimbi.svg";
 import Dollar from "../../../public/svg/Dollar.svg";
 import Light from "../../../public/svg/Light.svg";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "../Flash";
-
+import Sigma from "../../../public/svg/Sigma.svg";
+import Omega from "../../../public/svg/Omega.svg";
+import MidRank from "../../../public/svg/MidRank.svg";
+import Beta from "../../../public/svg/Beta.svg";
+import Luna from "../../../public/svg/Luna.svg";
+import Nimbi from "../../../public/svg/Nimbi.svg";
 export interface User {
   _id: string;
   firstName: string;
@@ -32,30 +36,75 @@ export interface User {
   mine: number;
 }
 
+const imgs = [
+  {
+    img: "/img/Quest/Sigma.png",
+    rank: 1,
+    color: "#3E4A5A",
+    name: "Sigma",
+    icon: Sigma,
+  },
+  {
+    img: "/img/Quest/Omega.png",
+    rank: 2,
+    color: "#5E4B1A",
+    name: "Omega",
+    icon: Omega,
+  },
+  {
+    img: "/img/Quest/Mid.png",
+    rank: 3,
+    color: "#FF8717",
+    name: "Mid Ranking",
+    icon: MidRank,
+  },
+  {
+    img: "/img/Quest/Beta.png",
+    rank: 4,
+    color: "#3F5A63",
+    name: "Beta",
+    icon: Beta,
+  },
+
+  {
+    img: "/img/Quest/Luna.png",
+    rank: 5,
+    color: "#7137ED",
+    name: "Luna",
+    icon: Luna,
+  },
+  {
+    img: "/img/Quest/Nimbi.png",
+    rank: 6,
+    color: "#05A7DE",
+    name: "Nimbi",
+    icon: Nimbi,
+  },
+];
 const Quest = () => {
   const { user } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
 
   useEffect(() => {
     if (user) {
-      fetchUserInfo();
+    fetchUserInfo();
     }
   }, [user]);
 
   const fetchUserInfo = async () => {
     if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
-      if (data.data) {
-        setUserInfo(data.data);
+    const data = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+      {
+        params: {
+          userId: user.id,
+        },
       }
+    );
+    if (data.data) {
+      setUserInfo(data.data);
     }
+  };
   };
   const updateUser = async (count: number, boost: number, user: User) => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
@@ -109,6 +158,7 @@ const Quest = () => {
     }
   };
 
+  const img = imgs.find((item) => item.rank === userInfo?.rank);
   return (
     <>
       {userInfo ? (
@@ -135,14 +185,14 @@ const Quest = () => {
                   <Image src={Question} alt="question" />
                 </span>
                 <span className="flex items-center gap-2">
-                  <Image src={Nimbi} alt="nimbi" width={15} />
-                  <h4>Nimbi Wolf</h4>
+                  <Image src={img?.icon} alt={img?.name || ""} width={15} />
+                  <h4>{img?.name}</h4>
                 </span>
               </div>
               <Progress
                 aria-label="Loading..."
                 value={userInfo?.rank * 20}
-                className="max-w-md mt-4"
+                className={`max-w-md mt-4`}
                 color="secondary"
               />
             </Container>
@@ -157,28 +207,46 @@ const Quest = () => {
                 </span>
               </div>
             </Container>
-            <Image
-              src="/img/Quest.png"
-              width={200}
-              height={200}
-              alt="quest"
-              className="h-[350px] w-full"
-              onClick={handleQuestClick}
-            />
-            <Container>
-              <div className="flex justify-between font-manrope font-medium text-xs items-center">
-                <span className="flex items-center gap-2">
-                  <Image src={Light} alt="Light" />
-                  <h2 className="font-bold font-istok text-lg">
-                    {userInfo.boost?.used}/{userInfo.boost?.total}
-                  </h2>
-                </span>
-                <Link href="/boost" className="flex items-center gap-2">
-                  <h2 className="font-bold font-istok text-xs">Boost</h2>
-                  <Image src={Boost} alt="boost" />
-                </Link>
-              </div>
-            </Container>
+            <div className="relative">
+              <Image
+                src="/img/Quest/Vector 20.png"
+                width={200}
+                height={100}
+                alt="quest"
+                className="absolute h-5 w-full"
+                onClick={handleQuestClick}
+              />
+              <Image
+                src={img?.img || ""}
+                width={200}
+                height={200}
+                alt="quest"
+                className="h-[450px] w-full objecr-cover"
+                onClick={handleQuestClick}
+              />
+              <Image
+                src="/img/Quest/Vector 21.png"
+                width={200}
+                height={100}
+                alt="quest"
+                className="absolute bottom-10 h-[100px] w-full"
+                onClick={handleQuestClick}
+              />
+              <Container>
+                <div className="relative  flex justify-between font-manrope font-medium text-xs items-center">
+                  <span className="flex items-center gap-2">
+                    <Image src={Light} alt="Light" />
+                    <h2 className="font-bold font-istok text-lg">
+                      {userInfo.boost?.used}/{userInfo.boost?.total}
+                    </h2>
+                  </span>
+                  <Link href="/boost" className="flex items-center gap-2">
+                    <h2 className="font-bold font-istok text-xs">Boost</h2>
+                    <Image src={Boost} alt="boost" />
+                  </Link>
+                </div>
+              </Container>
+            </div>
           </div>
         </Layout>
       ) : (
