@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { User } from "../Quest";
+import toast, { Toaster } from "react-hot-toast";
 
 interface EarnMoreProp {
   setEarnmore: (value: boolean) => void;
@@ -104,6 +105,7 @@ export const EarnMore = ({
         }
       );
       if (output.data) {
+        toast.success("Reward Collected")
         await updateUser(value);
         fetchStreakInfo();
       }
@@ -281,6 +283,7 @@ export const EarnMore = ({
           Come back tomorrow
         </Button>
       </div>
+      <Toaster/>
     </div>
   );
 };
