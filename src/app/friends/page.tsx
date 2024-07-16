@@ -9,7 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 const FriendsPage = () => {
   const { user } = useTelegram();
-  const referralLink = `https://t.me/your_bot_username?start=${user?.id}`; // Replace with your bot's username
+  const referralLink = `https://t.me/@xda_1_bot?start=${user?.id}`; // Replace with your bot's username
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(referralLink);
