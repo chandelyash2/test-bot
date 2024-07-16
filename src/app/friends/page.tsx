@@ -1,15 +1,23 @@
-'use client'
+"use client";
 import { Container } from "@/components/Container";
 import { Layout } from "@/components/Layout";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import React from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const FriendsPage = () => {
   const { user } = useTelegram();
   const referralLink = `https://t.me/your_bot_username?start=${user?.id}`; // Replace with your bot's username
-
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(referralLink);
+      toast.success("Copied to Clipboard");
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
+  };
   return (
     <Layout>
       <Container>
@@ -194,9 +202,8 @@ const FriendsPage = () => {
             </p>
             <Button
               className="bg-transparent"
-              onClick={() => navigator.clipboard.writeText(referralLink)}
+              onClick={copyToClipboard}
             >
-              
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -216,6 +223,7 @@ const FriendsPage = () => {
           </Button> */}
         </div>
       </Container>
+      <Toaster />
     </Layout>
   );
 };
