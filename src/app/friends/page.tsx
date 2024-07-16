@@ -1,3 +1,4 @@
+'use client'
 import { Container } from "@/components/Container";
 import { Layout } from "@/components/Layout";
 import { useTelegram } from "@/lib/TelegramProvider";
