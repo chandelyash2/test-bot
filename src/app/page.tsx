@@ -35,7 +35,7 @@ const array = [
   },
   {
     id: 4,
-    img: "/img/Home/luna.png",
+    img: "/img/Home/Luna.png",
     name: "Luna",
     value: "5M / 15M",
   },
@@ -49,7 +49,7 @@ const array = [
 
 export default function Home() {
   const [active, setActive] = useState(0);
-  const { user } = useTelegram();
+  const { user,webApp } = useTelegram();
 
   useEffect(() => {
     if (user) {

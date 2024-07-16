@@ -1,10 +1,14 @@
 import { Container } from "@/components/Container";
 import { Layout } from "@/components/Layout";
+import { useTelegram } from "@/lib/TelegramProvider";
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import React from "react";
 
 const FriendsPage = () => {
+  const { user } = useTelegram();
+  const referralLink = `https://t.me/your_bot_username?start=${user?.id}`; // Replace with your bot's username
+
   return (
     <Layout>
       <Container>
@@ -184,10 +188,13 @@ const FriendsPage = () => {
             </div>
           </div>
           <div className="w-full flex items-center justify-between">
-            <h4 className="text-xs font-roboto text-[#C0C4C6]">
+            <p className="text-xs font-roboto text-[#C0C4C6]">
               Copy Refferal link
-            </h4>
-            <Button className="bg-transparent">
+            </p>
+            <Button
+              className="bg-transparent"
+              onClick={() => navigator.clipboard.writeText(referralLink)}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -202,7 +209,9 @@ const FriendsPage = () => {
               </svg>
             </Button>
           </div>
-          <Button className="text-white bg-[#00ACE6] w-full rounded mt-[10%]">Invite a Friend</Button>
+          {/* <Button className="text-white bg-[#00ACE6] w-full rounded mt-[10%]">
+            Invite a Friend
+          </Button> */}
         </div>
       </Container>
     </Layout>
