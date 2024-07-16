@@ -1,20 +1,43 @@
 "use client";
 import { Container } from "@/components/Container";
 import { Layout } from "@/components/Layout";
+import { User } from "@/components/Quest";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Button } from "@nextui-org/react";
+import axios from "axios";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const FriendsPage = () => {
   const { user } = useTelegram();
-  const copyToClipboard = async () => {
+  const [userInfo, setUserInfo] = useState<User>();
+
+  useEffect(() => {
     if (user) {
-      const referralLink = `https://t.me/@xda_1_bot?start=${user.id}`; // Replace with your bot's username
-      await navigator.clipboard.writeText(referralLink);
-      toast.success("Copied to Clipboard");
+      fetchUserInfo();
     }
+  }, [user]);
+
+  const fetchUserInfo = async () => {
+    if (user) {
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setUserInfo(data.data);
+      }
+    }
+  };
+  const copyToClipboard = async () => {
+    const referralLink = `https://t.me/@xda_1_bot?start=${userInfo?.userId}`;
+    await navigator.clipboard.writeText(referralLink);
+    toast.success("Copied to Clipboard");
   };
   return (
     <Layout>
