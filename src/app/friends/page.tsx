@@ -190,12 +190,13 @@ const FriendsPage = () => {
           </div>
           <div className="w-full flex items-center justify-between">
             <p className="text-xs font-roboto text-[#C0C4C6]">
-              Copy Refferal link
+              Copy Refferal link {referralLink}
             </p>
             <Button
               className="bg-transparent"
               onClick={() => navigator.clipboard.writeText(referralLink)}
             >
+              
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
