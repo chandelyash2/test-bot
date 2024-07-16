@@ -3,29 +3,14 @@ import { Container } from "@/components/Container";
 import { Layout } from "@/components/Layout";
 import { MineBox } from "@/components/Mine/MineBox";
 import { SpecialMineBox } from "@/components/Mine/SpecialMineBox";
-import { User } from "@/components/Quest";
-import { CMSModal } from "@/context";
 import { Button } from "@nextui-org/react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
-
-
-
-
 
 const MinePage = () => {
   const [userData, setUserData] = useState<any>();
 
   const [active, setActive] = useState("Basic");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const data = localStorage.getItem("userData");
-      if (data) {
-        setUserData(JSON.parse(data));
-      }
-    }
-  }, []);
 
   return (
     <Layout>

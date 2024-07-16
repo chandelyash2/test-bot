@@ -4,10 +4,12 @@ import React, { useEffect, useState } from "react";
 import { Container } from "./Container";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/router";
+
 import { User } from "./Quest";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "./Flash";
+import Tick from "../../../public/svg/Tick.svg";
+import Image from "next/image";
 
 const tapLvls = [
   {
@@ -78,7 +80,6 @@ export const Boost = () => {
         toast.error(response.data.message);
       } else {
         toast.success("Tap Collected");
-        localStorage.setItem("userData", JSON.stringify(response.data.user));
         setUserInfo(response.data.user);
       }
     }
@@ -140,28 +141,7 @@ export const Boost = () => {
               <h4 className="font-semibold font-roboto">Boosters</h4>
               <div className="bg-[#242D32] rounded flex p-2 items-center justify-between">
                 <div className="flex gap-2 items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <g clip-path="url(#clip0_4331_13414)">
-                      <rect
-                        opacity="0.2"
-                        width="20"
-                        height="20"
-                        rx="4"
-                        fill="#171717"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_4331_13414">
-                        <rect width="20" height="20" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
+                  <Image src={Tick} alt="tick" />
                   <div className="">
                     <h4 className="font-bold font-roboto">
                       Power tap Lv.{userInfo?.tap && userInfo?.tap + 1}
@@ -226,7 +206,7 @@ export const Boost = () => {
                   </div>
                 </div>
                 <h2
-                  className="text-[#00ACE6] font-semibold text-inter"
+                  className="text-[#00ACE6] font-semibold text-inter cursor-pointer"
                   onClick={collectTap}
                 >
                   Collect

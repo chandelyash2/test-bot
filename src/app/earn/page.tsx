@@ -8,7 +8,7 @@ import axios from "axios";
 import moment from "moment";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-
+import Tick from "../../../public/svg/Tick.svg";
 const EarnPage = () => {
   const { user } = useTelegram();
   const [userData, setUserData] = useState<User>();
@@ -190,25 +190,7 @@ const EarnPage = () => {
                     </p>
                   </div>
                 </div>
-                {!disabled && (
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="21"
-                      viewBox="0 0 20 21"
-                      fill="none"
-                    >
-                      <path
-                        d="M4.16663 10.2311L8.33329 14.3978L15.8333 6.06442"
-                        stroke="#1B8E3B"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </span>
-                )}
+                {!disabled && <Image src={Tick} alt="tick" />}
               </div>
             </div>
             <div className="w-full flex flex-col gap-1">
