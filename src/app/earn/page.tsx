@@ -31,7 +31,7 @@ const EarnPage = () => {
       `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
       {
         params: {
-          userId: "7129429718",
+          userId: user?.id,
         },
       }
     );
