@@ -22,28 +22,28 @@ const EarnPage = () => {
   });
   useEffect(() => {
     if (user) {
-    fetchUserInfo();
+      fetchUserInfo();
     }
   }, []);
   const fetchUserInfo = async () => {
     if (user) {
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-      {
-        params: {
-          userId: user?.id,
-        },
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setUserData(data.data);
       }
-    );
-    if (data.data) {
-      setUserData(data.data);
-    }
     }
   };
   useEffect(() => {
     fetchStreakInfo();
   }, [userData]);
-  
+
   const fetchStreakInfo = async () => {
     console.log(userData, "UserData");
 

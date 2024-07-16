@@ -95,6 +95,8 @@ export const EarnMore = ({
     }
   };
   const updateStreak = async (value: number) => {
+    console.log(userData.balance + value);
+
     if (userStreak) {
       const output = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/updateStreak`,
@@ -105,8 +107,8 @@ export const EarnMore = ({
         }
       );
       if (output.data) {
-        toast.success("Reward Collected")
-        await updateUser(value);
+        toast.success("Reward Collected");
+        await updateUser(userData.balance + value);
         fetchStreakInfo();
       }
     }
@@ -114,7 +116,7 @@ export const EarnMore = ({
   const updateUser = async (value: number) => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
       userId: userData.userId,
-      balance: userData.balance && userData.balance + value,
+      balance: value,
     });
   };
 
@@ -166,7 +168,7 @@ export const EarnMore = ({
                   "border border-yellow-400"
               )}
               key={item.name}
-              isDisabled={!disabled}
+              isDisabled={item.day > userStreak.upcoming || !disabled}
               onClick={() => updateStreak(item.value)}
             >
               <h4>{item.name}</h4>
@@ -283,7 +285,7 @@ export const EarnMore = ({
           Come back tomorrow
         </Button>
       </div>
-      <Toaster/>
+      <Toaster />
     </div>
   );
 };
