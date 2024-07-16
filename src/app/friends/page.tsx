@@ -9,13 +9,11 @@ import toast, { Toaster } from "react-hot-toast";
 
 const FriendsPage = () => {
   const { user } = useTelegram();
-  const referralLink = `https://t.me/@xda_1_bot?start=${user?.id}`; // Replace with your bot's username
   const copyToClipboard = async () => {
-    try {
+    if (user) {
+      const referralLink = `https://t.me/@xda_1_bot?start=${user.id}`; // Replace with your bot's username
       await navigator.clipboard.writeText(referralLink);
       toast.success("Copied to Clipboard");
-    } catch (err) {
-      console.error("Failed to copy: ", err);
     }
   };
   return (
@@ -198,12 +196,9 @@ const FriendsPage = () => {
           </div>
           <div className="w-full flex items-center justify-between">
             <p className="text-xs font-roboto text-[#C0C4C6]">
-              Copy Refferal link {referralLink}
+              Copy Refferal link
             </p>
-            <Button
-              className="bg-transparent"
-              onClick={copyToClipboard}
-            >
+            <Button className="bg-transparent" onClick={copyToClipboard}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
