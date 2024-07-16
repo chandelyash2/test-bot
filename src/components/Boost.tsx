@@ -8,7 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { User } from "./Quest";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "./Flash";
-import Tick from "../../../public/svg/Tick.svg";
+import Tick from "../../public/svg/Tick.svg";
 import Image from "next/image";
 
 const tapLvls = [
