@@ -196,7 +196,7 @@ const FriendsPage = () => {
                 <Button
                   className="bg-transparent"
                   onClick={async () => {
-                    if (userInfo) {
+                    if (userInfo.userId) {
                       const referralLink = `https://t.me/@xda_1_bot?start=${userInfo.userId}`;
                       // navigator.clipboard.writeText(referralLink);
                       toast.success("https://t.me/@xda_1_bot?start=${userInfo.userId}");
