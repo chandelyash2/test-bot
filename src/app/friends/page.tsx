@@ -16,41 +16,41 @@ const FriendsPage = () => {
   const [friends, setFriends] = useState<User[]>();
 
   useEffect(() => {
-    // if (user) {
-    fetchUserInfo();
-    fetchFriends();
-    // }
+    if (user) {
+      fetchUserInfo();
+      fetchFriends();
+    }
   }, [user]);
 
   const fetchUserInfo = async () => {
-    // if (user) {
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-      {
-        params: {
-          userId: "7129429718",
-        },
+    if (user) {
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setUserInfo(data.data);
       }
-    );
-    if (data.data) {
-      setUserInfo(data.data);
     }
-    // }
   };
   const fetchFriends = async () => {
-    // if (user) {
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/userFriend`,
-      {
-        params: {
-          userId: "7129429718",
-        },
+    if (user) {
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userFriend`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setFriends(data.data);
       }
-    );
-    if (data.data) {
-      setFriends(data.data);
     }
-    // }
   };
   return (
     <>
