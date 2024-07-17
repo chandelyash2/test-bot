@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { Container } from "./Container";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-
 import { User } from "./Quest";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "./Flash";
