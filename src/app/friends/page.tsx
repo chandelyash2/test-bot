@@ -235,9 +235,11 @@ const FriendsPage = () => {
                 <Button
                   className="bg-transparent"
                   onClick={async () => {
-                    const referralLink = `https://t.me/@xda_1_bot?start=${userInfo.userId}`;
-                    await navigator.clipboard.writeText(referralLink);
-                    toast.success("Copied to Clipboard");
+                    if (userInfo) {
+                      const referralLink = `https://t.me/@xda_1_bot?start=${userInfo.userId}`;
+                      navigator.clipboard.writeText(referralLink);
+                      toast.success("Copied to Clipboard");
+                    }
                   }}
                 >
                   <svg
