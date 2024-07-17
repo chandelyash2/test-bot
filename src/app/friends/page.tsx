@@ -53,38 +53,34 @@ const FriendsPage = () => {
     }
   };
   const handleClick = async () => {
-    console.log('Button clicked');
+    console.log("Button clicked");
     if (userInfo && userInfo.userId) {
       const referralLink = `https://t.me/@xda_1_bot?start=${userInfo.userId}`;
-      console.log('Referral link:', referralLink);
+      console.log("Referral link:", referralLink);
 
       try {
         if (!navigator.clipboard) {
-          throw new Error('Clipboard API not supported');
+          throw new Error("Clipboard API not supported");
         }
         await navigator.clipboard.writeText(referralLink);
-        console.log('Link copied to clipboard');
-        toast.success(`Copied to clipboard: ${referralLink}`);
-      } catch (error:any) {
-        console.error('Failed to copy link to clipboard:', error);
-        toast.error('Failed to copy link to clipboard: ' + error.message);
-
+        console.log("Link copied to clipboard");
+        toast.success(`Link Copied to clipboard`);
+      } catch (error: any) {
         // Fallback: Select and copy the text manually
-        const textarea = document.createElement('textarea');
+        const textarea = document.createElement("textarea");
         textarea.value = referralLink;
         document.body.appendChild(textarea);
         textarea.select();
         try {
-          document.execCommand('copy');
-          toast.success(`Copied to clipboard: ${referralLink}`);
-        } catch (err:any) {
-          toast.error('Failed to copy link to clipboard: ' + err.message);
+          document.execCommand("copy");
+          toast.success(`Link Copied to clipboard`);
+        } catch (err: any) {
+          console.log(err);
         }
         document.body.removeChild(textarea);
       }
     } else {
-      console.log('User information is not available');
-      toast.error("User information is not available");
+      console.log("User information is not available");
     }
   };
 
@@ -231,11 +227,7 @@ const FriendsPage = () => {
                 <p className="text-xs font-roboto text-[#C0C4C6]">
                   Copy Refferal link
                 </p>
-                <Button
-                  className="bg-transparent"
-                  onClick={handleClick}
-                    
-                >
+                <Button className="bg-transparent" onClick={handleClick}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
