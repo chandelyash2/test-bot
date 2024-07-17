@@ -38,7 +38,7 @@ const FriendsPage = () => {
 
   return (
     <>
-      {user ? (
+      {userInfo ? (
         <Layout>
           <Container>
             <div className="flex flex-col items-center gap-4 pb-[120px] py-4">
@@ -235,7 +235,7 @@ const FriendsPage = () => {
                 <Button
                   className="bg-transparent"
                   onClick={async () => {
-                    const referralLink = `https://t.me/@xda_1_bot?start=${user.id}`;
+                    const referralLink = `https://t.me/@xda_1_bot?start=${userInfo.userId}`;
                     await navigator.clipboard.writeText(referralLink);
                     toast.success("Copied to Clipboard");
                   }}
