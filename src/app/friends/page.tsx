@@ -53,21 +53,21 @@ const FriendsPage = () => {
     }
   };
   const handleClick = async () => {
-    console.log("Button clicked");
+    console.log('Button clicked');
     if (userInfo && userInfo.userId) {
       const referralLink = `https://t.me/@xda_1_bot?start=${userInfo.userId}`;
-      console.log("Referral link:", referralLink);
-
+      console.log('Referral link:', referralLink);
+      
       try {
         await navigator.clipboard.writeText(referralLink);
-        console.log("Link copied to clipboard");
-        toast.success(referralLink);
+        console.log('Link copied to clipboard');
+        toast.success(`Copied to clipboard: ${referralLink}`);
       } catch (error) {
-        console.error("Failed to copy link to clipboard:", error);
-        toast.error("Failed to copy link to clipboard");
+        console.error('Failed to copy link to clipboard:', error);
+        toast.error('Failed to copy link to clipboard: ' + error.message);
       }
     } else {
-      console.log("User information is not available");
+      console.log('User information is not available');
       toast.error("User information is not available");
     }
   };
