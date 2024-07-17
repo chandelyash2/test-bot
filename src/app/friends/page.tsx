@@ -62,7 +62,7 @@ const FriendsPage = () => {
         await navigator.clipboard.writeText(referralLink);
         console.log('Link copied to clipboard');
         toast.success(`Copied to clipboard: ${referralLink}`);
-      } catch (error) {
+      } catch (error:any) {
         console.error('Failed to copy link to clipboard:', error);
         toast.error('Failed to copy link to clipboard: ' + error.message);
       }
