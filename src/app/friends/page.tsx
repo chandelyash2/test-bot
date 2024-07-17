@@ -87,7 +87,7 @@ const FriendsPage = () => {
               </div>
               <div className="flex flex-col gap-4 w-full">
                 <div className="flex items-center justify-between">
-                  <h2 className="font-bold font-roboto">Your Friends (2)</h2>
+                  <h2 className="font-bold font-roboto">Your Friends ({friends?.length})</h2>
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -198,8 +198,8 @@ const FriendsPage = () => {
                   onClick={async () => {
                     if (userInfo) {
                       const referralLink = `https://t.me/@xda_1_bot?start=${userInfo.userId}`;
-                      navigator.clipboard.writeText(referralLink);
-                      toast.success("Copied to Clipboard");
+                      // navigator.clipboard.writeText(referralLink);
+                      toast.success("https://t.me/@xda_1_bot?start=${userInfo.userId}");
                     }
                   }}
                 >
