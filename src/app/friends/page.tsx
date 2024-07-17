@@ -87,7 +87,9 @@ const FriendsPage = () => {
               </div>
               <div className="flex flex-col gap-4 w-full">
                 <div className="flex items-center justify-between">
-                  <h2 className="font-bold font-roboto">Your Friends ({friends?.length})</h2>
+                  <h2 className="font-bold font-roboto">
+                    Your Friends ({friends?.length})
+                  </h2>
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -196,10 +198,13 @@ const FriendsPage = () => {
                 <Button
                   className="bg-transparent"
                   onClick={async () => {
-                    if (userInfo.userId) {
+                    if (userInfo && userInfo.userId) {
                       const referralLink = `https://t.me/@xda_1_bot?start=${userInfo.userId}`;
-                      // navigator.clipboard.writeText(referralLink);
-                      toast.success("https://t.me/@xda_1_bot?start=${userInfo.userId}");
+                      // Uncomment this line if you want to copy the link to the clipboard
+                      await navigator.clipboard.writeText(referralLink);
+                      toast.success(referralLink);
+                    } else {
+                      toast.error("User information is not available");
                     }
                   }}
                 >
