@@ -4,7 +4,6 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useTelegram } from "@/lib/TelegramProvider";
-import { User } from "../Quest";
 import toast, { Toaster } from "react-hot-toast";
 
 interface EarnMoreProp {

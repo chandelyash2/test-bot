@@ -2,7 +2,7 @@
 import { Container } from "@/components/Container";
 import { Flash } from "@/components/Flash";
 import { Layout } from "@/components/Layout";
-import { User } from "@/components/Quest";
+import { User } from "@/lib/quest/type";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Button } from "@nextui-org/react";
 import axios from "axios";

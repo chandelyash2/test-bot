@@ -2,13 +2,13 @@
 import { Container } from "@/components/Container";
 import { EarnMore, Streak } from "@/components/Earn/EarnMore";
 import { Layout } from "@/components/Layout";
-import { User } from "@/components/Quest";
 import { useTelegram } from "@/lib/TelegramProvider";
 import axios from "axios";
 import moment from "moment";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Tick from "../../../public/svg/Tick.svg";
+import { User } from "@/lib/quest/type";
 const EarnPage = () => {
   const { user } = useTelegram();
   const [userData, setUserData] = useState<User>();
@@ -24,7 +24,7 @@ const EarnPage = () => {
     if (user) {
       fetchUserInfo();
     }
-  }, []);
+  }, [user]);
   const fetchUserInfo = async () => {
     if (user) {
       const data = await axios.get(

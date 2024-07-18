@@ -19,7 +19,7 @@ export const Boost = () => {
     if (user) {
     fetchUserInfo();
     }
-  }, []);
+  }, [user]);
 
   const fetchUserInfo = async () => {
     if (user) {
@@ -27,7 +27,7 @@ export const Boost = () => {
       `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
       {
         params: {
-          userId: "7129429718",
+          userId: user.id,
         },
       }
     );
