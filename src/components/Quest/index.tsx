@@ -14,94 +14,31 @@ import Dollar from "../../../public/svg/Dollar.svg";
 import Light from "../../../public/svg/Light.svg";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "../Flash";
-import Sigma from "../../../public/svg/Sigma.svg";
-import Omega from "../../../public/svg/Omega.svg";
-import MidRank from "../../../public/svg/MidRank.svg";
-import Beta from "../../../public/svg/Beta.svg";
-import Luna from "../../../public/svg/Luna.svg";
-import Nimbi from "../../../public/svg/Nimbi.svg";
-export interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  userId: string;
-  rank: number;
-  balance: number;
-  boost: {
-    used: number;
-    total: number;
-    lvl: number;
-  };
-  tap: number;
-  mine: number;
-}
+import { imgs, User } from "@/lib/quest/type";
 
-const imgs = [
-  {
-    img: "/img/Quest/Sigma.png",
-    color: "#3E4A5A",
-    name: "Sigma",
-    icon: Sigma,
-    less: 0,
-    greater: 4999999,
-  },
-  {
-    img: "/img/Quest/Omega.png",
-    less: 5000000,
-    greater: 9999999,
-    color: "#5E4B1A",
-    name: "Omega",
-    icon: Omega,
-  },
-  {
-    img: "/img/Quest/Mid.png",
-    less: 10000000,
-    greater: 49999999,
-    color: "#FF8717",
-    name: "Mid Ranking",
-    icon: MidRank,
-  },
-  {
-    img: "/img/Quest/Beta.png",
-    less: 50000000,
-    greater: 99999999,
-    color: "#3F5A63",
-    name: "Beta",
-    icon: Beta,
-  },
-
-  {
-    img: "/img/Quest/Luna.png",
-    less: 100000000,
-    greater:100000000,
-    color: "#7137ED",
-    name: "Alpha",
-    icon: Luna,
-  },
-];
 const Quest = () => {
   const { user } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
 
   useEffect(() => {
     if (user) {
-    fetchUserInfo();
+      fetchUserInfo();
     }
   }, [user]);
 
   const fetchUserInfo = async () => {
     if (user) {
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-      {
-        params: {
-          userId:user.id,
-        },
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setUserInfo(data.data);
       }
-    );
-    if (data.data) {
-      setUserInfo(data.data);
-    }
     }
   };
   const updateUser = async (count: number, boost: number, user: User) => {
@@ -142,8 +79,8 @@ const Quest = () => {
 
   const handleQuestClick = async () => {
     if (userInfo) {
-      const newBalance = userInfo.balance + (userInfo.tap + 1);
-      const newBoostUsed = userInfo.boost.used - (userInfo.tap + 1);
+      const newBalance = userInfo.balance + (userInfo.tap );
+      const newBoostUsed = userInfo.boost.used - (userInfo.tap);
       debouncedUpdateUser(newBalance, newBoostUsed, userInfo);
       setUserInfo({
         ...userInfo,
@@ -155,14 +92,14 @@ const Quest = () => {
       });
     }
   };
-console.log(userInfo,"userIndo");
 
-const img = userInfo &&
-  imgs.find(item => 
-    userInfo.balance >= item.less && userInfo.balance <= item.greater
-  );
-    console.log(img,"IMG");
-    
+  const img =
+    userInfo &&
+    imgs.find(
+      (item) =>
+        userInfo.balance >= item.less && userInfo.balance <= item.greater
+    );
+
   return (
     <>
       {userInfo ? (

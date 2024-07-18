@@ -1,0 +1,155 @@
+import Sigma from "../../../public/svg/Sigma.svg";
+import Omega from "../../../public/svg/Omega.svg";
+import MidRank from "../../../public/svg/MidRank.svg";
+import Beta from "../../../public/svg/Beta.svg";
+import Luna from "../../../public/svg/Luna.svg";
+
+export interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userId: string;
+  rank: number;
+  balance: number;
+  boost: {
+    used: number;
+    total: number;
+    lvl: number;
+  };
+  tap: number;
+  mine: number;
+}
+
+export const imgs = [
+  {
+    img: "/img/Quest/Sigma.png",
+    color: "#3E4A5A",
+    name: "Sigma",
+    icon: Sigma,
+    less: 0,
+    greater: 4999999,
+  },
+  {
+    img: "/img/Quest/Omega.png",
+    less: 5000000,
+    greater: 9999999,
+    color: "#5E4B1A",
+    name: "Omega",
+    icon: Omega,
+  },
+  {
+    img: "/img/Quest/Mid.png",
+    less: 10000000,
+    greater: 49999999,
+    color: "#FF8717",
+    name: "Mid Ranking",
+    icon: MidRank,
+  },
+  {
+    img: "/img/Quest/Beta.png",
+    less: 50000000,
+    greater: 99999999,
+    color: "#3F5A63",
+    name: "Beta",
+    icon: Beta,
+  },
+
+  {
+    img: "/img/Quest/Luna.png",
+    less: 100000000,
+    greater: 100000000,
+    color: "#7137ED",
+    name: "Alpha",
+    icon: Luna,
+  },
+];
+
+export const energy = [
+  {
+    lvl: 2,
+    price: 10000,
+    energy: 1000,
+  },
+  {
+    lvl: 3,
+    price: 150000,
+    energy: 1500,
+  },
+  {
+    lvl: 4,
+    price: 200000,
+    energy: 2000,
+  },
+  {
+    lvl: 5,
+    price: 250000,
+    energy: 2500,
+  },
+  {
+    lvl: 6,
+    price: 300000,
+    energy: 3000,
+  },
+  {
+    lvl: 7,
+    price: 350000,
+    energy: 3500,
+  },
+  {
+    lvl: 8,
+    price: 400000,
+    energy: 4000,
+  },
+  {
+    lvl: 9,
+    price: 450000,
+    energy: 4500,
+  },
+  {
+    lvl: 10,
+    price: 500000,
+    energy: 5000,
+  },
+  {
+    lvl: 11,
+    price: 550000,
+    energy: 5500,
+  },
+  {
+    lvl: 12,
+    price: 600000,
+    energy: 6000,
+  },
+  {
+    lvl: 13,
+    price: 650000,
+    energy: 6500,
+  },
+  {
+    lvl: 14,
+    price: 700000,
+    energy: 7000,
+  },
+  {
+    lvl: 15,
+    price: 750000,
+    energy: 7500,
+  },
+];
+
+export const multiTap = [
+  { tap: 4, price: 15000 },
+  { tap: 5, price: 200000 },
+  { tap: 6, price: 300000 },
+  { tap: 7, price: 400000 },
+  { tap: 8, price: 500000 },
+  { tap: 9, price: 600000 },
+  { tap: 10, price: 700000 },
+  { tap: 11, price: 800000 },
+  { tap: 12, price: 900000 },
+  { tap: 13, price: 1000000 },
+  { tap: 14, price: 1100000 },
+  { tap: 15, price: 1200000 },
+  { tap: 16, price: 1300000 },
+  { tap: 17, price: 1400000 },
+];

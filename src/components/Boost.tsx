@@ -4,34 +4,14 @@ import React, { useEffect, useState } from "react";
 import { Container } from "./Container";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { User } from "./Quest";
+
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "./Flash";
 import Tick from "../../public/svg/Tick.svg";
 import Image from "next/image";
+import { multiTap, User } from "@/lib/quest/type";
 
-const tapLvls = [
-  {
-    tap: 1,
-    value: 2500,
-  },
-  {
-    tap: 2,
-    value: 5000,
-  },
-  {
-    tap: 3,
-    value: 1000,
-  },
-  {
-    tap: 4,
-    value: 20000,
-  },
-  {
-    tap: 5,
-    value: 35000,
-  },
-];
+
 export const Boost = () => {
   const { user } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
@@ -59,10 +39,10 @@ export const Boost = () => {
   };
   const findPrice = () => {
     if (userInfo) {
-      const nextTapLevel = tapLvls.find(
+      const nextTapLevel = multiTap.find(
         (item) => item.tap === userInfo.tap + 1
       );
-      return nextTapLevel ? nextTapLevel.value : 0;
+      return nextTapLevel ? nextTapLevel.price : 0;
     }
   };
 
