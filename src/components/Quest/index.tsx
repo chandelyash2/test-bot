@@ -39,28 +39,32 @@ export interface User {
 const imgs = [
   {
     img: "/img/Quest/Sigma.png",
-    rank: 1,
     color: "#3E4A5A",
     name: "Sigma",
     icon: Sigma,
+    less: 0,
+    greater: 4999999,
   },
   {
     img: "/img/Quest/Omega.png",
-    rank: 2,
+    less: 5000000,
+    greater: 9999999,
     color: "#5E4B1A",
     name: "Omega",
     icon: Omega,
   },
   {
     img: "/img/Quest/Mid.png",
-    rank: 3,
+    less: 10000000,
+    greater: 49999999,
     color: "#FF8717",
     name: "Mid Ranking",
     icon: MidRank,
   },
   {
     img: "/img/Quest/Beta.png",
-    rank: 4,
+    less: 50000000,
+    greater: 99999999,
     color: "#3F5A63",
     name: "Beta",
     icon: Beta,
@@ -68,17 +72,11 @@ const imgs = [
 
   {
     img: "/img/Quest/Luna.png",
-    rank: 5,
+    less: 100000000,
+    greater:100000000,
     color: "#7137ED",
-    name: "Luna",
+    name: "Alpha",
     icon: Luna,
-  },
-  {
-    img: "/img/Quest/Nimbi.png",
-    rank: 6,
-    color: "#05A7DE",
-    name: "Nimbi",
-    icon: Nimbi,
   },
 ];
 const Quest = () => {
@@ -97,14 +95,14 @@ const Quest = () => {
       `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
       {
         params: {
-          userId: user.id,
+          userId:user.id,
         },
       }
     );
     if (data.data) {
       setUserInfo(data.data);
     }
-  };
+    }
   };
   const updateUser = async (count: number, boost: number, user: User) => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
@@ -157,8 +155,14 @@ const Quest = () => {
       });
     }
   };
+console.log(userInfo,"userIndo");
 
-  const img = imgs.find((item) => item.rank === userInfo?.rank);
+const img = userInfo &&
+  imgs.find(item => 
+    userInfo.balance >= item.less && userInfo.balance <= item.greater
+  );
+    console.log(img,"IMG");
+    
   return (
     <>
       {userInfo ? (

@@ -26,7 +26,7 @@ const array = [
   },
   {
     name: "Day3",
-    value: 2500,
+    value: 1500,
     day: 3,
   },
   {
@@ -36,17 +36,17 @@ const array = [
   },
   {
     name: "Day5",
-    value: 15000,
+    value: 10000,
     day: 5,
   },
   {
     name: "Day6",
-    value: 25000,
+    value: 100000,
     day: 6,
   },
   {
     name: "Day7",
-    value: 50000,
+    value: 500000,
     day: 7,
   },
 ];
