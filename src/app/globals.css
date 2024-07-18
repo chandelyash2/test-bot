@@ -5,6 +5,31 @@
 * {
   color: white;
   /* background: #1C2327 */
+}
+/* styles.css */
 
+.animation-text {
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: moveUp 1s ease-out forwards;
+  font-size: 42px;
+  color: rgb(218, 207, 207);
+  font: 700;
 }
 
+@keyframes moveUp {
+  0% {
+    bottom: 0;
+    opacity: 1;
+  }
+  50% {
+    bottom: 200px;
+    opacity: 0.9;
+  }
+  100% {
+    bottom: 400px; /* Adjust this value as needed */
+    opacity: 0.8;
+  }
+}

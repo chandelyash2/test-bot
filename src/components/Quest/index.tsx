@@ -19,26 +19,27 @@ import { imgs, User } from "@/lib/quest/type";
 const Quest = () => {
   const { user } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
+  const [clicks, setClicks] = useState(0);
 
   useEffect(() => {
     if (user) {
-      fetchUserInfo();
+    fetchUserInfo();
     }
   }, [user]);
 
   const fetchUserInfo = async () => {
     if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
-      if (data.data) {
-        setUserInfo(data.data);
+    const data = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+      {
+        params: {
+          userId: user.id,
+        },
       }
+    );
+    if (data.data) {
+      setUserInfo(data.data);
+    }
     }
   };
   const updateUser = async (count: number, boost: number, user: User) => {
@@ -78,9 +79,10 @@ const Quest = () => {
   }, [userInfo]);
 
   const handleQuestClick = async () => {
+    setClicks((prevClicks) => prevClicks + 1);
     if (userInfo) {
-      const newBalance = userInfo.balance + (userInfo.tap );
-      const newBoostUsed = userInfo.boost.used - (userInfo.tap);
+      const newBalance = userInfo.balance + userInfo.tap;
+      const newBoostUsed = userInfo.boost.used - userInfo.tap;
       debouncedUpdateUser(newBalance, newBoostUsed, userInfo);
       setUserInfo({
         ...userInfo,
@@ -91,6 +93,9 @@ const Quest = () => {
         },
       });
     }
+    setTimeout(() => {
+      setClicks((prevClicks) => prevClicks - 1);
+    }, 600);
   };
 
   const img =
@@ -155,23 +160,28 @@ const Quest = () => {
                 height={100}
                 alt="quest"
                 className="absolute h-5 w-full"
-                onClick={handleQuestClick}
               />
-              <Image
-                src={img?.img || ""}
-                width={200}
-                height={200}
-                alt="quest"
-                className="h-[450px] w-full objecr-cover"
-                onClick={handleQuestClick}
-              />
+              <div className="relative">
+                <Image
+                  src={img?.img || ""}
+                  width={200}
+                  height={200}
+                  alt="quest"
+                  className="h-[450px] w-full object-cover"
+                  onClick={handleQuestClick}
+                />
+                {Array.from({ length: clicks }, (_, index) => (
+                  <div key={index} className="animation-text">
+                    +{userInfo.tap}
+                  </div>
+                ))}
+              </div>
               <Image
                 src="/img/Quest/Vector 21.png"
                 width={200}
                 height={100}
                 alt="quest"
                 className="absolute bottom-10 h-[100px] w-full"
-                onClick={handleQuestClick}
               />
               <Container>
                 <div className="relative  flex justify-between font-manrope font-medium text-xs items-center">
