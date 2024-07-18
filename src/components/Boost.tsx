@@ -17,23 +17,23 @@ export const Boost = () => {
 
   useEffect(() => {
     if (user) {
-    fetchUserInfo();
+      fetchUserInfo();
     }
   }, [user]);
 
   const fetchUserInfo = async () => {
     if (user) {
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-      {
-        params: {
-          userId: user.id,
-        },
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setUserInfo(data.data);
       }
-    );
-    if (data.data) {
-      setUserInfo(data.data);
-    }
     }
   };
   const findPrice = () => {
@@ -77,6 +77,7 @@ export const Boost = () => {
         {
           _id: userInfo._id,
           price: findEnergy()?.price,
+          energy: findEnergy()?.energy,
         }
       );
       if (response.data.message) {
