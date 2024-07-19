@@ -5,12 +5,13 @@ import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useTelegram } from "@/lib/TelegramProvider";
 import toast, { Toaster } from "react-hot-toast";
-import Gif from '../../../public/img/Quest/Animation - 1721320428710.json'
+import Gif from "../../../public/img/Quest/Animation - 1721320428710.json";
 import Image from "next/image";
 interface EarnMoreProp {
   setEarnmore: (value: boolean) => void;
   userStreak: Streak;
   fetchStreakInfo: () => void;
+  setShowIframe: (value: boolean) => void;
 }
 
 const array = [
@@ -61,6 +62,7 @@ export const EarnMore = ({
   setEarnmore,
   userStreak,
   fetchStreakInfo,
+  setShowIframe,
 }: EarnMoreProp) => {
   const { user } = useTelegram();
   const [userData, setUserData] = useState<any>();
@@ -95,8 +97,6 @@ export const EarnMore = ({
     }
   };
   const updateStreak = async (value: number) => {
-    console.log(userData.balance + value);
-
     if (userStreak) {
       const output = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/updateStreak`,
@@ -107,6 +107,11 @@ export const EarnMore = ({
         }
       );
       if (output.data) {
+        setShowIframe(true);
+
+        setTimeout(() => {
+          setShowIframe(false);
+        }, 2000);
         toast.success("Reward Collected");
         await updateUser(userData.balance + value);
         fetchStreakInfo();
@@ -129,8 +134,8 @@ export const EarnMore = ({
     userStreak?.day == 0 ? true : currentDatetime.isAfter(expirationDatetime);
 
   return (
-    <div className="fixed h-screen w-full top-0 left-0 bg-black bg-opacity-25 backdrop-blur-sm z-[999] overflow-hidden">
-      <div className="fixed bottom-0 z-[999] min-h-[300px] w-full left-0 bg-[#1C2327] flex flex-col items-center border-t border-[#54C7EE] rounded-t p-2 gap-6 overflow-hidden">
+    <div className="fixed h-screen w-full top-0 left-0 bg-black bg-opacity-25 backdrop-blur-sm z-[8] overflow-hidden">
+      <div className="fixed bottom-0 z-[8] min-h-[300px] w-full left-0 bg-[#1C2327] flex flex-col items-center border-t border-[#54C7EE] rounded-t p-2 gap-6 overflow-hidden">
         <span
           className="absolute top-4 right-4 cursor-pointer"
           onClick={() => setEarnmore(false)}
@@ -159,7 +164,7 @@ export const EarnMore = ({
           {array.map((item) => (
             <Button
               className={twMerge(
-                "font-istok w-20 flex flex-col gap-1 h-20 items-center text-xs rounded",
+                "font-istok w-20 flex flex-col gap-1 h-20 items-center text-xs rounded z-8",
                 item.day <= userStreak.day
                   ? "bg-[#334047] border border-[#00ACE6]"
                   : "bg-[#242D32]",

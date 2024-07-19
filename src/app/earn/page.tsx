@@ -14,6 +14,8 @@ const EarnPage = () => {
   const { user } = useTelegram();
   const [userData, setUserData] = useState<User>();
   const [earnMore, setEarnmore] = useState(false);
+  const [showIframe, setShowIframe] = useState(false);
+
   const [userStreak, setUserStreak] = useState<Streak>({
     _id: "",
     day: 0,
@@ -46,7 +48,6 @@ const EarnPage = () => {
   }, [userData]);
 
   const fetchStreakInfo = async () => {
-
     if (userData) {
       const user = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/userStreak`,
@@ -512,11 +513,22 @@ const EarnPage = () => {
             </div>
           </div>
         </div>
+        {showIframe && (
+          <iframe
+            src="https://giphy.com/embed/MCuCYXkXaSHIhA0t4L"
+            width="300"
+            height="300"
+            frameBorder="0"
+            className="giphy-embed absolute top-[40%] z-10 left-10"
+            allowFullScreen
+          ></iframe>
+        )}
         {earnMore && (
           <EarnMore
             setEarnmore={setEarnmore}
             userStreak={userStreak}
             fetchStreakInfo={fetchStreakInfo}
+            setShowIframe={setShowIframe}
           />
         )}
       </Container>
