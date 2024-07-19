@@ -243,7 +243,7 @@ const FriendsPage = () => {
                 </Button>
               </div>
               <Link
-                href={`https://t.me/share/url?url={https://t.me/@xda_1_bot?start=${userInfo.userId}}`}
+                href={`https://t.me/share/url?url=https://t.me/@xda_1_bot?start=${userInfo.userId}`}
                 className="text-white bg-[#00ACE6] w-full rounded mt-[10%]"
                 // onClick={() => {
 
