@@ -109,12 +109,12 @@ export const EarnMore = ({
       if (output.data) {
         setShowIframe(true);
 
-        setTimeout(() => {
-          setShowIframe(false);
-        }, 2000);
         toast.success("Reward Collected");
         await updateUser(userData.balance + value);
         fetchStreakInfo();
+        setTimeout(() => {
+          setShowIframe(false);
+        }, 2000);
       }
     }
   };
