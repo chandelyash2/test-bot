@@ -48,6 +48,7 @@ export const imgs = [
     icon: Sigma,
     less: 0,
     greater: 4999999,
+    rank:1
   },
   {
     img: "/img/Quest/Omega.png",
@@ -56,6 +57,7 @@ export const imgs = [
     color: "#5E4B1A",
     name: "Omega",
     icon: Omega,
+    rank:2
   },
   {
     img: "/img/Quest/Mid.png",
@@ -64,6 +66,7 @@ export const imgs = [
     color: "#FF8717",
     name: "Mid Ranking",
     icon: MidRank,
+    rank:3
   },
   {
     img: "/img/Quest/Beta.png",
@@ -72,6 +75,7 @@ export const imgs = [
     color: "#3F5A63",
     name: "Beta",
     icon: Beta,
+    rank:4
   },
 
   {
@@ -81,6 +85,7 @@ export const imgs = [
     color: "#7137ED",
     name: "Alpha",
     icon: Luna,
+    rank:5
   },
 ];
 

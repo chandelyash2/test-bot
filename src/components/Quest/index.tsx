@@ -135,7 +135,7 @@ const Quest = () => {
             <Container>
               <div className="flex justify-between font-manrope font-medium text-xs items-center">
                 <span className="flex items-center gap-4">
-                  <h4>Rank {userInfo?.rank}/5</h4>
+                  <h4>Rank {img?.rank}/5</h4>
                   <Image src={Question} alt="question" />
                 </span>
                 <span className="flex items-center gap-2">
@@ -145,7 +145,7 @@ const Quest = () => {
               </div>
               <Progress
                 aria-label="Loading..."
-                value={userInfo?.rank * 20}
+                value={img && img?.rank * 20}
                 className={`max-w-md mt-4`}
                 color="secondary"
               />

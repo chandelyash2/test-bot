@@ -168,7 +168,7 @@ const EarnPage = () => {
           </span>
           <div className="flex flex-col items-center gap-4 relative bottom-[18%] w-full">
             <div
-              className="w-full flex flex-col gap-1"
+              className="w-full flex flex-col gap-1 cursor-pointer"
               onClick={() => setEarnmore(true)}
             >
               <h4 className="font-semibold font-roboto">Daily Rewards</h4>
