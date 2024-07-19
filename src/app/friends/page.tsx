@@ -242,18 +242,16 @@ const FriendsPage = () => {
                   </svg>
                 </Button>
               </div>
-              <Link
-                href={`https://t.me/share/url?url=https://t.me/@xda_1_bot?start=${userInfo.userId}`}
-                className="text-white bg-[#00ACE6] w-full rounded mt-[10%]"
-                // onClick={() => {
-
-                //   if (webApp) {
-                //     webApp.close();
-                //   }
-                // }}
-              >
-                Invite a Friend
-              </Link>
+              {userInfo.userId && (
+                <Button>
+                  <Link
+                    href={`https://t.me/share/url?url=https://t.me/@xda_1_bot?start=${userInfo.userId}`}
+                    className="text-white bg-[#00ACE6] w-full rounded mt-[10%]"
+                  >
+                    Invite a Friend
+                  </Link>
+                </Button>
+              )}
             </div>
           </Container>
           <Toaster />
