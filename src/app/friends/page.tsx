@@ -11,30 +11,30 @@ import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const FriendsPage = () => {
-  const { user } = useTelegram();
+  const { user, webApp } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
   const [friends, setFriends] = useState<User[]>();
 
   useEffect(() => {
     if (user) {
-    fetchUserInfo();
-    fetchFriends();
+      fetchUserInfo();
+      fetchFriends();
     }
   }, [user]);
 
   const fetchUserInfo = async () => {
     if (user) {
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-      {
-        params: {
-          userId: user.id,
-        },
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setUserInfo(data.data);
       }
-    );
-    if (data.data) {
-      setUserInfo(data.data);
-    }
     }
   };
   const fetchFriends = async () => {
@@ -243,13 +243,10 @@ const FriendsPage = () => {
               </div>
               <Button
                 className="text-white bg-[#00ACE6] w-full rounded mt-[10%]"
-                onClick={async () => {
-                  await axios.post(
-                    `${process.env.NEXT_PUBLIC_API_URL}/inviteFriend`,
-                    {
-                      userId: userInfo.userId,
-                    }
-                  );
+                onClick={() => {
+                  if (webApp) {
+                    webApp.close();
+                  }
                 }}
               >
                 Invite a Friend
