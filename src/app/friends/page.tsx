@@ -17,24 +17,24 @@ const FriendsPage = () => {
 
   useEffect(() => {
     if (user) {
-      fetchUserInfo();
-      fetchFriends();
+    fetchUserInfo();
+    fetchFriends();
     }
   }, [user]);
 
   const fetchUserInfo = async () => {
     if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
-      if (data.data) {
-        setUserInfo(data.data);
+    const data = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+      {
+        params: {
+          userId: user.id,
+        },
       }
+    );
+    if (data.data) {
+      setUserInfo(data.data);
+    }
     }
   };
   const fetchFriends = async () => {
@@ -53,7 +53,6 @@ const FriendsPage = () => {
     }
   };
   const handleClick = async () => {
-    console.log("Button clicked");
     if (userInfo && userInfo.userId) {
       const referralLink = `https://t.me/@xda_1_bot?start=${userInfo.userId}`;
       console.log("Referral link:", referralLink);
@@ -242,7 +241,17 @@ const FriendsPage = () => {
                   </svg>
                 </Button>
               </div>
-              <Button className="text-white bg-[#00ACE6] w-full rounded mt-[10%]">
+              <Button
+                className="text-white bg-[#00ACE6] w-full rounded mt-[10%]"
+                onClick={async () => {
+                  await axios.post(
+                    `${process.env.NEXT_PUBLIC_API_URL}/inviteFriend`,
+                    {
+                      userId: userInfo.userId,
+                    }
+                  );
+                }}
+              >
                 Invite a Friend
               </Button>
             </div>
