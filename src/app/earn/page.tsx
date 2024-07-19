@@ -517,7 +517,7 @@ const EarnPage = () => {
           <iframe
             src="https://giphy.com/embed/MCuCYXkXaSHIhA0t4L"
             frameBorder="0"
-            className="giphy-embed absolute top-[70%] z-10 left-10 w-[300px] h-[300px] md:left:[20%] md:w-[400px] md:h-[400px]"
+            className="giphy-embed absolute bottom-[20%] z-10 left-10 w-[300px] h-[300px] md:left:[20%] md:w-[400px] md:h-[400px]"
             allowFullScreen
           ></iframe>
         )}
