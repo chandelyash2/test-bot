@@ -243,10 +243,9 @@ const FriendsPage = () => {
                 </Button>
               </div>
               {userInfo.userId && (
-                <Button>
+                <Button className="text-white bg-[#00ACE6] w-full rounded mt-[10%]">
                   <Link
                     href={`https://t.me/share/url?url=https://t.me/@xda_1_bot?start=${userInfo.userId}`}
-                    className="text-white bg-[#00ACE6] w-full rounded mt-[10%]"
                   >
                     Invite a Friend
                   </Link>
