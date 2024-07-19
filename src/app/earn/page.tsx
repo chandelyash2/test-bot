@@ -206,7 +206,7 @@ const EarnPage = () => {
               <h4 className="font-semibold font-roboto">Your tasks</h4>
               <Link
                 target="_blank"
-                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+                className="bg-[#242D32] rounded flex p-2 gap-8 items-center"
                 href="https://x.com/nimbitoken"
                 onClick={() =>
                   !userData?.social.x &&
@@ -215,8 +215,8 @@ const EarnPage = () => {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="41"
-                  height="41"
+                  width="30"
+                  height="30"
                   viewBox="0 0 30 29"
                   fill="none"
                 >
@@ -225,7 +225,7 @@ const EarnPage = () => {
                     fill="#EBECED"
                   />
                 </svg>
-                <div>
+                <div className="w-52 text-left">
                   <h4 className="text-left">Follow our account on X</h4>
                   <p className="flex items-center gap-1 text-xs font-manrope">
                     <svg
@@ -240,10 +240,10 @@ const EarnPage = () => {
                     +25 000
                   </p>
                 </div>
-                {userData?.social.x ? (
-                  <Image src={Tick} alt="tg" />
-                ) : (
-                  <span>
+                <span>
+                  {userData?.social.x ? (
+                    <Image src={Tick} alt="tg" />
+                  ) : (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -259,13 +259,13 @@ const EarnPage = () => {
                         stroke-linejoin="round"
                       />
                     </svg>
-                  </span>
-                )}
+                  )}
+                </span>
               </Link>
               <Link
                 target="_blank"
                 href="https://discord.com/invite/NrVU2G82CR"
-                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+                className="bg-[#242D32] rounded flex p-2 gap-8 items-center"
                 onClick={() =>
                   !userData?.social.discord &&
                   handleSocial({ ...userData?.social, discord: true })
@@ -273,8 +273,8 @@ const EarnPage = () => {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="41"
-                  height="41"
+                  width="30"
+                  height="30"
                   viewBox="0 0 50 51"
                   fill="none"
                 >
@@ -283,7 +283,7 @@ const EarnPage = () => {
                     fill="#5865F2"
                   />
                 </svg>
-                <div>
+                <div className="w-52 text-left">
                   <h4>Follow Us on Discord</h4>
                   <p className="flex items-center gap-1 text-xs font-manrope">
                     <svg
@@ -327,15 +327,15 @@ const EarnPage = () => {
                   handleSocial({ ...userData?.social, yt: true })
                 }
                 href="https://www.youtube.com/@nimbitoken"
-                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+                className="bg-[#242D32] rounded flex p-2 gap-8 items-center"
               >
                 <Image
                   src="/youtube.png"
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                   alt="youtube"
                 />
-                <div>
+                <div className="w-52 text-left">
                   <h4>Follow Us on Youtube</h4>
                   <p className="flex items-center gap-1 text-xs font-manrope">
                     <svg
@@ -375,7 +375,7 @@ const EarnPage = () => {
               <Link
                 target="_blank"
                 href="https://t.me/nimbitokenvip"
-                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+                className="bg-[#242D32] rounded flex p-2 gap-8 items-center"
                 onClick={() =>
                   !userData?.social.tg &&
                   handleSocial({ ...userData?.social, tg: true })
@@ -383,11 +383,11 @@ const EarnPage = () => {
               >
                 <Image
                   src="/telegram.png"
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                   alt="telegram"
                 />
-                <div>
+                <div className="w-52 text-left">
                   <h4>Follow Us on Telegram</h4>
                   <p className="flex items-center gap-1 text-xs font-manrope">
                     <svg
@@ -427,7 +427,7 @@ const EarnPage = () => {
               <Link
                 target="_blank"
                 href="https://www.instagram.com/nimbiwolfpack/"
-                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+                className="bg-[#242D32] rounded flex p-2 gap-8 items-center"
                 onClick={() =>
                   !userData?.social.insta &&
                   handleSocial({ ...userData?.social, insta: true })
@@ -439,7 +439,7 @@ const EarnPage = () => {
                   height={30}
                   alt="insta"
                 />
-                <div>
+                <div className="w-52 text-left">
                   <h4>Follow Us on Instagram</h4>
                   <p className="flex items-center gap-1 text-xs font-manrope">
                     <svg
@@ -479,14 +479,14 @@ const EarnPage = () => {
               <Link
                 target="_blank"
                 href="https://www.reddit.com/user/nimbitoken/"
-                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+                className="bg-[#242D32] rounded flex p-2 gap-8 items-center"
                 onClick={() =>
                   !userData?.social.red &&
                   handleSocial({ ...userData?.social, red: true })
                 }
               >
-                <Image src="/media.png" width={40} height={40} alt="insta" />
-                <div>
+                <Image src="/media.png" width={30} height={30} alt="insta" />
+                <div className="w-52 text-left">
                   <h4>Follow Us on Redit</h4>
                   <p className="flex items-center gap-1 text-xs font-manrope">
                     <svg
