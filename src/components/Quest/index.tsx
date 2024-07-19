@@ -16,16 +16,20 @@ import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "../Flash";
 import { imgs, User } from "@/lib/quest/type";
 import Wolf from "../../../public/img/Quest/Wolf.gif";
+interface Click {
+  x: number;
+  y: number;
+}
 const Quest = () => {
   const { user } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
-  const [clicks, setClicks] = useState(0);
+  const [clicks, setClicks] = useState<Click[]>([]);
 
   useEffect(() => {
     if (user) {
-    fetchUserInfo();
+      fetchUserInfo();
     }
-  }, [user]);
+  }, []);
 
   const fetchUserInfo = async () => {
     if (user) {
@@ -78,9 +82,13 @@ const Quest = () => {
     }
   }, [userInfo]);
 
-  const handleQuestClick = async () => {
-    setClicks((prevClicks) => prevClicks + 1);
-    if (userInfo) {
+  const handleQuestClick = async (e: any) => {
+    const rect = e.target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = rect.bottom - e.clientY;
+
+    if (userInfo && userInfo.boost.used > 0) {
+      setClicks((prevClicks) => [...prevClicks, { x, y }]);
       const newBalance = userInfo.balance + userInfo.tap;
       const newBoostUsed = userInfo.boost.used - userInfo.tap;
       debouncedUpdateUser(newBalance, newBoostUsed, userInfo);
@@ -92,10 +100,10 @@ const Quest = () => {
           used: newBoostUsed,
         },
       });
+      setTimeout(() => {
+        setClicks((prevClicks) => prevClicks.slice(1));
+      }, 600);
     }
-    setTimeout(() => {
-      setClicks((prevClicks) => prevClicks - 1);
-    }, 600);
   };
 
   const img =
@@ -161,17 +169,24 @@ const Quest = () => {
                 alt="quest"
                 className="absolute h-5 w-full"
               />
-              <div className="relative">
+              <div className="relative" onClick={handleQuestClick}>
                 <Image
                   src={img?.img || ""}
                   width={200}
                   height={200}
                   alt="quest"
                   className="h-[450px] w-full object-cover"
-                  onClick={handleQuestClick}
                 />
-                {Array.from({ length: clicks }, (_, index) => (
-                  <div key={index} className="animation-text ">
+                {clicks.map((click, index) => (
+                  <div
+                    key={index}
+                    className="absolute animation-text"
+                    style={{
+                      left: `${click.x}px`,
+                      bottom: `${click.y}px`,
+                      transform: "translate(-50%, 0)", // Ensure proper centering horizontally
+                    }}
+                  >
                     <Image src={Wolf} width={50} height={50} alt="wolf" />+
                     {userInfo.tap}
                   </div>
