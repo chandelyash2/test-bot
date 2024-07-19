@@ -9,6 +9,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Tick from "../../../public/svg/Tick.svg";
 import { User } from "@/lib/quest/type";
+import Link from "next/link";
 const EarnPage = () => {
   const { user } = useTelegram();
   const [userData, setUserData] = useState<User>();
@@ -45,7 +46,6 @@ const EarnPage = () => {
   }, [userData]);
 
   const fetchStreakInfo = async () => {
-    console.log(userData, "UserData");
 
     if (userData) {
       const user = await axios.get(
@@ -70,6 +70,15 @@ const EarnPage = () => {
   const disabled =
     userStreak?.day == 0 ? true : currentDatetime.isAfter(expirationDatetime);
 
+  const handleSocial = async (social: any) => {
+    if (userData) {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateSocial`, {
+        _id: userData._id,
+        social: social,
+      });
+      fetchUserInfo();
+    }
+  };
   return (
     <Layout>
       <Container>
@@ -195,7 +204,12 @@ const EarnPage = () => {
             </div>
             <div className="w-full flex flex-col gap-1">
               <h4 className="font-semibold font-roboto">Your tasks</h4>
-              <div className="bg-[#242D32] rounded flex p-2 justify-between items-center">
+              <Link
+                target="_blank"
+                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+                href="https://x.com/nimbitoken"
+                onClick={() => handleSocial({ ...userData?.social, x: true })}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="41"
@@ -223,25 +237,36 @@ const EarnPage = () => {
                     +25 000
                   </p>
                 </div>
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="21"
-                    viewBox="0 0 20 21"
-                    fill="none"
-                  >
-                    <path
-                      d="M4 10.2311L16 10.2311M16 10.2311L11.7574 6.23108M16 10.2311L11.7574 14.2311"
-                      stroke="white"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </span>
-              </div>
-              <div className="bg-[#242D32] rounded flex p-2 justify-between items-center">
+                {userData?.social.x ? (
+                  <Image src={Tick} alt="tg" />
+                ) : (
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="21"
+                      viewBox="0 0 20 21"
+                      fill="none"
+                    >
+                      <path
+                        d="M4 10.2311L16 10.2311M16 10.2311L11.7574 6.23108M16 10.2311L11.7574 14.2311"
+                        stroke="white"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                )}
+              </Link>
+              <Link
+                target="_blank"
+                href="https://discord.com/invite/NrVU2G82CR"
+                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+                onClick={() =>
+                  handleSocial({ ...userData?.social, discord: true })
+                }
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="41"
@@ -269,24 +294,221 @@ const EarnPage = () => {
                     +25 000
                   </p>
                 </div>
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="21"
-                    viewBox="0 0 20 21"
-                    fill="none"
-                  >
-                    <path
-                      d="M4 10.2311L16 10.2311M16 10.2311L11.7574 6.23108M16 10.2311L11.7574 14.2311"
-                      stroke="white"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </span>
-              </div>
+                {userData?.social.discord ? (
+                  <Image src={Tick} alt="tg" />
+                ) : (
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="21"
+                      viewBox="0 0 20 21"
+                      fill="none"
+                    >
+                      <path
+                        d="M4 10.2311L16 10.2311M16 10.2311L11.7574 6.23108M16 10.2311L11.7574 14.2311"
+                        stroke="white"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                )}
+              </Link>
+              <Link
+                target="_blank"
+                onClick={() => handleSocial({ ...userData?.social, yt: true })}
+                href="https://www.youtube.com/@nimbitoken"
+                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+              >
+                <Image
+                  src="/youtube.png"
+                  width={40}
+                  height={40}
+                  alt="youtube"
+                />
+                <div>
+                  <h4>Follow Us on Youtube</h4>
+                  <p className="flex items-center gap-1 text-xs font-manrope">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="8"
+                      height="9"
+                      viewBox="0 0 8 9"
+                      fill="none"
+                    >
+                      <circle cx="4" cy="4.23108" r="4" fill="#00ACE6" />
+                    </svg>
+                    +25 000
+                  </p>
+                </div>
+                {userData?.social.yt ? (
+                  <Image src={Tick} alt="tg" />
+                ) : (
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="21"
+                      viewBox="0 0 20 21"
+                      fill="none"
+                    >
+                      <path
+                        d="M4 10.2311L16 10.2311M16 10.2311L11.7574 6.23108M16 10.2311L11.7574 14.2311"
+                        stroke="white"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                )}
+              </Link>
+              <Link
+                target="_blank"
+                href="https://t.me/nimbitokenvip"
+                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+                onClick={() => handleSocial({ ...userData?.social, tg: true })}
+              >
+                <Image
+                  src="/telegram.png"
+                  width={40}
+                  height={40}
+                  alt="telegram"
+                />
+                <div>
+                  <h4>Follow Us on Telegram</h4>
+                  <p className="flex items-center gap-1 text-xs font-manrope">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="8"
+                      height="9"
+                      viewBox="0 0 8 9"
+                      fill="none"
+                    >
+                      <circle cx="4" cy="4.23108" r="4" fill="#00ACE6" />
+                    </svg>
+                    +25 000
+                  </p>
+                </div>
+                {userData?.social.tg ? (
+                  <Image src={Tick} alt="tg" />
+                ) : (
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="21"
+                      viewBox="0 0 20 21"
+                      fill="none"
+                    >
+                      <path
+                        d="M4 10.2311L16 10.2311M16 10.2311L11.7574 6.23108M16 10.2311L11.7574 14.2311"
+                        stroke="white"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                )}
+              </Link>
+              <Link
+                target="_blank"
+                href="https://www.instagram.com/nimbiwolfpack/"
+                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+                onClick={() =>
+                  handleSocial({ ...userData?.social, insta: true })
+                }
+              >
+                <Image
+                  src="/instagram.png"
+                  width={30}
+                  height={30}
+                  alt="insta"
+                />
+                <div>
+                  <h4>Follow Us on Instagram</h4>
+                  <p className="flex items-center gap-1 text-xs font-manrope">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="8"
+                      height="9"
+                      viewBox="0 0 8 9"
+                      fill="none"
+                    >
+                      <circle cx="4" cy="4.23108" r="4" fill="#00ACE6" />
+                    </svg>
+                    +25 000
+                  </p>
+                </div>
+                {userData?.social.insta ? (
+                  <Image src={Tick} alt="tg" />
+                ) : (
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="21"
+                      viewBox="0 0 20 21"
+                      fill="none"
+                    >
+                      <path
+                        d="M4 10.2311L16 10.2311M16 10.2311L11.7574 6.23108M16 10.2311L11.7574 14.2311"
+                        stroke="white"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                )}
+              </Link>
+              <Link
+                target="_blank"
+                href="https://www.reddit.com/user/nimbitoken/"
+                className="bg-[#242D32] rounded flex p-2 justify-between items-center"
+                onClick={() => handleSocial({ ...userData?.social, red: true })}
+              >
+                <Image src="/media.png" width={40} height={40} alt="insta" />
+                <div>
+                  <h4>Follow Us on Redit</h4>
+                  <p className="flex items-center gap-1 text-xs font-manrope">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="8"
+                      height="9"
+                      viewBox="0 0 8 9"
+                      fill="none"
+                    >
+                      <circle cx="4" cy="4.23108" r="4" fill="#00ACE6" />
+                    </svg>
+                    +25 000
+                  </p>
+                </div>
+                {userData?.social.red ? (
+                  <Image src={Tick} alt="tg" />
+                ) : (
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="21"
+                      viewBox="0 0 20 21"
+                      fill="none"
+                    >
+                      <path
+                        d="M4 10.2311L16 10.2311M16 10.2311L11.7574 6.23108M16 10.2311L11.7574 14.2311"
+                        stroke="white"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                )}
+              </Link>
             </div>
           </div>
         </div>

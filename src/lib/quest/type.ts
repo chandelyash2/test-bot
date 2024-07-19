@@ -18,6 +18,26 @@ export interface User {
   };
   tap: number;
   mine: number;
+  social: {
+    x: {
+      type: boolean;
+    };
+    tg: {
+      type: boolean;
+    };
+    yt: {
+      type: boolean;
+    };
+    discord: {
+      type: boolean;
+    };
+    insta: {
+      type: boolean;
+    };
+    red: {
+      type: boolean;
+    };
+  };
 }
 
 export const imgs = [

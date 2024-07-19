@@ -15,7 +15,7 @@ import Light from "../../../public/svg/Light.svg";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "../Flash";
 import { imgs, User } from "@/lib/quest/type";
-
+import Wolf from "../../../public/img/Quest/Wolf.gif";
 const Quest = () => {
   const { user } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
@@ -29,17 +29,17 @@ const Quest = () => {
 
   const fetchUserInfo = async () => {
     if (user) {
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-      {
-        params: {
-          userId: user.id,
-        },
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setUserInfo(data.data);
       }
-    );
-    if (data.data) {
-      setUserInfo(data.data);
-    }
     }
   };
   const updateUser = async (count: number, boost: number, user: User) => {
@@ -171,8 +171,9 @@ const Quest = () => {
                   onClick={handleQuestClick}
                 />
                 {Array.from({ length: clicks }, (_, index) => (
-                  <div key={index} className="animation-text">
-                    +{userInfo.tap}
+                  <div key={index} className="animation-text ">
+                    <Image src={Wolf} width={50} height={50} alt="wolf" />+
+                    {userInfo.tap}
                   </div>
                 ))}
               </div>

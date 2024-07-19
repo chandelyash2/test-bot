@@ -17,6 +17,8 @@
   font-size: 42px;
   color: rgb(218, 207, 207);
   font: 700;
+  display: flex;
+  flex-direction: row;
 }
 
 @keyframes moveUp {

@@ -5,7 +5,8 @@ import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useTelegram } from "@/lib/TelegramProvider";
 import toast, { Toaster } from "react-hot-toast";
-
+import Gif from '../../../public/img/Quest/Animation - 1721320428710.json'
+import Image from "next/image";
 interface EarnMoreProp {
   setEarnmore: (value: boolean) => void;
   userStreak: Streak;

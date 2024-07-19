@@ -49,7 +49,7 @@ const array = [
 
 export default function Home() {
   const [active, setActive] = useState(0);
-  const { user,webApp } = useTelegram();
+  const { user, webApp } = useTelegram();
 
   useEffect(() => {
     if (user) {
@@ -79,9 +79,6 @@ export default function Home() {
     <>
       {user ? (
         <Layout>
-          <p>
-            {user?.first_name} {user?.last_name}
-          </p>
           <div className="absolute flex flex-col items-center h-full top-0">
             <Image
               src={array[active].img}
