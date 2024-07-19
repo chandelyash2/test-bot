@@ -61,7 +61,6 @@ export const EarnMore = ({
   setEarnmore,
   userStreak,
   fetchStreakInfo,
-
 }: EarnMoreProp) => {
   const { user } = useTelegram();
   const [userData, setUserData] = useState<any>();
@@ -78,22 +77,22 @@ export const EarnMore = ({
   }, []);
   useEffect(() => {
     if (user) {
-      fetchUserInfo();
+    fetchUserInfo();
     }
   }, [user]);
   const fetchUserInfo = async () => {
     if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
-      if (data.data) {
-        setUserData(data.data);
+    const data = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+      {
+        params: {
+          userId: user.id,
+        },
       }
+    );
+    if (data.data) {
+      setUserData(data.data);
+    }
     }
   };
   const updateStreak = async (value: number) => {
@@ -161,14 +160,14 @@ export const EarnMore = ({
           Play every day and receive Daily Rewards
         </p>
         <div className="grid grid-cols-3 gap-4">
-        {showIframe && (
-          <iframe
-            src="https://giphy.com/embed/MCuCYXkXaSHIhA0t4L"
-            frameBorder="0"
-            className="giphy-embed absolute top-0 z-10 left-10 w-[300px] h-[300px]"
-            allowFullScreen
-          ></iframe>
-        )}
+          {showIframe && (
+            <iframe
+              src="https://giphy.com/embed/MCuCYXkXaSHIhA0t4L"
+              frameBorder="0"
+              className="giphy-embed absolute top-0 z-10 left-10 w-[300px] h-[300px]"
+              allowFullScreen
+            ></iframe>
+          )}
           {array.map((item) => (
             <Button
               className={twMerge(
@@ -181,7 +180,7 @@ export const EarnMore = ({
                   "border border-yellow-400"
               )}
               key={item.name}
-              isDisabled={item.day > userStreak.upcoming || !disabled}
+              isDisabled={item.day !== userStreak.upcoming || !disabled}
               onClick={() => updateStreak(item.value)}
             >
               <h4>{item.name}</h4>
