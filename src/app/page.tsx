@@ -11,13 +11,13 @@ import { useEffect, useState } from "react";
 const array = [
   {
     id: 0,
-    img: "/img/Home/Sigma.png",
+    img: "/img/Home/Omega.png",
     name: "Sigma",
     value: "250k",
   },
   {
     id: 1,
-    img: "/img/Home/Omega.png",
+    img: "/img/Home/Sigma.png",
     name: "Omega",
     value: "250k",
   },
