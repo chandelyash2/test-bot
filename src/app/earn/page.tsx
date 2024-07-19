@@ -209,7 +209,7 @@ const EarnPage = () => {
                 className="bg-[#242D32] rounded flex p-2 justify-between items-center"
                 href="https://x.com/nimbitoken"
                 onClick={() =>
-                  userData?.social.x &&
+                  !userData?.social.x &&
                   handleSocial({ ...userData?.social, x: true })
                 }
               >
@@ -267,7 +267,7 @@ const EarnPage = () => {
                 href="https://discord.com/invite/NrVU2G82CR"
                 className="bg-[#242D32] rounded flex p-2 justify-between items-center"
                 onClick={() =>
-                  userData?.social.discord &&
+                  !userData?.social.discord &&
                   handleSocial({ ...userData?.social, discord: true })
                 }
               >
@@ -323,7 +323,7 @@ const EarnPage = () => {
               <Link
                 target="_blank"
                 onClick={() =>
-                  userData?.social.yt &&
+                  !userData?.social.yt &&
                   handleSocial({ ...userData?.social, yt: true })
                 }
                 href="https://www.youtube.com/@nimbitoken"
@@ -377,7 +377,7 @@ const EarnPage = () => {
                 href="https://t.me/nimbitokenvip"
                 className="bg-[#242D32] rounded flex p-2 justify-between items-center"
                 onClick={() =>
-                  userData?.social.tg &&
+                  !userData?.social.tg &&
                   handleSocial({ ...userData?.social, tg: true })
                 }
               >
@@ -429,7 +429,7 @@ const EarnPage = () => {
                 href="https://www.instagram.com/nimbiwolfpack/"
                 className="bg-[#242D32] rounded flex p-2 justify-between items-center"
                 onClick={() =>
-                  userData?.social.insta &&
+                  !userData?.social.insta &&
                   handleSocial({ ...userData?.social, insta: true })
                 }
               >
@@ -481,7 +481,7 @@ const EarnPage = () => {
                 href="https://www.reddit.com/user/nimbitoken/"
                 className="bg-[#242D32] rounded flex p-2 justify-between items-center"
                 onClick={() =>
-                  userData?.social.red &&
+                  !userData?.social.red &&
                   handleSocial({ ...userData?.social, red: true })
                 }
               >
