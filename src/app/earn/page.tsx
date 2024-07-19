@@ -14,7 +14,6 @@ const EarnPage = () => {
   const { user } = useTelegram();
   const [userData, setUserData] = useState<User>();
   const [earnMore, setEarnmore] = useState(false);
-  const [showIframe, setShowIframe] = useState(false);
 
   const [userStreak, setUserStreak] = useState<Streak>({
     _id: "",
@@ -513,20 +512,12 @@ const EarnPage = () => {
             </div>
           </div>
         </div>
-        {showIframe && (
-          <iframe
-            src="https://giphy.com/embed/MCuCYXkXaSHIhA0t4L"
-            frameBorder="0"
-            className="giphy-embed absolute bottom-[40%] z-10 left-10 w-[300px] h-[300px] md:left:[20%] md:w-[400px] md:h-[400px] md:bottom-[20%]"
-            allowFullScreen
-          ></iframe>
-        )}
+
         {earnMore && (
           <EarnMore
             setEarnmore={setEarnmore}
             userStreak={userStreak}
             fetchStreakInfo={fetchStreakInfo}
-            setShowIframe={setShowIframe}
           />
         )}
       </Container>

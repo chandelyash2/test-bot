@@ -11,7 +11,6 @@ interface EarnMoreProp {
   setEarnmore: (value: boolean) => void;
   userStreak: Streak;
   fetchStreakInfo: () => void;
-  setShowIframe: (value: boolean) => void;
 }
 
 const array = [
@@ -62,10 +61,11 @@ export const EarnMore = ({
   setEarnmore,
   userStreak,
   fetchStreakInfo,
-  setShowIframe,
+
 }: EarnMoreProp) => {
   const { user } = useTelegram();
   const [userData, setUserData] = useState<any>();
+  const [showIframe, setShowIframe] = useState(false);
 
   useEffect(() => {
     // Add a Tailwind CSS class to the body
@@ -161,6 +161,14 @@ export const EarnMore = ({
           Play every day and receive Daily Rewards
         </p>
         <div className="grid grid-cols-3 gap-4">
+        {showIframe && (
+          <iframe
+            src="https://giphy.com/embed/MCuCYXkXaSHIhA0t4L"
+            frameBorder="0"
+            className="giphy-embed absolute top-0 z-10 left-10 w-[300px] h-[300px]"
+            allowFullScreen
+          ></iframe>
+        )}
           {array.map((item) => (
             <Button
               className={twMerge(
