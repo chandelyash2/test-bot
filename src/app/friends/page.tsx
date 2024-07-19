@@ -7,6 +7,7 @@ import { useTelegram } from "@/lib/TelegramProvider";
 import { Button } from "@nextui-org/react";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -241,16 +242,18 @@ const FriendsPage = () => {
                   </svg>
                 </Button>
               </div>
-              <Button
+              <Link
+                href={`https://t.me/share/url?url={https://t.me/@xda_1_bot?start=${userInfo.userId}}`}
                 className="text-white bg-[#00ACE6] w-full rounded mt-[10%]"
-                onClick={() => {
-                  if (webApp) {
-                    webApp.close();
-                  }
-                }}
+                // onClick={() => {
+
+                //   if (webApp) {
+                //     webApp.close();
+                //   }
+                // }}
               >
                 Invite a Friend
-              </Button>
+              </Link>
             </div>
           </Container>
           <Toaster />
