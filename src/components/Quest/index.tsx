@@ -15,7 +15,7 @@ import Light from "../../../public/svg/Light.svg";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "../Flash";
 import { imgs, User } from "@/lib/quest/type";
-import Wolf from "../../../public/img/Quest/Wolf.gif";
+import Wolf from "../../../public/svg/H Vector.svg";
 interface Click {
   x: number;
   y: number;
