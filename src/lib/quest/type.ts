@@ -48,7 +48,7 @@ export const imgs = [
     icon: Sigma,
     less: 0,
     greater: 4999999,
-    rank:1
+    rank: 1,
   },
   {
     img: "/img/Quest/Omega.png",
@@ -57,7 +57,7 @@ export const imgs = [
     color: "#5E4B1A",
     name: "Omega",
     icon: Omega,
-    rank:2
+    rank: 2,
   },
   {
     img: "/img/Quest/Mid.png",
@@ -66,7 +66,7 @@ export const imgs = [
     color: "#FF8717",
     name: "Mid Ranking",
     icon: MidRank,
-    rank:3
+    rank: 3,
   },
   {
     img: "/img/Quest/Beta.png",
@@ -75,7 +75,7 @@ export const imgs = [
     color: "#3F5A63",
     name: "Beta",
     icon: Beta,
-    rank:4
+    rank: 4,
   },
 
   {
@@ -85,7 +85,7 @@ export const imgs = [
     color: "#7137ED",
     name: "Alpha",
     icon: Luna,
-    rank:5
+    rank: 5,
   },
 ];
 
@@ -163,18 +163,18 @@ export const energy = [
 ];
 
 export const multiTap = [
-  { lvl: 1, tap: 4, price: 15000 },
-  { lvl: 2, tap: 5, price: 200000 },
-  { lvl: 3, tap: 6, price: 300000 },
-  { lvl: 4, tap: 7, price: 400000 },
-  { lvl: 5, tap: 8, price: 500000 },
-  { lvl: 6, tap: 9, price: 600000 },
-  { lvl: 7, tap: 10, price: 700000 },
-  { lvl: 8, tap: 11, price: 800000 },
-  { lvl: 9, tap: 12, price: 900000 },
-  { lvl: 10, tap: 13, price: 1000000 },
-  { lvl: 11, tap: 14, price: 1100000 },
-  { lvl: 12, tap: 15, price: 1200000 },
-  { lvl: 13, tap: 16, price: 1300000 },
-  { lvL: 14, tap: 17, price: 1400000 },
+  { lvl: 2, tap: 3, price: 15000 },
+  { lvl: 3, tap: 5, price: 200000 },
+  { lvl: 4, tap: 6, price: 300000 },
+  { lvl: 5, tap: 7, price: 400000 },
+  { lvl: 6, tap: 8, price: 500000 },
+  { lvl: 7, tap: 9, price: 600000 },
+  { lvl: 8, tap: 10, price: 700000 },
+  { lvl: 9, tap: 11, price: 800000 },
+  { lvl: 10, tap: 12, price: 9000000 },
+  { lvl: 11, tap: 13, price: 1000000 },
+  { lvl: 12, tap: 14, price: 1100000 },
+  { lvl: 13, tap: 15, price: 1200000 },
+  { lvL: 14, tap: 16, price: 1300000 },
+  { lvL: 15, tap: 17, price: 1400000 },
 ];

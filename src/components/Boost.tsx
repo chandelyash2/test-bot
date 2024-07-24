@@ -39,7 +39,7 @@ export const Boost = () => {
   const findPrice = () => {
     if (userInfo) {
       const nextTapLevel = multiTap.find(
-        (item) => item.tap === userInfo.tap + 1
+        (item) => item.lvl === userInfo.tap + 1
       );
       return nextTapLevel;
     }

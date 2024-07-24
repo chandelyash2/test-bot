@@ -140,7 +140,7 @@ const Quest = () => {
                 </span>
                 <span className="flex items-center gap-2">
                   <Image src={img?.icon} alt={img?.name || ""} width={15} />
-                  <h4>{img?.name}</h4>
+                  <Link href='/'>{img?.name}</Link>
                 </span>
               </div>
               <Progress
