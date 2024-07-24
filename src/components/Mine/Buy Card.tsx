@@ -24,17 +24,17 @@ export const BuyCard = ({ setBuyCard, selectedCard }: BuyCardProp) => {
 
   const fetchUserInfo = async () => {
     if (user) {
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-      {
-        params: {
-          userId: user.id,
-        },
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setUserInfo(data.data);
       }
-    );
-    if (data.data) {
-      setUserInfo(data.data);
-    }
     }
   };
   useEffect(() => {
@@ -59,7 +59,7 @@ export const BuyCard = ({ setBuyCard, selectedCard }: BuyCardProp) => {
     );
   return (
     <>
-      {userInfo ? (
+      {userInfo && (
         <div className="absolute h-screen w-full top-0 left-0 bg-black bg-opacity-25 backdrop-blur-sm z-[999] overflow-hidden">
           <div className="absolute bottom-0 z-10 min-h-[300px] w-full left-0 bg-[#1C2327] flex flex-col items-center border-t border-[#54C7EE] rounded-t p-2 gap-6">
             <span
@@ -182,8 +182,6 @@ export const BuyCard = ({ setBuyCard, selectedCard }: BuyCardProp) => {
             </Button>
           </div>
         </div>
-      ) : (
-        <Flash />
       )}
     </>
   );
