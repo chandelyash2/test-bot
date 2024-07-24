@@ -17,7 +17,6 @@ export interface User {
     lvl: number;
   };
   tap: number;
-  mine: number;
   social: {
     x: {
       type: boolean;
@@ -37,6 +36,29 @@ export interface User {
     red: {
       type: boolean;
     };
+  };
+  mine: {
+    profit: {
+      type: number;
+    };
+    cards: [
+      {
+        type: {
+          type: string;
+        };
+        lvl: {
+          type: number;
+        };
+      },
+      {
+        type: {
+          type: string;
+        };
+        lvl: {
+          type: number;
+        };
+      }
+    ];
   };
 }
 
@@ -177,4 +199,177 @@ export const multiTap = [
   { lvl: 13, tap: 15, price: 1200000 },
   { lvL: 14, tap: 16, price: 1300000 },
   { lvL: 15, tap: 17, price: 1400000 },
+];
+
+export const mineArr = [
+  {
+    name: "Annapurna I",
+    title: "annapurna",
+    cardType: "Mountains",
+    meter: "8091",
+    img: "/mine/Annpurna.png",
+    level: [
+      {
+        lvl: 1,
+        meters: "809.1",
+        profit: 270,
+        price: 15000,
+        required: null,
+      },
+      {
+        lvl: 2,
+        meters: "1618.2",
+        profit: 2695,
+        price: 21618,
+        required: null,
+      },
+      {
+        lvl: 3,
+        meters: "2427.3",
+        profit: 4045,
+        price: 27427,
+        required: null,
+      },
+      {
+        lvl: 4,
+        meters: "3236.4",
+        profit: 4045,
+        price: 33236,
+        required: null,
+      },
+      {
+        lvl: 5,
+        meters: "4045.5",
+        profit: 9443,
+        price: 354046,
+        required: null,
+      },
+      {
+        lvl: 6,
+        meters: "4854.6",
+        profit: 11326,
+        price: 404854.6,
+        required: null,
+      },
+      {
+        lvl: 7,
+        meters: "5663.7",
+        profit: 15104,
+        price: 4505663.7,
+        required: null,
+      },
+      {
+        lvl: 8,
+        meters: "6472.8",
+        profit: 19422,
+        price: 5012137,
+        required: {
+          type: "friend",
+          lvl: 2,
+        },
+      },
+      {
+        lvl: 9,
+        meters: "7281.9",
+        profit: 21843,
+        price: 5519418.4,
+        required: null,
+      },
+      {
+        lvl: 10,
+        meters: "8091",
+        profit: 26970,
+        price: 6033236,
+        required: null,
+      },
+    ],
+  },
+  {
+    name: "Nanga Parbat",
+    title: "nangaParbat",
+    cardType: "Mountains",
+    meter: "8126",
+    img: "/mine/Nanga.png",
+    level: [
+      {
+        lvl: 1,
+        meters: "812.6",
+        profit: 350,
+        price: 25000,
+        required: {
+          type: "annapurna",
+          lvl: 2,
+        },
+      },
+      {
+        lvl: 2,
+        meters: "1625.2",
+        profit: 2710,
+        price: 40000,
+        required: null,
+      },
+      {
+        lvl: 3,
+        meters: "2437.8",
+        profit: 5420,
+        price: 57438,
+        required: null,
+      },
+      {
+        lvl: 4,
+        meters: "3250.4",
+        profit: 8130,
+        price: 73250,
+        required: {
+          type: "friend",
+          lvl: 3,
+        },
+      },
+      {
+        lvl: 5,
+        meters: "4063",
+        profit: 10830,
+        price: 854063,
+        required: null,
+      },
+      {
+        lvl: 6,
+        meters: "4875.6",
+        profit: 13540,
+        price: 3504876,
+        required: null,
+      },
+      {
+        lvl: 7,
+        meters: "5688.2",
+        profit: 16250,
+        price: 6010564,
+        required: {
+          type: "annapurna",
+          lvl: 5,
+        },
+      },
+      {
+        lvl: 8,
+        meters: "6500.8",
+        profit: 18960,
+        price: 8126501,
+        required: null,
+      },
+      {
+        lvl: 9,
+        meters: "7313.4",
+        profit: 21670,
+        price: 12007313,
+        required: null,
+      },
+      {
+        lvl: 10,
+        meters: "8126",
+        profit: 24380,
+        price: 20008126,
+        required: null,
+      },
+    ],
+  },
 ];

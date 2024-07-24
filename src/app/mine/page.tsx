@@ -3,13 +3,13 @@ import { Container } from "@/components/Container";
 import { Layout } from "@/components/Layout";
 import { MineBox } from "@/components/Mine/MineBox";
 import { SpecialMineBox } from "@/components/Mine/SpecialMineBox";
+import { mineArr } from "@/lib/quest/type";
 import { Button } from "@nextui-org/react";
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const MinePage = () => {
   const [userData, setUserData] = useState<any>();
-
   const [active, setActive] = useState("Basic");
 
   return (
@@ -36,33 +36,17 @@ const MinePage = () => {
               Specials
             </Button>
           </div>
+
           {active === "Basic" ? (
             <div className="grid grid-cols-2 gap-2">
-              <MineBox color="text-[#00ACE6]" locked={userData?.rank === 1} />
-              <MineBox color="text-[#00ACE6]" locked={userData?.rank > 1} />
-              <MineBox color="text-[#9D4EDD]" locked={userData?.rank >= 2} />
-              <MineBox color="text-orange-400" locked={userData?.rank >= 3} />
-              <MineBox color="text-[#00ACE6]" locked={userData?.rank >= 3} />
+              {mineArr.map((mine, i) => (
+                <MineBox color="text-[#00ACE6]" mine={mine} key={mine.name}  />
+              ))}
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-2">
-              <SpecialMineBox
-                name="Everest"
-                value="+11,5"
-                price="825"
-                ranking="Alpha Ranking"
-                locked={userData?.rank >= 4}
-                img="/img/Mine1.png"
-              />
-              <SpecialMineBox
-                name="NFT collection"
-                value="+11,5"
-                price="1M"
-                ranking="10 Friends"
-                locked={userData?.rank >= 4}
-                img="/img/Mine2.png"
-              />
-            </div>
+            <p className="font-bold text-xl flex justify-center mt-20">
+              Coming Soon...
+            </p>
           )}
         </div>
       </Container>

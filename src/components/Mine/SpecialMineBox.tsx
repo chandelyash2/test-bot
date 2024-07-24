@@ -114,7 +114,7 @@ export const SpecialMineBox = ({
           </div>
         )}
       </div>
-      {buyCard && <BuyCard setBuyCard={setBuyCard} />}
+      {/* {buyCard && <BuyCard setBuyCard={setBuyCard} />} */}
     </>
   );
 };
