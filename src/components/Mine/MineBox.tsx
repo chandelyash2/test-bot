@@ -29,13 +29,13 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
   const [locked, setLocked] = useState(true);
 
   useEffect(() => {
-    // if (user) {
+    if (user) {
     fetchUserInfo();
-    // }
-  }, []);
+    }
+  }, [user]);
 
   const fetchUserInfo = async () => {
-    // if (user) {
+    if (user) {
     const data = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
       {
@@ -47,7 +47,7 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
     if (data.data) {
       setUserInfo(data.data);
     }
-    // }
+    }
   };
   const mineLvl = (mineInfo: mineLvl[]) => {
     const mineData: any = userInfo?.mine.cards.find(
@@ -61,13 +61,13 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
         <>
           <div
             className={twMerge(
-              "relative min-w-[153px] border border-[#5C666C] rounded flex flex-col gap-1 ",
-              mineLvl(mine.level)?.required?.type
+              "relative min-w-[153px] border border-[#5C666C] rounded flex flex-col gap-1",
+              mineLvl(mine.level)?.required?.type=='Friend'
                 ? "bg-[#334047] z-1"
                 : " bg-[#334047]"
             )}
             onClick={() => {
-              if (!mineLvl(mine.level)?.required?.type) {
+              if (!mineLvl(mine.level)?.required?.lvl) {
                 setBuyCard(true);
                 setSelectedCard(mine);
               }
