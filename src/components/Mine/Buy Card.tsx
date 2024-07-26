@@ -10,33 +10,13 @@ import { useTelegram } from "@/lib/TelegramProvider";
 interface BuyCardProp {
   setBuyCard: (value: boolean) => void;
   selectedCard: any;
+  userInfo: User;
 }
-export const BuyCard = ({ setBuyCard, selectedCard }: BuyCardProp) => {
-  const { user } = useTelegram();
-
-  const [userInfo, setUserInfo] = useState<User>();
-
-  useEffect(() => {
-    if (user) {
-      fetchUserInfo();
-    }
-  }, [user]);
-
-  const fetchUserInfo = async () => {
-    if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
-      if (data.data) {
-        setUserInfo(data.data);
-      }
-    }
-  };
+export const BuyCard = ({
+  setBuyCard,
+  selectedCard,
+  userInfo,
+}: BuyCardProp) => {
   useEffect(() => {
     // Add a Tailwind CSS class to the body
     document.body.classList.add("overflow-hidden");
@@ -48,7 +28,7 @@ export const BuyCard = ({ setBuyCard, selectedCard }: BuyCardProp) => {
   }, []);
   const mineLvl = (mineInfo: mineLvl[]) => {
     const mineData: any = userInfo?.mine.cards.find(
-      (item) => item.type === selectedCard.title
+      (item) => item.type === selectedCard.name
     );
     return mineInfo.find((item) => item.lvl === mineData?.lvl + 1);
   };
@@ -60,8 +40,8 @@ export const BuyCard = ({ setBuyCard, selectedCard }: BuyCardProp) => {
   return (
     <>
       {userInfo && (
-        <div className="absolute h-screen w-full top-0 left-0 bg-black bg-opacity-25 backdrop-blur-sm z-[999] overflow-hidden">
-          <div className="absolute bottom-0 z-10 min-h-[300px] w-full left-0 bg-[#1C2327] flex flex-col items-center border-t border-[#54C7EE] rounded-t p-2 gap-6">
+        <div className="fixed h-screen w-full top-0 left-0 bg-black bg-opacity-25 backdrop-blur-sm z-[999] overflow-hidden">
+          <div className="fixed bottom-0 z-10 min-h-[300px] w-full left-0 bg-[#1C2327] flex flex-col items-center border-t border-[#54C7EE] rounded-t p-2 gap-6">
             <span
               className="absolute top-4 right-4 cursor-pointer"
               onClick={() => setBuyCard(false)}
@@ -99,7 +79,7 @@ export const BuyCard = ({ setBuyCard, selectedCard }: BuyCardProp) => {
             </h2>
 
             <p className="w-[80%] text-center font-manrope text-[14px]">
-              Limited time available card to get higher level in Nimbi ecosystem
+          {selectedCard.description}
             </p>
             <p className="font-roboto font-[14px] text-[#C0C4C6]">
               Income per hour + {mineLvl(selectedCard.level)?.profit}

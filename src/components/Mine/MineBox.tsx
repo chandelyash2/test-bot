@@ -26,46 +26,48 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
   const [buyCard, setBuyCard] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [userInfo, setUserInfo] = useState<User>();
+  const [locked, setLocked] = useState(true);
 
   useEffect(() => {
-    if (user) {
-      fetchUserInfo();
-    }
-  }, [user]);
+    // if (user) {
+    fetchUserInfo();
+    // }
+  }, []);
 
   const fetchUserInfo = async () => {
-    if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
-      if (data.data) {
-        setUserInfo(data.data);
+    // if (user) {
+    const data = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+      {
+        params: {
+          userId: "6120388361",
+        },
       }
+    );
+    if (data.data) {
+      setUserInfo(data.data);
     }
+    // }
   };
-  let locked = true;
   const mineLvl = (mineInfo: mineLvl[]) => {
     const mineData: any = userInfo?.mine.cards.find(
-      (item) => item.type === mine.title
+      (item) => item.type === mine.name
     );
-    return mineInfo.find((item) => item.lvl === mineData?.lvl + 1);
+    return mineInfo.find((item) => item.lvl === mineData.lvl + 1);
   };
   return (
     <>
-      {userInfo ? (
+      {userInfo && (
         <>
           <div
             className={twMerge(
               "relative min-w-[153px] border border-[#5C666C] rounded flex flex-col gap-1 ",
-              locked ? "bg-[#334047] z-1" : " bg-[#334047]"
+              mineLvl(mine.level)?.required?.type
+                ? "bg-[#334047] z-1"
+                : " bg-[#334047]"
             )}
             onClick={() => {
-              if (locked) {
+              if (!mineLvl(mine.level)?.required?.type) {
                 setBuyCard(true);
                 setSelectedCard(mine);
               }
@@ -86,7 +88,10 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
                 <h2 className="font-bold text-roboto text-[14px]">
                   {mine.name}
                 </h2>
-                <span className="text-xs text-[#C0C4C6]">{mine.meter}m</span>
+                <span className="text-xs text-[#C0C4C6]">
+                  <label className="text-white"> Climbed</label>{" "}
+                  {mineLvl(mine.level)?.meters}m
+                </span>
                 <div className="flex items-center gap-1">
                   <Image
                     src="/mine/Coin.svg"
@@ -100,16 +105,14 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
                 </div>
               </div>
               <hr className="bg-[#5C666C]" />
-              {mineLvl(mine.level)?.required?.type ? (
-                <span className="text-[12px] font-roboto">
-                  {mineLvl(mine.level)?.required?.type} Lv.
-                  {mineLvl(mine.level)?.required?.lvl}
-                </span>
-              ) : (
-                <p className="text-[12px] font-roboto">Unlocked</p>
-              )}
+
+              <span className="text-[12px] font-roboto h-4">
+                {mineLvl(mine.level)?.required?.type}{" "}
+                {mineLvl(mine.level)?.required?.type && <span>Lv.</span>}
+                {mineLvl(mine.level)?.required?.lvl}
+              </span>
             </div>
-            {!locked && (
+            {mineLvl(mine.level)?.required?.type && (
               <div className="absolute inset-0 flex justify-center items-center  bg-black/50 z-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -131,11 +134,13 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
             )}
           </div>
           {buyCard && (
-            <BuyCard setBuyCard={setBuyCard} selectedCard={selectedCard} />
+            <BuyCard
+              setBuyCard={setBuyCard}
+              selectedCard={selectedCard}
+              userInfo={userInfo}
+            />
           )}
         </>
-      ) : (
-        <Flash />
       )}
     </>
   );
