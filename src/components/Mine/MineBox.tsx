@@ -40,7 +40,7 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
       `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
       {
         params: {
-          userId: "6120388361",
+          userId: user.id,
         },
       }
     );
