@@ -62,9 +62,9 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
     const levelRequirements: any = mineLvl(mine.level)?.required;
 
     if (levelRequirements?.type === "Friend" && userInfo) {
-      return levelRequirements?.lvl >= userInfo.friends.length;
+      return levelRequirements?.lvl > userInfo.friends.length;
     } else {
-      return levelRequirements?.lvl >= mineData(levelRequirements?.type)?.lvl;
+      return levelRequirements?.lvl > mineData(levelRequirements?.type)?.lvl;
     }
   };
   console.log(levelRequirementsMet());
