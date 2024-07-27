@@ -2,6 +2,7 @@
 "use client";
 import { Flash } from "@/components/Flash";
 import { Layout } from "@/components/Layout";
+import { User } from "@/lib/quest/type";
 import { TelegramProvider, useTelegram } from "@/lib/TelegramProvider";
 import axios from "axios";
 import Image from "next/image";
@@ -50,31 +51,29 @@ const array = [
 export default function Home() {
   const [active, setActive] = useState(0);
   const { user, webApp } = useTelegram();
+  const [userInfo, setUserInfo] = useState<User>();
 
   useEffect(() => {
     if (user) {
-      createUser();
+      fetchUserInfo();
     }
   }, [user]);
 
-  const createUser = async () => {
-    try {
-      if (user?.id) {
-        const userData = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
-          {
+  const fetchUserInfo = async () => {
+    if (user) {
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
             userId: user.id,
-            firstName: user.first_name,
-            lastName: user.last_name,
-          }
-        );
-        console.log("User Data:", userData.data); // Log the response data
+          },
+        }
+      );
+      if (data.data) {
+        setUserInfo(data.data);
       }
-    } catch (error) {
-      console.error("Error creating user:", error);
     }
   };
-
   return (
     <>
       {user ? (

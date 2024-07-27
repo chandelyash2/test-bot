@@ -27,25 +27,28 @@ const Quest = () => {
 
   useEffect(() => {
     if (user) {
-      fetchUserInfo();
+      createUser();
     }
   }, [user]);
-
-  const fetchUserInfo = async () => {
-    if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
+  const createUser = async () => {
+    try {
+      if (user?.id) {
+        const userData = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
+          {
             userId: user.id,
-          },
-        }
-      );
-      if (data.data) {
-        setUserInfo(data.data);
+            firstName: user.first_name,
+            lastName: user.last_name,
+          }
+        );
+        console.log("User Data:", userData.data); // Log the response data
+        setUserInfo(userData.data);
       }
+    } catch (error) {
+      console.error("Error creating user:", error);
     }
   };
+
   const updateUser = async (count: number, boost: number, user: User) => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
       userId: user.userId,
@@ -140,7 +143,7 @@ const Quest = () => {
                 </span>
                 <span className="flex items-center gap-2">
                   <Image src={img?.icon} alt={img?.name || ""} width={15} />
-                  <Link href='/'>{img?.name}</Link>
+                  <Link href="/">{img?.name}</Link>
                 </span>
               </div>
               <Progress
