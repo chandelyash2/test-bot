@@ -30,6 +30,14 @@ const Quest = () => {
       createUser();
     }
   }, [user]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchUserInfo();
+    }, 10000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [userInfo]);
   const createUser = async () => {
     try {
       if (user?.id) {
@@ -46,6 +54,21 @@ const Quest = () => {
       }
     } catch (error) {
       console.error("Error creating user:", error);
+    }
+  };
+  const fetchUserInfo = async () => {
+    if (user) {
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setUserInfo(data.data);
+      }
     }
   };
 
