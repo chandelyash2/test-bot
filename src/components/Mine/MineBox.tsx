@@ -28,25 +28,25 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
   const [userInfo, setUserInfo] = useState<User>();
 
   useEffect(() => {
-    // if (user) {
+    if (user) {
     fetchUserInfo();
-    // }
-  }, []);
+    }
+  }, [user]);
 
   const fetchUserInfo = async () => {
-    // if (user) {
+    if (user) {
     const data = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
       {
         params: {
-          userId: "6120388361",
+          userId:user.id,
         },
       }
     );
     if (data.data) {
       setUserInfo(data.data);
     }
-    // }
+    }
   };
   const mineLvl: any = (mineInfo: mineLvl[]) => {
     const mineData: any = userInfo?.mine.cards.find(

@@ -29,7 +29,7 @@ const Quest = () => {
     if (user) {
       fetchUserInfo();
     }
-  }, []);
+  }, [user]);
 
   const fetchUserInfo = async () => {
     if (user) {
