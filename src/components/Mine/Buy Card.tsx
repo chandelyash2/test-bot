@@ -19,6 +19,7 @@ export const BuyCard = ({
   selectedCard,
   userInfo,
 }: BuyCardProp) => {
+  const [loader, setLoader] = useState(false);
   useEffect(() => {
     // Add a Tailwind CSS class to the body
     document.body.classList.add("overflow-hidden");
@@ -41,6 +42,7 @@ export const BuyCard = ({
     );
 
   const updateMine = async (profit: number, level: number, balance: number) => {
+    setLoader(true);
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/updateMine`,
       {
@@ -58,6 +60,7 @@ export const BuyCard = ({
       setBuyCard(false);
       location.reload();
     }
+    setLoader(false);
   };
   return (
     <>
@@ -174,6 +177,7 @@ export const BuyCard = ({
             )}
             <Button
               className="bg-[#00ACE6] rounded p-4 w-full text-white mb-4"
+              isLoading={loader}
               isDisabled={
                 mineLvl(selectedCard.level)?.required?.lvl
                   ? mineLvl(selectedCard.level)?.required?.lvl !== mineData.lvl

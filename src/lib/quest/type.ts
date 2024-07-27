@@ -7,7 +7,7 @@ import Luna from "../../../public/svg/Luna.svg";
 export interface User {
   _id: string;
   firstName: string;
-  friends:string[]
+  friends: string[];
   lastName: string;
   userId: string;
   rank: number;
@@ -209,9 +209,17 @@ export const mineArr = [
     country: "Canada",
     meter: "1652",
     img: "/mine/Rectangle0.png",
+    countryImg: "/mine/Canada.png",
     description:
       "The highest peak in Eastern Canada, forming part of the Torngat Mountains. Once the site of significant geological studies.",
     level: [
+      {
+        lvl: 0,
+        meters: "0",
+        profit: 0,
+        price: 0,
+        required: null,
+      },
       {
         lvl: 1,
         meters: "165.2",
@@ -293,9 +301,17 @@ export const mineArr = [
     country: "Australia",
     meter: "2228",
     img: "/mine/Rectangle1.png",
+    countryImg: "/mine/Australia.png",
     description:
       "The highest peak in Australia, located in the Snowy Mountains. Named by the Polish explorer Paweł Strzelecki.",
     level: [
+      {
+        lvl: 0,
+        meters: "0",
+        profit: 0,
+        price: 0,
+        required: null,
+      },
       {
         lvl: 1,
         meters: "222.8",
@@ -380,9 +396,18 @@ export const mineArr = [
     country: "Bulgaria",
     meter: "2925",
     img: "/mine/Rectangle2.png",
+    countryImg: "/mine/Musala.png",
+
     description:
       'The highest peak in the Balkans, located in the Rila Mountain Range. Historically significant, it means "near God" in Arabic.',
     level: [
+      {
+        lvl: 0,
+        meters: "0",
+        profit: 0,
+        price: 0,
+        required: null,
+      },
       {
         lvl: 1,
         meters: "292.5",
@@ -461,9 +486,17 @@ export const mineArr = [
     country: "Italy",
     meter: "3329",
     img: "/mine/Rectangle3.png",
+    countryImg: "/mine/Etna.png",
     description:
       "One of the most active volcanoes in the world, located in Sicily. Known for its frequent eruptions and rich volcanic soil.",
     level: [
+      {
+        lvl: 0,
+        meters: "0",
+        profit: 0,
+        price: 0,
+        required: null,
+      },
       {
         lvl: 1,
         meters: "332.9",
@@ -545,9 +578,18 @@ export const mineArr = [
     country: "D.R. Congo",
     meter: "3470",
     img: "/mine/Rectangle4.png",
+    countryImg: "/mine/Nyi.png",
+
     description:
       "Known for its large and active lava lake, it is part of the Virunga Mountains. First recorded eruption was in 1882.",
     level: [
+      {
+        lvl: 0,
+        meters: "0",
+        profit: 0,
+        price: 0,
+        required: null,
+      },
       {
         lvl: 1,
         meters: "347",
@@ -629,9 +671,18 @@ export const mineArr = [
     country: "New Zealand",
     meter: "3724",
     img: "/mine/Rectangle5.png",
+    countryImg: "/mine/Aoraki.png",
+
     description:
       "The highest peak in New Zealand, located in the Southern Alps. Named Aoraki by the Māori, it offers challenging climbs.",
     level: [
+      {
+        lvl: 0,
+        meters: "0",
+        profit: 0,
+        price: 0,
+        required: null,
+      },
       {
         lvl: 1,
         meters: "372.4",
@@ -713,9 +764,19 @@ export const mineArr = [
     country: "Malaysia",
     meter: "4095",
     img: "/mine/Rectangle1.png",
+    countryImg: "/mine/Canada.png",
+
     description:
       "The highest peak in Borneo's Crocker Range. Known for its biodiversity, it is a UNESCO World Heritage Site.",
     level: [
+      {
+        lvl: 0,
+        meters: "0",
+        profit: 0,
+        price: 0,
+        required: null,
+      },
+
       {
         lvl: 1,
         meters: "409.5",
@@ -794,9 +855,19 @@ export const mineArr = [
     country: "Switzerland",
     meter: "4478",
     img: "/mine/Rectangle0.png",
+    countryImg: "/mine/Canada.png",
+
     description:
       "Renowned for its distinctive pyramidal shape. One of the deadliest peaks in the Alps, first ascended in 1865.",
     level: [
+      {
+        lvl: 0,
+        meters: "0",
+        profit: 0,
+        price: 0,
+        required: null,
+      },
+      ,
       {
         lvl: 1,
         meters: "447.8",

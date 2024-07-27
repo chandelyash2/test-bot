@@ -28,31 +28,37 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
   const [userInfo, setUserInfo] = useState<User>();
 
   useEffect(() => {
-    if (user) {
+    // if (user) {
     fetchUserInfo();
-    }
-  }, [user]);
+    // }
+  }, []);
 
   const fetchUserInfo = async () => {
-    if (user) {
+    // if (user) {
     const data = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
       {
         params: {
-          userId:user.id,
+          userId: "6120388361",
         },
       }
     );
     if (data.data) {
       setUserInfo(data.data);
     }
-    }
+    // }
   };
   const mineLvl: any = (mineInfo: mineLvl[]) => {
     const mineData: any = userInfo?.mine.cards.find(
       (item) => item.type === mine.name
     );
-    return mineInfo?.find((item: any) => item?.lvl === mineData?.lvl + 1);
+    return mineInfo?.find((item: any) => item?.lvl === mineData?.lvl );
+  };
+  const mineLvl1 = (mineInfo: mineLvl[]) => {
+    const mineData: any = userInfo?.mine.cards.find(
+      (item) => item.type === mine.name
+    );
+    return mineInfo.find((item) => item.lvl === mineData?.lvl + 1);
   };
   const mineData: any = (name: string) => {
     const data = userInfo?.mine.cards.find((item: any) => item.type === name);
@@ -92,6 +98,9 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
             <span className="flex items-center justify-center absolute top-1 left-1 bg-[#2E3A41] rounded-full min-w-8 h-6 font-semibold font-roboto text-[10px]">
               Lv.{mineLvl(mine.level)?.lvl}
             </span>
+            <span className="flex items-center justify-center absolute top-1 right-1 rounded-full min-w-8 h-6 font-semibold font-roboto text-[10px]">
+          <Image src={mine.countryImg} alt="img" width={24} height={24}/>
+            </span>
             <Image
               src={mine.img}
               alt={mine.name}
@@ -116,7 +125,7 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
                     height={20}
                   />
                   <span className="font-bold text-roboto text-[14px]">
-                    {mineLvl(mine.level)?.price}
+                    {mineLvl1(mine.level)?.price}
                   </span>
                 </div>
               </div>
