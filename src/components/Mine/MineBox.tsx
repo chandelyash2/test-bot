@@ -58,7 +58,7 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
     const mineData: any = userInfo?.mine.cards.find(
       (item) => item.type === mine.name
     );
-    return mineInfo.find((item) => item.lvl === mineData?.lvl + 1);
+    return mineInfo.find((item) => item?.lvl === mineData?.lvl + 1);
   };
   const mineData: any = (name: string) => {
     const data = userInfo?.mine.cards.find((item: any) => item.type === name);
@@ -73,7 +73,6 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
       return levelRequirements?.lvl > mineData(levelRequirements?.type)?.lvl;
     }
   };
-  console.log(levelRequirementsMet());
 
   return (
     <>
