@@ -39,7 +39,7 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
       `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
       {
         params: {
-          userId: user.id,
+          userId:user.id,
         },
       }
     );
@@ -65,7 +65,7 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
     return data;
   };
   const levelRequirementsMet = () => {
-    const levelRequirements: any = mineLvl(mine.level)?.required;
+    const levelRequirements: any = mineLvl1(mine.level)?.required;
 
     if (levelRequirements?.type === "Friend" && userInfo) {
       return levelRequirements?.lvl > userInfo.friends.length;
