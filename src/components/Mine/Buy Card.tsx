@@ -6,6 +6,8 @@ import { User } from "@/lib/quest/type";
 import axios from "axios";
 import { Flash } from "../Flash";
 import { useTelegram } from "@/lib/TelegramProvider";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface BuyCardProp {
   setBuyCard: (value: boolean) => void;
@@ -37,6 +39,26 @@ export const BuyCard = ({
     userInfo?.mine.cards.find(
       (item) => item.type === mineLvl(selectedCard.level)?.required.type
     );
+
+  const updateMine = async (profit: number, level: number, balance: number) => {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/updateMine`,
+      {
+        _id: userInfo._id,
+        profit,
+        level,
+        balance,
+        type: selectedCard.name,
+      }
+    );
+    if (response.data.message) {
+      toast.error(response.data.message);
+    } else {
+      toast.success("Success");
+      setBuyCard(false);
+      location.reload();
+    }
+  };
   return (
     <>
       {userInfo && (
@@ -79,7 +101,7 @@ export const BuyCard = ({
             </h2>
 
             <p className="w-[80%] text-center font-manrope text-[14px]">
-          {selectedCard.description}
+              {selectedCard.description}
             </p>
             <p className="font-roboto font-[14px] text-[#C0C4C6]">
               Income per hour + {mineLvl(selectedCard.level)?.profit}
@@ -157,10 +179,19 @@ export const BuyCard = ({
                   ? mineLvl(selectedCard.level)?.required?.lvl !== mineData.lvl
                   : false
               }
+              onClick={async () => {
+                const profit = mineLvl(selectedCard.level)?.profit;
+                const level = mineLvl(selectedCard.level)?.lvl;
+                const balance = mineLvl(selectedCard.level)?.price;
+                if (profit && balance && level) {
+                  await updateMine(profit, level, balance);
+                }
+              }}
             >
               Buy Card
             </Button>
           </div>
+          <Toaster />
         </div>
       )}
     </>

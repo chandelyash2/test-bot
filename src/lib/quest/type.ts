@@ -7,6 +7,7 @@ import Luna from "../../../public/svg/Luna.svg";
 export interface User {
   _id: string;
   firstName: string;
+  friends:string[]
   lastName: string;
   userId: string;
   rank: number;
@@ -266,7 +267,7 @@ export const mineArr = [
         profit: 1764,
         price: 5002478,
         required: {
-          type: "friend",
+          type: "Friend",
           lvl: 2,
         },
       },

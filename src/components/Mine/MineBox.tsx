@@ -4,7 +4,7 @@ import { BuyCard } from "./Buy Card";
 import Image from "next/image";
 import { User } from "@/lib/quest/type";
 import axios from "axios";
-import { user } from "@nextui-org/react";
+import { Button, Card, user } from "@nextui-org/react";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "../Flash";
 
@@ -26,7 +26,6 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
   const [buyCard, setBuyCard] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [userInfo, setUserInfo] = useState<User>();
-  const [locked, setLocked] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -49,12 +48,27 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
     }
     }
   };
-  const mineLvl = (mineInfo: mineLvl[]) => {
+  const mineLvl: any = (mineInfo: mineLvl[]) => {
     const mineData: any = userInfo?.mine.cards.find(
       (item) => item.type === mine.name
     );
-    return mineInfo.find((item) => item.lvl === mineData.lvl + 1);
+    return mineInfo?.find((item: any) => item?.lvl === mineData?.lvl + 1);
   };
+  const mineData: any = (name: string) => {
+    const data = userInfo?.mine.cards.find((item: any) => item.type === name);
+    return data;
+  };
+  const levelRequirementsMet = () => {
+    const levelRequirements: any = mineLvl(mine.level)?.required;
+
+    if (levelRequirements?.type === "Friend" && userInfo) {
+      return levelRequirements?.lvl >= userInfo.friends.length;
+    } else {
+      return levelRequirements?.lvl >= mineData(levelRequirements?.type)?.lvl;
+    }
+  };
+  console.log(levelRequirementsMet());
+
   return (
     <>
       {userInfo && (
@@ -62,12 +76,14 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
           <div
             className={twMerge(
               "relative min-w-[153px] border border-[#5C666C] rounded flex flex-col gap-1",
-              mineLvl(mine.level)?.required?.type=='Friend'
+              mineLvl(mine.level)?.required?.type
                 ? "bg-[#334047] z-1"
                 : " bg-[#334047]"
             )}
             onClick={() => {
-              if (!mineLvl(mine.level)?.required?.lvl) {
+              if (!levelRequirementsMet()) {
+                return null;
+              } else {
                 setBuyCard(true);
                 setSelectedCard(mine);
               }
@@ -112,7 +128,7 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
                 {mineLvl(mine.level)?.required?.lvl}
               </span>
             </div>
-            {mineLvl(mine.level)?.required?.type && (
+            {levelRequirementsMet() && (
               <div className="absolute inset-0 flex justify-center items-center  bg-black/50 z-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
