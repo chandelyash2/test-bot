@@ -131,9 +131,9 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
               <hr className="bg-[#5C666C]" />
 
               <span className="text-[12px] font-roboto h-4">
-                {mineLvl(mine.level)?.required?.type}{" "}
-                {mineLvl(mine.level)?.required?.type && <span>Lv.</span>}
-                {mineLvl(mine.level)?.required?.lvl}
+                {mineLvl1(mine.level)?.required?.type}{" "}
+                {mineLvl1(mine.level)?.required?.type && <span>Lv.</span>}
+                {mineLvl1(mine.level)?.required?.lvl}
               </span>
             </div>
             {levelRequirementsMet() && (
