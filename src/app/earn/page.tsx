@@ -65,7 +65,7 @@ const EarnPage = () => {
   const parsedDatetime = moment(userStreak?.updatedAt);
 
   // Add 24 hours to the parsed datetime
-  const expirationDatetime = parsedDatetime.add(1, "hours");
+  const expirationDatetime = parsedDatetime.add(24, "hours");
   const currentDatetime = moment();
   const disabled =
     userStreak?.day == 0 ? true : currentDatetime.isAfter(expirationDatetime);
