@@ -24,7 +24,7 @@ interface Click {
 
 const Quest = () => {
   const { user } = useTelegram();
-  const [userInfo, setUserInfo] = useState<User|any>();
+  const [userInfo, setUserInfo] = useState<User>();
   const [clicks, setClicks] = useState<Click[]>([]);
 
   useEffect(() => {
@@ -34,14 +34,11 @@ const Quest = () => {
   }, [user]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      console.log("Fetching user info");
+    const fetchInterval = setInterval(() => {
       fetchUserInfo();
     }, 10000);
-
     return () => {
-      console.log("Clearing interval");
-      clearInterval(interval);
+      clearInterval(fetchInterval);
     };
   }, []);
 
@@ -64,9 +61,9 @@ const Quest = () => {
     }
   };
 
-  const fetchUserInfo = async () => {
-    try {
-      if (user?.id) {
+  const fetchUserInfo = useCallback(
+    debounce(async () => {
+      if (user) {
         const data = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
           {
@@ -76,34 +73,28 @@ const Quest = () => {
           }
         );
         if (data.data) {
-          console.log("Fetched user data:", data.data);
           setUserInfo(data.data);
         }
       }
-    } catch (error) {
-      console.error("Error fetching user info:", error);
-    }
-  };
+    }, 300), // Adjust the debounce delay as needed
+    [user]
+  );
 
   const updateUser = async (count: number, boost: number, user: User) => {
-    try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
-        userId: user.userId,
-        balance: count,
-        boost: {
-          ...user.boost,
-          used: boost,
-        },
-      });
-    } catch (error) {
-      console.error("Error updating user:", error);
-    }
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+      userId: user.userId,
+      balance: count,
+      boost: {
+        ...user.boost,
+        used: boost,
+      },
+    });
   };
 
   const debouncedUpdateUser = useCallback(
-    debounce((newBalance, newBoostUsed, user) => {
-      updateUser(newBalance, newBoostUsed, user);
-    }, 300),
+    debounce((newBalance, boost, user) => {
+      updateUser(newBalance, boost, user);
+    }, 300), // Adjust the debounce delay as needed
     []
   );
 
@@ -135,7 +126,7 @@ const Quest = () => {
       const newBalance = userInfo.balance + userInfo.tap;
       const newBoostUsed = userInfo.boost.used - userInfo.tap;
       debouncedUpdateUser(newBalance, newBoostUsed, userInfo);
-      setUserInfo((prevUserInfo:any) => ({
+      setUserInfo((prevUserInfo: any) => ({
         ...prevUserInfo,
         balance: newBalance,
         boost: {
@@ -188,7 +179,7 @@ const Quest = () => {
               </div>
               <Progress
                 aria-label="Loading..."
-                value={img && img?.rank + 1 * 20}
+                value={img && img?.rank * 20}
                 className={`max-w-md mt-4`}
                 color="secondary"
               />
@@ -243,7 +234,7 @@ const Quest = () => {
                 className="absolute bottom-10 h-[100px] w-full"
               />
               <Container>
-                <div className="relative flex justify-between font-manrope font-medium text-xs items-center">
+                <div className="relative  flex justify-between font-manrope font-medium text-xs items-center">
                   <span className="flex items-center gap-2">
                     <Image src={Light} alt="Light" />
                     <h2 className="font-bold font-istok text-lg">
