@@ -6,7 +6,7 @@ import Image from "next/image";
 import Boost from "../../../public/svg/Boost.svg";
 import Link from "next/link";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { debounce } from "lodash";
 import QuestMine from "../../../public/svg/QuestMine.svg";
 import Question from "../../../public/svg/Question.svg";
@@ -26,6 +26,7 @@ const Quest = () => {
   const { user } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
   const [clicks, setClicks] = useState<Click[]>([]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -34,18 +35,18 @@ const Quest = () => {
   }, [user]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      fetchUserInfo();
-    }, 10000);
+    intervalRef.current = setInterval(fetchUserInfo, 10000);
     return () => {
-      clearInterval(interval);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
-  }, [userInfo]);
+  }, [user]);
 
   const createUser = async () => {
     try {
       if (user?.id) {
-        const userData = await axios.post(
+        const { data } = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
           {
             userId: user.id,
@@ -53,8 +54,8 @@ const Quest = () => {
             lastName: user.last_name,
           }
         );
-        console.log("User Data:", userData.data); // Log the response data
-        setUserInfo(userData.data);
+        console.log("User Data:", data);
+        setUserInfo(data);
       }
     } catch (error) {
       console.error("Error creating user:", error);
@@ -62,58 +63,66 @@ const Quest = () => {
   };
 
   const fetchUserInfo = async () => {
-    if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
-      if (data.data) {
-        setUserInfo(data.data);
+    try {
+      if (user) {
+        const { data } = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+          {
+            params: {
+              userId: user.id,
+            },
+          }
+        );
+        setUserInfo(data);
       }
+    } catch (error) {
+      console.error("Error fetching user info:", error);
     }
   };
 
   const updateUser = async (count: number, boost: number, user: User) => {
-    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
-      userId: user.userId,
-      balance: count,
-      boost: {
-        ...user.boost,
-        used: boost,
-      },
-    });
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+        userId: user.userId,
+        balance: count,
+        boost: {
+          ...user.boost,
+          used: boost,
+        },
+      });
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
   };
 
   const debouncedUpdateUser = useCallback(
     debounce((newBalance, boost, user) => {
       updateUser(newBalance, boost, user);
-    }, 300), // Adjust the debounce delay as needed
+    }, 300),
     []
   );
 
   useEffect(() => {
     if (userInfo && userInfo.boost?.used < userInfo.boost?.total) {
-      const interval = setInterval(() => {
-        setUserInfo((prevuserData: any) => ({
-          ...prevuserData,
+      intervalRef.current = setInterval(() => {
+        setUserInfo((prevUserData:any) => ({
+          ...prevUserData,
           boost: {
-            ...prevuserData.boost,
-            used: prevuserData.boost.used + 1,
+            ...prevUserData.boost,
+            used: prevUserData.boost.used + 1,
           },
         }));
       }, 1000);
 
       return () => {
-        clearInterval(interval);
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
       };
     }
   }, [userInfo]);
 
-  const handleQuestClick = async (e: any) => {
+  const handleQuestClick = (e: any) => {
     const rect = e.target.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = rect.bottom - e.clientY;
@@ -176,7 +185,7 @@ const Quest = () => {
               </div>
               <Progress
                 aria-label="Loading..."
-                value={img && img?.rank * 20}
+                value={img ? img.rank * 20 : 0}
                 className={`max-w-md mt-4`}
                 color="secondary"
               />
@@ -215,7 +224,7 @@ const Quest = () => {
                     style={{
                       left: `${click.x}px`,
                       bottom: `${click.y}px`,
-                      transform: "translate(-50%, 0)", // Ensure proper centering horizontally
+                      transform: "translate(-50%, 0)",
                     }}
                   >
                     <Image src={Wolf} width={50} height={50} alt="wolf" />+
