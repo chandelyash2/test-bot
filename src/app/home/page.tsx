@@ -75,7 +75,7 @@ export default function Home() {
           (item) =>
             data.data.balance >= item.less && data.data.balance <= item.greater
         );
-        imgdata?.rank && setActive(imgdata?.rank);
+        imgdata?.rank && setActive(imgdata?.rank-1);
       }
     }
   };
