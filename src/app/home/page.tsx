@@ -2,7 +2,7 @@
 "use client";
 import { Flash } from "@/components/Flash";
 import { Layout } from "@/components/Layout";
-import { User } from "@/lib/quest/type";
+import { imgs, User } from "@/lib/quest/type";
 import { TelegramProvider, useTelegram } from "@/lib/TelegramProvider";
 import axios from "axios";
 import Image from "next/image";
@@ -71,10 +71,15 @@ export default function Home() {
       );
       if (data.data) {
         setUserInfo(data.data);
-        setActive(data.data.rank - 1);
+        const imgdata = imgs.find(
+          (item) =>
+            data.data.balance >= item.less && data.data.balance <= item.greater
+        );
+        imgdata?.rank && setActive(imgdata?.rank);
       }
     }
   };
+
   return (
     <>
       {user ? (
