@@ -171,7 +171,7 @@ const Quest = () => {
               </div>
               <Progress
                 aria-label="Loading..."
-                value={img && img?.rank * 20}
+                value={img && img?.rank+1 * 20}
                 className={`max-w-md mt-4`}
                 color="secondary"
               />
