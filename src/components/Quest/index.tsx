@@ -16,12 +16,10 @@ import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "../Flash";
 import { imgs, User } from "@/lib/quest/type";
 import Wolf from "../../../public/svg/H Vector.svg";
-
 interface Click {
   x: number;
   y: number;
 }
-
 const Quest = () => {
   const { user } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
@@ -32,23 +30,21 @@ const Quest = () => {
       createUser();
     }
   }, [user]);
-
   useEffect(() => {
-    const fetchInterval = setInterval(() => {
+    const interval = setInterval(() => {
       fetchUserInfo();
     }, 10000);
     return () => {
-      clearInterval(fetchInterval);
+      clearInterval(interval);
     };
   }, []);
-
   const createUser = async () => {
     try {
       if (user?.id) {
         const userData = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
           {
-            userId:user.id,
+            userId: user.id,
             firstName: user.first_name,
             lastName: user.last_name,
           }
@@ -60,25 +56,21 @@ const Quest = () => {
       console.error("Error creating user:", error);
     }
   };
-
-  const fetchUserInfo = useCallback(
-    debounce(async () => {
-      if (user?.id) {
-        const data = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-          {
-            params: {
-              userId:user.id,
-            },
-          }
-        );
-        if (data.data) {
-          setUserInfo(data.data);
+  const fetchUserInfo = async () => {
+    if (user) {
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
         }
+      );
+      if (data.data) {
+        setUserInfo(data.data);
       }
-    }, 300), // Adjust the debounce delay as needed
-    [user]
-  );
+    }
+  };
 
   const updateUser = async (count: number, boost: number, user: User) => {
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
@@ -101,11 +93,11 @@ const Quest = () => {
   useEffect(() => {
     if (userInfo && userInfo?.boost?.used < userInfo?.boost?.total) {
       const interval = setInterval(() => {
-        setUserInfo((prevUserInfo: any) => ({
-          ...prevUserInfo,
+        setUserInfo((prevuserData: any) => ({
+          ...prevuserData,
           boost: {
-            ...prevUserInfo.boost,
-            used: prevUserInfo.boost.used + 1,
+            ...prevuserData.boost,
+            used: prevuserData.boost.used + 1,
           },
         }));
       }, 1000);
@@ -126,14 +118,14 @@ const Quest = () => {
       const newBalance = userInfo.balance + userInfo.tap;
       const newBoostUsed = userInfo.boost.used - userInfo.tap;
       debouncedUpdateUser(newBalance, newBoostUsed, userInfo);
-      setUserInfo((prevUserInfo: any) => ({
-        ...prevUserInfo,
+      setUserInfo({
+        ...userInfo,
         balance: newBalance,
         boost: {
-          ...prevUserInfo.boost,
+          ...userInfo.boost,
           used: newBoostUsed,
         },
-      }));
+      });
       setTimeout(() => {
         setClicks((prevClicks) => prevClicks.slice(1));
       }, 600);
