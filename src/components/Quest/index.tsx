@@ -105,7 +105,7 @@ const Quest = () => {
   useEffect(() => {
     if (userInfo && userInfo.boost?.used < userInfo.boost?.total) {
       intervalRef.current = setInterval(() => {
-        setUserInfo((prevUserData:any) => ({
+        setUserInfo((prevUserData: any) => ({
           ...prevUserData,
           boost: {
             ...prevUserData.boost,
@@ -185,7 +185,7 @@ const Quest = () => {
               </div>
               <Progress
                 aria-label="Loading..."
-                value={img ? img.rank * 20 : 0}
+                value={img ? (img.rank - 1) * 25 : 0}
                 className={`max-w-md mt-4`}
                 color="secondary"
               />
