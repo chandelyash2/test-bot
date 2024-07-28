@@ -16,10 +16,12 @@ import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "../Flash";
 import { imgs, User } from "@/lib/quest/type";
 import Wolf from "../../../public/svg/H Vector.svg";
+
 interface Click {
   x: number;
   y: number;
 }
+
 const Quest = () => {
   const { user } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
@@ -30,6 +32,7 @@ const Quest = () => {
       createUser();
     }
   }, [user]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       fetchUserInfo();
@@ -37,7 +40,8 @@ const Quest = () => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [userInfo]);
+
   const createUser = async () => {
     try {
       if (user?.id) {
@@ -56,6 +60,7 @@ const Quest = () => {
       console.error("Error creating user:", error);
     }
   };
+
   const fetchUserInfo = async () => {
     if (user) {
       const data = await axios.get(
@@ -91,7 +96,7 @@ const Quest = () => {
   );
 
   useEffect(() => {
-    if (userInfo && userInfo?.boost?.used < userInfo?.boost?.total) {
+    if (userInfo && userInfo.boost?.used < userInfo.boost?.total) {
       const interval = setInterval(() => {
         setUserInfo((prevuserData: any) => ({
           ...prevuserData,
@@ -226,7 +231,7 @@ const Quest = () => {
                 className="absolute bottom-10 h-[100px] w-full"
               />
               <Container>
-                <div className="relative  flex justify-between font-manrope font-medium text-xs items-center">
+                <div className="relative flex justify-between font-manrope font-medium text-xs items-center">
                   <span className="flex items-center gap-2">
                     <Image src={Light} alt="Light" />
                     <h2 className="font-bold font-istok text-lg">
