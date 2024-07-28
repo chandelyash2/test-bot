@@ -16,10 +16,12 @@ import { useTelegram } from "@/lib/TelegramProvider";
 import { Flash } from "../Flash";
 import { imgs, User } from "@/lib/quest/type";
 import Wolf from "../../../public/svg/H Vector.svg";
+
 interface Click {
   x: number;
   y: number;
 }
+
 const Quest = () => {
   const { user } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
@@ -30,14 +32,18 @@ const Quest = () => {
       createUser();
     }
   }, [user]);
+
   useEffect(() => {
     const interval = setInterval(() => {
+      console.log("Fetching user info");
       fetchUserInfo();
     }, 10000);
+
     return () => {
       clearInterval(interval);
     };
-  }, [userInfo]);
+  }, []);
+
   const createUser = async () => {
     try {
       if (user?.id) {
@@ -56,48 +62,58 @@ const Quest = () => {
       console.error("Error creating user:", error);
     }
   };
+
   const fetchUserInfo = async () => {
-    if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
+    try {
+      if (user?.id) {
+        const data = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+          {
+            params: {
+              userId: user.id,
+            },
+          }
+        );
+        if (data.data) {
+          console.log("Fetched user data:", data.data);
+          setUserInfo(data.data);
         }
-      );
-      if (data.data) {
-        setUserInfo(data.data);
       }
+    } catch (error) {
+      console.error("Error fetching user info:", error);
     }
   };
 
   const updateUser = async (count: number, boost: number, user: User) => {
-    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
-      userId: user.userId,
-      balance: count,
-      boost: {
-        ...user.boost,
-        used: boost,
-      },
-    });
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+        userId: user.userId,
+        balance: count,
+        boost: {
+          ...user.boost,
+          used: boost,
+        },
+      });
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
   };
 
   const debouncedUpdateUser = useCallback(
-    debounce((newBalance, boost, user) => {
-      updateUser(newBalance, boost, user);
-    }, 300), // Adjust the debounce delay as needed
+    debounce((newBalance, newBoostUsed, user) => {
+      updateUser(newBalance, newBoostUsed, user);
+    }, 300),
     []
   );
 
   useEffect(() => {
     if (userInfo && userInfo?.boost?.used < userInfo?.boost?.total) {
       const interval = setInterval(() => {
-        setUserInfo((prevuserData: any) => ({
-          ...prevuserData,
+        setUserInfo((prevUserInfo: any) => ({
+          ...prevUserInfo,
           boost: {
-            ...prevuserData.boost,
-            used: prevuserData.boost.used + 1,
+            ...prevUserInfo.boost,
+            used: prevUserInfo.boost.used + 1,
           },
         }));
       }, 1000);
@@ -171,7 +187,7 @@ const Quest = () => {
               </div>
               <Progress
                 aria-label="Loading..."
-                value={img && img?.rank+1 * 20}
+                value={img && img?.rank + 1 * 20}
                 className={`max-w-md mt-4`}
                 color="secondary"
               />
@@ -226,7 +242,7 @@ const Quest = () => {
                 className="absolute bottom-10 h-[100px] w-full"
               />
               <Container>
-                <div className="relative  flex justify-between font-manrope font-medium text-xs items-center">
+                <div className="relative flex justify-between font-manrope font-medium text-xs items-center">
                   <span className="flex items-center gap-2">
                     <Image src={Light} alt="Light" />
                     <h2 className="font-bold font-istok text-lg">
