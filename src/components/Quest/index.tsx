@@ -48,7 +48,7 @@ const Quest = () => {
         const userData = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
           {
-            userId: user.id,
+            userId:user.id,
             firstName: user.first_name,
             lastName: user.last_name,
           }
@@ -63,12 +63,12 @@ const Quest = () => {
 
   const fetchUserInfo = useCallback(
     debounce(async () => {
-      if (user) {
+      if (user?.id) {
         const data = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
           {
             params: {
-              userId: user.id,
+              userId:user.id,
             },
           }
         );
