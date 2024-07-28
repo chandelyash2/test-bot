@@ -24,7 +24,7 @@ interface Click {
 
 const Quest = () => {
   const { user } = useTelegram();
-  const [userInfo, setUserInfo] = useState<User>();
+  const [userInfo, setUserInfo] = useState<User|any>();
   const [clicks, setClicks] = useState<Click[]>([]);
 
   useEffect(() => {
@@ -40,6 +40,7 @@ const Quest = () => {
     }, 10000);
 
     return () => {
+      console.log("Clearing interval");
       clearInterval(interval);
     };
   }, []);
@@ -134,14 +135,14 @@ const Quest = () => {
       const newBalance = userInfo.balance + userInfo.tap;
       const newBoostUsed = userInfo.boost.used - userInfo.tap;
       debouncedUpdateUser(newBalance, newBoostUsed, userInfo);
-      setUserInfo({
-        ...userInfo,
+      setUserInfo((prevUserInfo:any) => ({
+        ...prevUserInfo,
         balance: newBalance,
         boost: {
-          ...userInfo.boost,
+          ...prevUserInfo.boost,
           used: newBoostUsed,
         },
-      });
+      }));
       setTimeout(() => {
         setClicks((prevClicks) => prevClicks.slice(1));
       }, 600);
