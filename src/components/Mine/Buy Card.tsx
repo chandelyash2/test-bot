@@ -28,18 +28,13 @@ export const BuyCard = ({
     return () => {
       document.body.classList.remove("overflow-hidden");
     };
-  }, []);
+  }, []);  
   const mineLvl = (mineInfo: mineLvl[]) => {
     const mineData: any = userInfo?.mine.cards.find(
       (item) => item.type === selectedCard.name
     );
-    return mineInfo.find((item) => item.lvl === mineData?.lvl + 1);
+    return mineInfo.find((item) => item?.lvl === mineData?.lvl + 1);
   };
-  const mineData: any =
-    mineLvl(selectedCard.level)?.required?.type &&
-    userInfo?.mine.cards.find(
-      (item) => item.type === mineLvl(selectedCard.level)?.required.type
-    );
 
   const updateMine = async (profit: number, level: number, balance: number) => {
     setLoader(true);
@@ -178,11 +173,6 @@ export const BuyCard = ({
             <Button
               className="bg-[#00ACE6] rounded p-4 w-full text-white mb-4"
               isLoading={loader}
-              isDisabled={
-                mineLvl(selectedCard.level)?.required?.lvl
-                  ? mineLvl(selectedCard.level)?.required?.lvl !== mineData.lvl
-                  : false
-              }
               onClick={async () => {
                 const profit = mineLvl(selectedCard.level)?.profit;
                 const level = mineLvl(selectedCard.level)?.lvl;
