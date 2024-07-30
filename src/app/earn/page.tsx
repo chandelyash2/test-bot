@@ -374,11 +374,12 @@ const EarnPage = () => {
                   </span>
                 )}
               </Link>
-              <div
+              <Link
+                href="https://t.me/nimbitokenvip"
                 className="bg-[#242D32] rounded flex p-2 gap-8 items-center"
                 onClick={() => {
-                  !userData?.social.tg && handleSocial({ ...userData?.social, tg: true });
-                  router.push(`https://t.me/nimbitokenvip`);
+                  !userData?.social.tg &&
+                    handleSocial({ ...userData?.social, tg: true });
                 }}
               >
                 <Image
@@ -423,7 +424,7 @@ const EarnPage = () => {
                     </svg>
                   </span>
                 )}
-              </div>
+              </Link>
               <Link
                 target="_blank"
                 href="https://www.instagram.com/nimbiwolfpack/"
