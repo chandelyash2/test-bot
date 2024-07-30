@@ -372,58 +372,58 @@ const EarnPage = () => {
                   </span>
                 )}
               </Link>
-              <Link
-                target="_blank"
-                href="https://t.me/nimbitokenvip"
-                className="bg-[#242D32] rounded flex p-2 gap-8 items-center"
+              <div
                 onClick={() =>
                   !userData?.social.tg &&
                   handleSocial({ ...userData?.social, tg: true })
                 }
+                className="bg-[#242D32] rounded flex p-2 gap-8 items-center"
               >
-                <Image
-                  src="/telegram.png"
-                  width={30}
-                  height={30}
-                  alt="telegram"
-                />
-                <div className="w-52 text-left">
-                  <h4>Follow Us on Telegram</h4>
-                  <p className="flex items-center gap-1 text-xs font-manrope">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="8"
-                      height="9"
-                      viewBox="0 0 8 9"
-                      fill="none"
-                    >
-                      <circle cx="4" cy="4.23108" r="4" fill="#00ACE6" />
-                    </svg>
-                    +25 000
-                  </p>
-                </div>
-                {userData?.social.tg ? (
-                  <Image src={Tick} alt="tg" />
-                ) : (
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="21"
-                      viewBox="0 0 20 21"
-                      fill="none"
-                    >
-                      <path
-                        d="M4 10.2311L16 10.2311M16 10.2311L11.7574 6.23108M16 10.2311L11.7574 14.2311"
-                        stroke="white"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </span>
-                )}
-              </Link>
+                <Link target="_blank" href="https://t.me/nimbitokenvip">
+                  <Image
+                    src="/telegram.png"
+                    width={30}
+                    height={30}
+                    alt="telegram"
+                  />
+                  <div className="w-52 text-left">
+                    <h4>Follow Us on Telegram</h4>
+                    <p className="flex items-center gap-1 text-xs font-manrope">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="8"
+                        height="9"
+                        viewBox="0 0 8 9"
+                        fill="none"
+                      >
+                        <circle cx="4" cy="4.23108" r="4" fill="#00ACE6" />
+                      </svg>
+                      +25 000
+                    </p>
+                  </div>
+                  {userData?.social.tg ? (
+                    <Image src={Tick} alt="tg" />
+                  ) : (
+                    <span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="21"
+                        viewBox="0 0 20 21"
+                        fill="none"
+                      >
+                        <path
+                          d="M4 10.2311L16 10.2311M16 10.2311L11.7574 6.23108M16 10.2311L11.7574 14.2311"
+                          stroke="white"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  )}
+                </Link>
+              </div>
               <Link
                 target="_blank"
                 href="https://www.instagram.com/nimbiwolfpack/"
