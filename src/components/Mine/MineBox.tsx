@@ -124,7 +124,7 @@ export const MineBox = ({ color, mine }: MineBoxProp) => {
                     height={20}
                   />
                   <span className="font-bold text-roboto text-[14px]">
-                    {mineLvl1(mine.level)?.price}
+                    {mineLvl1(mine.level)?.price.toLocaleString()}
                   </span>
                 </div>
               </div>

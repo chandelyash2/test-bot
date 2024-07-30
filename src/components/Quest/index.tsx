@@ -168,7 +168,7 @@ const Quest = () => {
               <span className="flex items-center gap-2 p-3 bg-[#242D32]">
                 <Image src={QuestMine} alt="quest" />
                 <h2 className="text-xs font-semibold font-roboto">
-                  Auto Mining <span className="fnt-semibold">K2900 hr</span>
+                  Auto Mining <span className="font-semibold">{userInfo.mine.profit} hr</span>
                 </h2>
               </span>
             </div>
@@ -176,7 +176,6 @@ const Quest = () => {
               <div className="flex justify-between font-manrope font-medium text-xs items-center">
                 <span className="flex items-center gap-4">
                   <h4>Rank {img?.rank}/5</h4>
-                  <Image src={Question} alt="question" />
                 </span>
                 <span className="flex items-center gap-2">
                   <Image src={img?.icon} alt={img?.name || ""} width={15} />
@@ -196,7 +195,7 @@ const Quest = () => {
                 <span className="flex items-center gap-2">
                   <Image src={Dollar} alt="Dollar" />
                   <h2 className="font-istok text-3xl font-semibold">
-                    {userInfo.balance}
+                    {userInfo.balance.toLocaleString()}
                   </h2>
                 </span>
               </div>

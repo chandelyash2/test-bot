@@ -249,7 +249,7 @@ export const Boost = () => {
                   className="text-[#00ACE6] font-semibold text-inter cursor-pointer"
                   onClick={collectTap}
                 >
-                  Collect
+                  Buy
                 </h2>
               </div>
             </div>

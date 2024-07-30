@@ -39,17 +39,12 @@ export interface User {
     };
   };
   mine: {
-    profit: {
-      type: number;
-    };
+    profit: number;
     cards: [
       {
-        type: {
-          type: string;
-        };
-        lvl: {
-          type: number;
-        };
+        type: string;
+
+        lvl: number;
       },
       {
         type: {

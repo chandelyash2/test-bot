@@ -160,7 +160,7 @@ export const BuyCard = ({
                 </defs>
               </svg>
               <h3 className="text-lg font-roboto font-bold">
-                {mineLvl(selectedCard.level)?.price}
+                {mineLvl(selectedCard.level)?.price.toLocaleString()}
               </h3>
             </div>
             {mineLvl(selectedCard.level)?.required && (

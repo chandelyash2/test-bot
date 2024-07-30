@@ -57,9 +57,7 @@ export const BuyNimbi = () => {
             </p>
           </div>
         </div>
-        <Button className="w-full lg:w-[221px] rounded bg-nimbi text-white font-semibold">
-          Buy Now
-        </Button>
+   
       </div>
     </Container>
   );
