@@ -175,7 +175,7 @@ export const Boost = () => {
                   className="text-[#00ACE6] font-semibold text-inter cursor-pointer"
                   onClick={collectEnergy}
                 >
-                  Collect
+                  Buy
                 </h2>
               </div>
               <div className="bg-[#242D32] rounded flex p-2 items-center justify-between">

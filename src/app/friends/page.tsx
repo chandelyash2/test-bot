@@ -18,39 +18,39 @@ const FriendsPage = () => {
 
   useEffect(() => {
     if (user) {
-      fetchUserInfo();
-      fetchFriends();
+    fetchUserInfo();
+    fetchFriends();
     }
   }, [user]);
 
   const fetchUserInfo = async () => {
     if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
-      if (data.data) {
-        setUserInfo(data.data);
+    const data = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+      {
+        params: {
+          userId:user.id,
+        },
       }
+    );
+    if (data.data) {
+      setUserInfo(data.data);
+    }
     }
   };
   const fetchFriends = async () => {
     if (user) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userFriend`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
-      if (data.data) {
-        setFriends(data.data);
+    const data = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/userFriend`,
+      {
+        params: {
+          userId: user.id,
+        },
       }
+    );
+    if (data.data) {
+      setFriends(data.data);
+    }
     }
   };
   const handleClick = async () => {
@@ -123,14 +123,11 @@ const FriendsPage = () => {
                     Your Friends ({friends?.length})
                   </h2>
                 </div>
-                <div className="flex flex-col gap-4 items-center justify-between border-b p-1 border-[#334047]">
+                <div className="flex flex-col gap-4  border-b p-1 border-[#334047]">
                   {friends && friends?.length > 0 ? (
                     friends?.map((friend) => (
-                      <>
-                        <div
-                          className="flex items-center gap-2"
-                          key={friend._id}
-                        >
+                      <div className="flex justify-between items-center" key={friend._id} >
+                        <div className="flex items-center gap-2">
                           <Image
                             src="/img/28.png"
                             width={50}
@@ -198,7 +195,7 @@ const FriendsPage = () => {
                           </svg>
                           +5k
                         </span>
-                      </>
+                      </div>
                     ))
                   ) : (
                     <p>No Friends to show</p>
