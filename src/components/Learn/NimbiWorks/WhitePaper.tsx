@@ -27,9 +27,6 @@ export const WhitePaper = () => {
             Dive into our educational white paper and find out why taking this
             journey with us is an absolute no-brainer!
           </p>
-          <Button className="lg:w-[221px] rounded bg-nimbi text-white font-semibold">
-            Access The Whitepaper
-          </Button>
         </div>
         <img
           src="/Nimbi.png"

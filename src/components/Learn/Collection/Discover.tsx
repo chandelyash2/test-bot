@@ -23,9 +23,6 @@ export const Discover = () => {
           <CollectionCard img="/Collection2.png" />
           <CollectionCard img="/Collection3.png" />
         </div>
-        <Button className="mt-3 rounded w-[220px] bg-nimbi text-white font-semibold">
-          Explore the Collection
-        </Button>
       </div>
     </Container>
   );
