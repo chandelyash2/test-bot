@@ -166,7 +166,7 @@ export const Boost = () => {
                           </clipPath>
                         </defs>
                       </svg>
-                      {findEnergy()?.price}
+                      {findEnergy()?.price.toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -240,7 +240,7 @@ export const Boost = () => {
                           </clipPath>
                         </defs>
                       </svg>
-                      {findPrice()?.price}
+                      {findPrice()?.price.toLocaleString()}
                     </span>
                   </div>
                 </div>
