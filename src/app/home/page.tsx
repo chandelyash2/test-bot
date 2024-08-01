@@ -14,37 +14,37 @@ const array = [
     id: 0,
     img: "/img/Home/Omega.png",
     name: "Sigma",
-    value: "250k",
+    value:"",
   },
   {
     id: 1,
     img: "/img/Home/Sigma.png",
     name: "Omega",
-    value: "250k",
+    value: "5M",
   },
   {
     id: 2,
     img: "/img/Home/Mid.png",
     name: "Mid Ranking",
-    value: "5M",
+    value: "10M",
   },
   {
     id: 3,
     img: "/img/Home/Beta.png",
     name: "Beta",
-    value: "5M",
+    value: "50M",
   },
   {
     id: 4,
     img: "/img/Home/Luna.png",
     name: "Luna",
-    value: "5M / 15M",
+    value: "100M",
   },
   {
     id: 5,
     img: "/img/Home/Nimbi.png",
     name: "Nimbi",
-    value: "50M",
+    value: "100M",
   },
 ];
 
