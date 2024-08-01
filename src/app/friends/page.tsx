@@ -18,39 +18,39 @@ const FriendsPage = () => {
 
   useEffect(() => {
     if (user) {
-    fetchUserInfo();
-    fetchFriends();
+      fetchUserInfo();
+      fetchFriends();
     }
   }, [user]);
 
   const fetchUserInfo = async () => {
     if (user) {
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-      {
-        params: {
-          userId:user.id,
-        },
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setUserInfo(data.data);
       }
-    );
-    if (data.data) {
-      setUserInfo(data.data);
-    }
     }
   };
   const fetchFriends = async () => {
     if (user) {
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/userFriend`,
-      {
-        params: {
-          userId: user.id,
-        },
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userFriend`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      if (data.data) {
+        setFriends(data.data);
       }
-    );
-    if (data.data) {
-      setFriends(data.data);
-    }
     }
   };
   const handleClick = async () => {
@@ -126,14 +126,19 @@ const FriendsPage = () => {
                 <div className="flex flex-col gap-4  border-b p-1 border-[#334047]">
                   {friends && friends?.length > 0 ? (
                     friends?.map((friend) => (
-                      <div className="flex justify-between items-center" key={friend._id} >
+                      <div
+                        className="flex justify-between items-center"
+                        key={friend._id}
+                      >
                         <div className="flex items-center gap-2">
-                          <Image
-                            src="/img/28.png"
-                            width={50}
-                            height={50}
-                            alt="avatar"
-                          />
+                          <span className="rounded bg-[#242D32] p-1">
+                            <Image
+                              src="/img/Default.png"
+                              alt="avatar"
+                              width={30}
+                              height={30}
+                            />
+                          </span>
                           <div>
                             <h3 className="font-bold font-roboto">
                               {friend.firstName} {friend.lastName}

@@ -160,14 +160,14 @@ const Quest = () => {
           <div className="flex flex-col gap-4 pb-[120px]">
             <div className="flex items-center justify-between border-b border-[#5C666C] p-4">
               <span className="flex items-center gap-4">
-                <span className="rounded bg-primary">
+                <span className="rounded bg-[#242D32] p-1">
                   <Image
                     src="/img/Default.png"
                     alt="avatar"
                     width={30}
                     height={30}
                   />
-                </span>
+                </span>{" "}
                 <h2 className="font-inter font-bold font-sm">
                   {userInfo.firstName} {userInfo.lastName}
                 </h2>
