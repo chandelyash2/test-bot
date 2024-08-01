@@ -160,7 +160,14 @@ const Quest = () => {
           <div className="flex flex-col gap-4 pb-[120px]">
             <div className="flex items-center justify-between border-b border-[#5C666C] p-4">
               <span className="flex items-center gap-4">
-                <Image src="/img/28.png" alt="avatar" width={40} height={40} />
+                <span className="rounded bg-primary">
+                  <Image
+                    src="/img/Default.png"
+                    alt="avatar"
+                    width={30}
+                    height={30}
+                  />
+                </span>
                 <h2 className="font-inter font-bold font-sm">
                   {userInfo.firstName} {userInfo.lastName}
                 </h2>
@@ -168,7 +175,10 @@ const Quest = () => {
               <span className="flex items-center gap-2 p-3 bg-[#242D32]">
                 <Image src={QuestMine} alt="quest" />
                 <h2 className="text-xs font-semibold font-roboto">
-                  Auto Mining <span className="font-semibold">{userInfo.mine.profit} hr</span>
+                  Auto Mining{" "}
+                  <span className="font-semibold">
+                    {userInfo.mine.profit} hr
+                  </span>
                 </h2>
               </span>
             </div>
