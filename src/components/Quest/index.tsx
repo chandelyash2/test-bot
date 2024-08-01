@@ -29,10 +29,10 @@ const Quest = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (user) {
-      createUser();
-    }
-  }, [user]);
+    // if (user) {
+    createUser();
+    // }
+  }, []);
 
   useEffect(() => {
     intervalRef.current = setInterval(fetchUserInfo, 10000);
@@ -41,22 +41,22 @@ const Quest = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [user]);
+  }, []);
 
   const createUser = async () => {
     try {
-      if (user?.id) {
-        const { data } = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
-          {
-            userId: user.id,
-            firstName: user.first_name,
-            lastName: user.last_name,
-          }
-        );
-        console.log("User Data:", data);
-        setUserInfo(data);
-      }
+      // if (user?.id) {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
+        {
+          userId: "7129429718",
+          // firstName: user.first_name,
+          // lastName: user.last_name,
+        }
+      );
+      console.log("User Data:", data);
+      setUserInfo(data);
+      // }
     } catch (error) {
       console.error("Error creating user:", error);
     }
@@ -64,17 +64,17 @@ const Quest = () => {
 
   const fetchUserInfo = async () => {
     try {
-      if (user) {
-        const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-          {
-            params: {
-              userId: user.id,
-            },
-          }
-        );
-        setUserInfo(data);
-      }
+      // if (user) {
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: "7129429718",
+          },
+        }
+      );
+      setUserInfo(data);
+      // }
     } catch (error) {
       console.error("Error fetching user info:", error);
     }
@@ -161,7 +161,7 @@ const Quest = () => {
     <>
       {userInfo ? (
         <Layout>
-          <div className="flex flex-col gap-4 pb-[120px]">
+          <div className="flex flex-col gap-4 pb-[80px]">
             <div className="flex items-center justify-between border-b border-[#5C666C] p-4">
               <span className="flex items-center gap-4">
                 <span className="rounded bg-[#242D32] p-1">
@@ -181,7 +181,7 @@ const Quest = () => {
                 <h2 className="text-xs font-semibold font-roboto">
                   Auto Mining{" "}
                   <span className="font-semibold">
-                    {userInfo.mine.profit} hr
+                    {userInfo.mine.profit.toLocaleString()} hr
                   </span>
                 </h2>
               </span>
@@ -193,7 +193,15 @@ const Quest = () => {
                 </span>
                 <span className="flex items-center gap-2">
                   <Image src={img?.icon} alt={img?.name || ""} width={15} />
-                  <Link href="/home">{img?.name}</Link>
+                  <Link href="/home" className="flex items-center">
+                    {img?.name}{" "}
+                    <Image
+                      src="/img/Quest/Right.png"
+                      width={20}
+                      height={20}
+                      alt="angle"
+                    />
+                  </Link>
                 </span>
               </div>
               <Progress
@@ -250,10 +258,10 @@ const Quest = () => {
                 width={200}
                 height={100}
                 alt="quest"
-                className="absolute bottom-10 h-[100px] w-full"
+                className="absolute bottom-8 h-[100px] w-full"
               />
               <Container>
-                <div className="relative flex justify-between font-manrope font-medium text-xs items-center">
+                <div className="relative bottom-2 flex justify-between font-manrope font-medium text-xs items-center">
                   <span className="flex items-center gap-2">
                     <Image src={Light} alt="Light" />
                     <h2 className="font-bold font-istok text-lg">
