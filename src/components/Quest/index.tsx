@@ -146,12 +146,16 @@ const Quest = () => {
     }
   };
 
-  const img =
+  const img: any =
     userInfo &&
     imgs.find(
       (item) =>
         userInfo.balance >= item.less && userInfo.balance <= item.greater
     );
+  const progressValue =
+    userInfo && img.less !== undefined && img.greater !== undefined
+      ? ((userInfo.balance - img.less) / (img.greater - img.less)) * 100
+      : 0;
 
   return (
     <>
@@ -194,7 +198,7 @@ const Quest = () => {
               </div>
               <Progress
                 aria-label="Loading..."
-                value={img ? (img.rank - 1) * 25 : 0}
+                value={progressValue}
                 className={`max-w-md mt-4`}
                 color="secondary"
               />
