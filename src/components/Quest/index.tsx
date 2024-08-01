@@ -29,10 +29,10 @@ const Quest = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // if (user) {
-    createUser();
-    // }
-  }, []);
+    if (user) {
+      createUser();
+    }
+  }, [user]);
 
   useEffect(() => {
     intervalRef.current = setInterval(fetchUserInfo, 10000);
@@ -41,22 +41,22 @@ const Quest = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, []);
+  }, [user]);
 
   const createUser = async () => {
     try {
-      // if (user?.id) {
-      const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
-        {
-          userId: "7129429718",
-          // firstName: user.first_name,
-          // lastName: user.last_name,
-        }
-      );
-      console.log("User Data:", data);
-      setUserInfo(data);
-      // }
+      if (user?.id) {
+        const { data } = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
+          {
+            userId: user.id,
+            firstName: user.first_name,
+            lastName: user.last_name,
+          }
+        );
+        console.log("User Data:", data);
+        setUserInfo(data);
+      }
     } catch (error) {
       console.error("Error creating user:", error);
     }
@@ -64,17 +64,17 @@ const Quest = () => {
 
   const fetchUserInfo = async () => {
     try {
-      // if (user) {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: "7129429718",
-          },
-        }
-      );
-      setUserInfo(data);
-      // }
+      if (user) {
+        const { data } = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+          {
+            params: {
+              userId: user.id,
+            },
+          }
+        );
+        setUserInfo(data);
+      }
     } catch (error) {
       console.error("Error fetching user info:", error);
     }
