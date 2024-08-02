@@ -30,7 +30,7 @@ const Quest = () => {
 
   useEffect(() => {
     if (user) {
-    createUser();
+      createUser();
     }
   }, [user]);
 
@@ -46,16 +46,16 @@ const Quest = () => {
   const createUser = async () => {
     try {
       if (user?.id) {
-      const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
-        {
-          userId: user.id,
-          firstName: user.first_name,
-          lastName: user.last_name,
-        }
-      );
-      console.log("User Data:", data);
-      setUserInfo(data);
+        const { data } = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
+          {
+            userId: user.id,
+            firstName: user.first_name,
+            lastName: user.last_name,
+          }
+        );
+        console.log("User Data:", data);
+        setUserInfo(data);
       }
     } catch (error) {
       console.error("Error creating user:", error);
@@ -65,15 +65,15 @@ const Quest = () => {
   const fetchUserInfo = async () => {
     try {
       if (user) {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-        {
-          params: {
-            userId: user.id,
-          },
-        }
-      );
-      setUserInfo(data);
+        const { data } = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+          {
+            params: {
+              userId: user.id,
+            },
+          }
+        );
+        setUserInfo(data);
       }
     } catch (error) {
       console.error("Error fetching user info:", error);
@@ -135,13 +135,15 @@ const Quest = () => {
     let ranking: any = userInfo?.ranking;
     if (userInfo && userInfo.boost.used > 0) {
       setClicks((prevClicks) => [...prevClicks, { x, y }]);
-      if (userInfo.balance > userInfo.ranking.greater) {
+      if (
+        userInfo.ranking.rank < 5 &&
+        userInfo.balance > userInfo.ranking.greater
+      ) {
         ranking = {
           rank: userInfo.ranking.rank + 1,
           less: 0,
-          greater:
-            imgs.find((item) => item.rank === userInfo.ranking.rank + 1)
-              ?.greater || 0,
+          greater: imgs.find((item) => item.rank === userInfo.ranking.rank + 1)
+            ?.greater,
         };
       }
 
