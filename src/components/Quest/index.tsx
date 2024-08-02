@@ -30,7 +30,7 @@ const Quest = () => {
 
   useEffect(() => {
     if (user) {
-      createUser();
+    createUser();
     }
   }, [user]);
 
@@ -46,16 +46,16 @@ const Quest = () => {
   const createUser = async () => {
     try {
       if (user?.id) {
-        const { data } = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
-          {
-            userId: user.id,
-            firstName: user.first_name,
-            lastName: user.last_name,
-          }
-        );
-        console.log("User Data:", data);
-        setUserInfo(data);
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
+        {
+          userId: user.id,
+          firstName: user.first_name,
+          lastName: user.last_name,
+        }
+      );
+      console.log("User Data:", data);
+      setUserInfo(data);
       }
     } catch (error) {
       console.error("Error creating user:", error);
@@ -65,22 +65,27 @@ const Quest = () => {
   const fetchUserInfo = async () => {
     try {
       if (user) {
-        const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-          {
-            params: {
-              userId: user.id,
-            },
-          }
-        );
-        setUserInfo(data);
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
+        {
+          params: {
+            userId: user.id,
+          },
+        }
+      );
+      setUserInfo(data);
       }
     } catch (error) {
       console.error("Error fetching user info:", error);
     }
   };
 
-  const updateUser = async (count: number, boost: number, user: User) => {
+  const updateUser = async (
+    count: number,
+    boost: number,
+    user: User,
+    ranking: any
+  ) => {
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
         userId: user.userId,
@@ -89,6 +94,7 @@ const Quest = () => {
           ...user.boost,
           used: boost,
         },
+        ranking,
       });
     } catch (error) {
       console.error("Error updating user:", error);
@@ -96,8 +102,8 @@ const Quest = () => {
   };
 
   const debouncedUpdateUser = useCallback(
-    debounce((newBalance, boost, user) => {
-      updateUser(newBalance, boost, user);
+    debounce((newBalance, boost, user, ranking) => {
+      updateUser(newBalance, boost, user, ranking);
     }, 300),
     []
   );
@@ -126,12 +132,22 @@ const Quest = () => {
     const rect = e.target.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = rect.bottom - e.clientY;
-
+    let ranking: any = userInfo?.ranking;
     if (userInfo && userInfo.boost.used > 0) {
       setClicks((prevClicks) => [...prevClicks, { x, y }]);
+      if (userInfo.balance > userInfo.ranking.greater) {
+        ranking = {
+          rank: userInfo.ranking.rank + 1,
+          less: 0,
+          greater:
+            imgs.find((item) => item.rank === userInfo.ranking.rank + 1)
+              ?.greater || 0,
+        };
+      }
+
       const newBalance = userInfo.balance + userInfo.tap;
       const newBoostUsed = userInfo.boost.used - userInfo.tap;
-      debouncedUpdateUser(newBalance, newBoostUsed, userInfo);
+      debouncedUpdateUser(newBalance, newBoostUsed, userInfo, ranking);
       setUserInfo({
         ...userInfo,
         balance: newBalance,
@@ -139,6 +155,7 @@ const Quest = () => {
           ...userInfo.boost,
           used: newBoostUsed,
         },
+        ranking,
       });
       setTimeout(() => {
         setClicks((prevClicks) => prevClicks.slice(1));
@@ -147,14 +164,14 @@ const Quest = () => {
   };
 
   const img: any =
-    userInfo &&
-    imgs.find(
-      (item) =>
-        userInfo.balance >= item.less && userInfo.balance <= item.greater
-    );
+    userInfo && imgs.find((item) => item.rank === userInfo.ranking.rank);
   const progressValue =
-    userInfo && img.less !== undefined && img.greater !== undefined
-      ? ((userInfo.balance - img.less) / (img.greater - img.less)) * 100
+    userInfo &&
+    userInfo.ranking.less !== undefined &&
+    userInfo.ranking.greater !== undefined
+      ? ((userInfo.balance - userInfo.ranking.less) /
+          (userInfo.ranking.greater - userInfo.ranking.less)) *
+        100
       : 0;
 
   return (
@@ -189,7 +206,7 @@ const Quest = () => {
             <Container>
               <div className="flex justify-between font-manrope font-medium text-xs items-center">
                 <span className="flex items-center gap-4">
-                  <h4>Rank {img?.rank}/5</h4>
+                  <h4>Rank {userInfo?.ranking.rank}/5</h4>
                 </span>
                 <span className="flex items-center gap-2">
                   <Image src={img?.icon} alt={img?.name || ""} width={15} />

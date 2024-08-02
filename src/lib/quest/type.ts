@@ -10,7 +10,11 @@ export interface User {
   friends: string[];
   lastName: string;
   userId: string;
-  rank: number;
+  ranking: {
+    rank: number;
+    less: number;
+    greater: number;
+  };
   balance: number;
   boost: {
     used: number;
