@@ -35,7 +35,7 @@ const Quest = () => {
   }, [user]);
 
   useEffect(() => {
-    intervalRef.current = setInterval(fetchUserInfo, 10000);
+    intervalRef.current = setInterval(fetchUserInfo, 5000);
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
