@@ -168,13 +168,7 @@ const Quest = () => {
   const img: any =
     userInfo && imgs.find((item) => item.rank === userInfo.ranking.rank);
   const progressValue =
-    userInfo &&
-    userInfo.ranking.less !== undefined &&
-    userInfo.ranking.greater !== undefined
-      ? ((userInfo.balance - userInfo.ranking.less) /
-          (userInfo.ranking.greater - userInfo.ranking.less)) *
-        100
-      : 0;
+    userInfo && (userInfo?.balance / userInfo?.ranking.greater) * 100;
 
   return (
     <>
