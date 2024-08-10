@@ -262,8 +262,8 @@ const Quest = () => {
                       transform: "translate(-50%, 0)",
                     }}
                   >
-                    <Image src={Wolf} width={50} height={50} alt="wolf"/>+
-                    {userInfo.tap}
+                    <Image src={Wolf} width={50} height={50} alt="wolf" className="" />
+                    <span>+{userInfo.tap}</span>
                   </div>
                 ))}
               </div>
