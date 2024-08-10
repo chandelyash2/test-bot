@@ -20,7 +20,7 @@
 }
 
 @keyframes moveUp {
-  100% {
+  50% {
     bottom: 400px; /* Adjust this value as needed */
     opacity: 0.8;
     font-size: 14px;
