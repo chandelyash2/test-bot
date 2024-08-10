@@ -255,14 +255,14 @@ const Quest = () => {
                 {clicks.map((click, index) => (
                   <div
                     key={index}
-                    className="absolute animation-text"
+                    className="absolute animation-text text-xs"
                     style={{
                       left: `${click.x}px`,
                       bottom: `${click.y}px`,
                       transform: "translate(-50%, 0)",
                     }}
                   >
-                    <Image src={Wolf} width={50} height={50} alt="wolf" />+
+                    <Image src={Wolf} width={50} height={50} alt="wolf" className="animation-text"/>+
                     {userInfo.tap}
                   </div>
                 ))}
