@@ -254,17 +254,17 @@ const Quest = () => {
                 />
                 {clicks.map((click, index) => (
                   <div
-                    key={index}
-                    className="absolute animation-text text-xs"
-                    style={{
-                      left: `${click.x}px`,
-                      bottom: `${click.y}px`,
-                      transform: "translate(-50%, 0)",
-                    }}
-                  >
-                    <Image src={Wolf} width={50} height={50} alt="wolf" className="absolute animation-text" />
-                    <span>+{userInfo.tap}</span>
-                  </div>
+                  key={index}
+                  className="absolute animation-text text-[10px] flex gap-2 items-center"
+                  style={{
+                    left: `${click.x}px`,
+                    bottom: `${click.y}px`,
+                    transform: "translate(-50%, 0)",
+                  }}
+                >
+                  <Image src={Wolf} width={30} height={30} alt="wolf" />
+                  <span>+{userInfo.tap}</span>
+                </div>
                 ))}
               </div>
               <Image
