@@ -213,6 +213,7 @@ const Quest = () => {
                       width={20}
                       height={20}
                       alt="angle"
+                      className="pl-2"
                     />
                   </Link>
                 </span>
