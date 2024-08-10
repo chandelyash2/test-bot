@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  color: white;
+  /* background: #1C2327 */
+}
+/* styles.css */
+
+.animation-text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: moveUp 1s ease-out forwards;
+  font-size: 30px;
+  color: rgb(218, 207, 207);
+  font-weight: 700;
+  display: flex;
+}
+
+@keyframes moveUp {
+  100% {
+    bottom: 400px; /* Adjust this value as needed */
+    opacity: 0.8;
+    font-size: 12px;
+  }
+}
