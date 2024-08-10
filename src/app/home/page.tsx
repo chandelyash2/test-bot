@@ -14,37 +14,49 @@ const array = [
     id: 0,
     img: "/img/Home/Omega.png",
     name: "Sigma",
-    value:"",
+    value: "",
+    description:
+      "Sigma wolves are usually of in-pack relations as betas and alphas. They are considered wolves with a strong sense of loyalty and respect for the pack’s hierarchy. They often have a good meal after a hunt and are given more freedom to make decisions.",
   },
   {
     id: 1,
     img: "/img/Home/Sigma.png",
     name: "Omega",
     value: "5M",
+    description:
+      "The omega wolves are the lowest rank in the pack and are often the victims of bullying and harassment by higher-ranking wolves. They may be younger or weaker wolves that have not yet established their place in the pack hierarchy.",
   },
   {
     id: 2,
     img: "/img/Home/Mid.png",
     name: "Mid Ranking",
     value: "10M",
+    description:
+      "The mid-rank wolves are subordinate to the alpha and beta pairs and are responsible for carrying out tasks assigned to them by the alpha pair. They may be responsible for hunting, caring for pups, or defending the pack’s territory.",
   },
   {
     id: 3,
     img: "/img/Home/Beta.png",
     name: "Beta",
     value: "50M",
+    description:
+      "The beta pair is the second-highest rank in the pack, consisting of a male and female wolf. They are responsible for assisting the alpha pair and helping to maintain order within the pack. The beta pair may also take over as the alpha pair if the current alpha pair is injured or dies.",
   },
   {
     id: 4,
     img: "/img/Home/Luna.png",
     name: "Luna",
     value: "100M",
+    description:
+      "The Luna wolf is the leader of the group, responsible for protecting the pack, dealing with threats to the pack’s survival, making decisions, and leading hunts. ",
   },
   {
     id: 5,
     img: "/img/Home/Nimbi.png",
     name: "Nimbi",
     value: "100M",
+    description:
+      "The alpha pair is the dominant pair in the pack, consisting of a male and female wolf. They are responsible for leading the pack, making decisions, and protecting the pack’s territory and resources. The alpha pair is also responsible for mating and producing offspring.",
   },
 ];
 
@@ -75,7 +87,7 @@ export default function Home() {
           (item) =>
             data.data.balance >= item.less && data.data.balance <= item.greater
         );
-        imgdata?.rank && setActive(imgdata?.rank-1);
+        imgdata?.rank && setActive(imgdata?.rank - 1);
       }
     }
   };
@@ -167,9 +179,7 @@ export default function Home() {
                           {item.value}
                         </span>
                         <p className="font-manrope w-[70%] text-sm">
-                          The Luna wolf is the leader of the group, responsible
-                          for protecting the pack, dealing with threats to the
-                          pack’s survival, making decisions, and leading hunts.
+                          {item.description}
                         </p>
                       </div>
                     )}

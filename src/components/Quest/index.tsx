@@ -274,7 +274,7 @@ const Quest = () => {
                 className="absolute bottom-8 h-[100px] w-full"
               />
               <Container>
-                <div className="relative bottom-2 flex justify-between font-manrope font-medium text-xs items-center">
+                <div className="relative bottom-4 flex justify-between font-manrope font-medium text-xs items-center">
                   <span className="flex items-center gap-2">
                     <Image src={Light} alt="Light" />
                     <h2 className="font-bold font-istok text-lg">

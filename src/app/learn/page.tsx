@@ -28,7 +28,7 @@ const array = [
     name: "Omega",
     icon: Omega,
     description:
-      "Sigma wolves are usually of in-pack relations as betas and alphas. They are considered wolves with a strong sense of loyalty and respect for the pack’s hierarchy. They often have a good meal after a hunt and are given more freedom to make decisions.",
+      "The omega wolves are the lowest rank in the pack and are often the victims of bullying and harassment by higher-ranking wolves. They may be younger or weaker wolves that have not yet established their place in the pack hierarchy.",
     color: "#847343",
     img: "/img/Omega.png",
     text: "250 000 + 5 Active Friends",
@@ -37,7 +37,7 @@ const array = [
     name: "Mid Ranking Wolf",
     icon: MidRank,
     description:
-      "Sigma wolves are usually of in-pack relations as betas and alphas. They are considered wolves with a strong sense of loyalty and respect for the pack’s hierarchy. They often have a good meal after a hunt and are given more freedom to make decisions.",
+      "The mid-rank wolves are subordinate to the alpha and beta pairs and are responsible for carrying out tasks assigned to them by the alpha pair. They may be responsible for hunting, caring for pups, or defending the pack’s territory.",
     color: "#EBAC0B",
     img: "/img/MidRank.png",
     text: "500 000 or 15 Active Friends",
@@ -46,7 +46,7 @@ const array = [
     name: "Beta",
     icon: Beta,
     description:
-      "Sigma wolves are usually of in-pack relations as betas and alphas. They are considered wolves with a strong sense of loyalty and respect for the pack’s hierarchy. They often have a good meal after a hunt and are given more freedom to make decisions.",
+      "The beta pair is the second-highest rank in the pack, consisting of a male and female wolf. They are responsible for assisting the alpha pair and helping to maintain order within the pack. The beta pair may also take over as the alpha pair if the current alpha pair is injured or dies.",
     color: "#668F97",
     img: "/img/Beta.png",
     text: "+5 000 000or 25 Active Friends",
@@ -57,7 +57,7 @@ const alphaArry = [
     name: "Luna",
     icon: Luna,
     description:
-      "Sigma wolves are usually of in-pack relations as betas and alphas. They are considered wolves with a strong sense of loyalty and respect for the pack’s hierarchy. They often have a good meal after a hunt and are given more freedom to make decisions.",
+      "The Luna wolf is the leader of the group, responsible for protecting the pack, dealing with threats to the pack’s survival, making decisions, and leading hunts. ",
     color: "#8E64F1",
     img: "/img/Luna.png",
     text: "+5 000 000 + 35 Active Friends",
@@ -66,7 +66,7 @@ const alphaArry = [
     name: "Nimbi",
     icon: Nimbi,
     description:
-      "Sigma wolves are usually of in-pack relations as betas and alphas. They are considered wolves with a strong sense of loyalty and respect for the pack’s hierarchy. They often have a good meal after a hunt and are given more freedom to make decisions.",
+      "The alpha pair is the dominant pair in the pack, consisting of a male and female wolf. They are responsible for leading the pack, making decisions, and protecting the pack’s territory and resources. The alpha pair is also responsible for mating and producing offspring.",
     color: "#00ACE6",
     img: "/img/Nimbi.png",
     text: "+15 000 000 + 100 Active Friends",
