@@ -275,7 +275,7 @@ const Quest = () => {
                     className="absolute animation-text text-[10px] flex gap-2 items-center"
                     style={{
                       left: `${click.x}px`,
-                      bottom: `calc(${click.y}px)`, // Adjust this line to fix vertical positioning
+                      top: `calc(${click.y}px - 40px)`, // Adjust `40px` based on the height of the wolf image
                       transform: "translate(-50%, 0)",
                     }}
                   >
