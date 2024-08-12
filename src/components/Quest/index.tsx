@@ -23,7 +23,7 @@ interface Click {
 
 const Quest = () => {
   const { user } = useTelegram();
-  const [userInfo, setUserInfo] = useState<User>();
+  const [userInfo, setUserInfo] = useState<any>();
   const [clicks, setClicks] = useState<Click[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -45,7 +45,7 @@ const Quest = () => {
   const createUser = async () => {
     try {
       if (user?.id) {
-        const { data } = await axios.post(
+        const { data } = await axios.post<User>(
           `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
           {
             userId: user.id,
@@ -64,12 +64,10 @@ const Quest = () => {
   const fetchUserInfo = async () => {
     try {
       if (user) {
-        const { data } = await axios.get(
+        const { data } = await axios.get<User>(
           `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
           {
-            params: {
-              userId: user.id,
-            },
+            params: { userId: user.id },
           }
         );
         setUserInfo(data);
@@ -89,10 +87,7 @@ const Quest = () => {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
         userId: user.userId,
         balance: count,
-        boost: {
-          ...user.boost,
-          used: boost,
-        },
+        boost: { ...user.boost, used: boost },
         ranking,
       });
     } catch (error) {
@@ -103,18 +98,18 @@ const Quest = () => {
   const debouncedUpdateUser = useCallback(
     debounce((newBalance, boost, user, ranking) => {
       updateUser(newBalance, boost, user, ranking);
-    }),
+    }, 300),
     []
   );
 
   useEffect(() => {
     if (userInfo && userInfo.boost?.used < userInfo.boost?.total) {
       intervalRef.current = setInterval(() => {
-        setUserInfo((prevUserData: any) => ({
-          ...prevUserData,
+        setUserInfo((prev: any) => ({
+          ...prev!,
           boost: {
-            ...prevUserData.boost,
-            used: prevUserData.boost.used + 1,
+            ...prev!.boost,
+            used: prev!.boost.used + 1,
           },
         }));
       }, 1000);
@@ -127,13 +122,15 @@ const Quest = () => {
     }
   }, [userInfo]);
 
-  const handleQuestClick = (e: any) => {
-    const rect = e.target.getBoundingClientRect();
+  const handleQuestClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = rect.bottom - e.clientY;
-    let ranking: any = userInfo?.ranking;
+    let ranking = userInfo?.ranking;
+
     if (userInfo && userInfo.boost.used > userInfo.tap) {
       setClicks((prevClicks) => [...prevClicks, { x, y }]);
+
       if (
         userInfo.ranking.rank < 5 &&
         userInfo.balance > userInfo.ranking.greater
@@ -148,26 +145,30 @@ const Quest = () => {
 
       const newBalance = userInfo.balance + userInfo.tap;
       const newBoostUsed = userInfo.boost.used - userInfo.tap;
+
       debouncedUpdateUser(newBalance, newBoostUsed, userInfo, ranking);
-      setUserInfo({
-        ...userInfo,
+
+      setUserInfo((prev: any) => ({
+        ...prev!,
         balance: newBalance,
         boost: {
-          ...userInfo.boost,
+          ...prev!.boost,
           used: newBoostUsed,
         },
         ranking,
-      });
+      }));
+
       setTimeout(() => {
         setClicks((prevClicks) => prevClicks.slice(1));
       }, 600);
     }
   };
 
-  const img: any =
+  const img =
     userInfo && imgs.find((item) => item.rank === userInfo.ranking.rank);
-  const progressValue =
-    userInfo && (userInfo?.balance / userInfo?.ranking.greater) * 100;
+  const progressValue = userInfo
+    ? (userInfo.balance / userInfo.ranking.greater) * 100
+    : 0;
 
   return (
     <>
@@ -220,7 +221,7 @@ const Quest = () => {
               <Progress
                 aria-label="Loading..."
                 value={progressValue}
-                className={`max-w-md mt-4`}
+                className="max-w-md mt-4"
                 color="secondary"
               />
             </Container>
@@ -253,17 +254,17 @@ const Quest = () => {
                 />
                 {clicks.map((click, index) => (
                   <div
-                  key={index}
-                  className="absolute animation-text text-[10px] flex gap-2 items-center"
-                  style={{
-                    left: `${click.x}px`,
-                    bottom: `${click.y}px`,
-                    transform: "translate(-50%, 0)",
-                  }}
-                >
-                  <Image src={Wolf} width={30} height={30} alt="wolf" />
-                  <span>+{userInfo.tap}</span>
-                </div>
+                    key={index}
+                    className="absolute animation-text text-[10px] flex gap-2 items-center"
+                    style={{
+                      left: `${click.x}px`,
+                      bottom: `${click.y}px`,
+                      transform: "translate(-50%, 0)",
+                    }}
+                  >
+                    <Image src={Wolf} width={30} height={30} alt="wolf" />
+                    <span>+{userInfo.tap}</span>
+                  </div>
                 ))}
               </div>
               <Image
