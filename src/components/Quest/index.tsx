@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import axios from "axios";
@@ -120,11 +120,10 @@ const Quest = () => {
   }, [userInfo]);
 
   const handleClick = (x: number, y: number) => {
-    let ranking = userInfo?.ranking;
-
     if (userInfo && userInfo.boost.used > userInfo.tap) {
       setClicks((prevClicks) => [...prevClicks, { x, y }]);
 
+      let ranking = userInfo.ranking;
       if (
         userInfo.ranking.rank < 5 &&
         userInfo.balance > userInfo.ranking.greater
@@ -174,6 +173,7 @@ const Quest = () => {
       (e.type === "touchend"
         ? (e as React.TouchEvent<HTMLDivElement>).touches[0].clientY
         : (e as React.MouseEvent<HTMLDivElement>).clientY) - rect.top;
+
     handleClick(x, y);
   };
 
@@ -275,7 +275,7 @@ const Quest = () => {
                     className="absolute animation-text text-[10px] flex gap-2 items-center"
                     style={{
                       left: `${click.x}px`,
-                      bottom: `${click.y}px`,
+                      bottom: `calc(${click.y}px)`, // Adjust this line to fix vertical positioning
                       transform: "translate(-50%, 0)",
                     }}
                   >
@@ -284,6 +284,7 @@ const Quest = () => {
                   </div>
                 ))}
               </div>
+
               <Image
                 src="/img/Quest/Vector 21.png"
                 width={200}

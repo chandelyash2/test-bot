@@ -31,3 +31,10 @@
     gap: 10px;
   }
 }
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
