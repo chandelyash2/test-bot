@@ -1,3 +1,4 @@
+'use client'
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import axios from "axios";
