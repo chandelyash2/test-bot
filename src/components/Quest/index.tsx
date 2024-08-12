@@ -1,20 +1,19 @@
-"use client";
+import { useState, useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
+import axios from "axios";
+import { debounce } from "lodash";
+import { useTelegram } from "@/lib/TelegramProvider";
+import { Flash } from "../Flash";
 import { Container } from "@/components/Container";
 import { Layout } from "@/components/Layout";
 import { Progress } from "@nextui-org/react";
-import Image from "next/image";
-import Boost from "../../../public/svg/Boost.svg";
-import Link from "next/link";
-import axios from "axios";
-import { useCallback, useEffect, useState, useRef } from "react";
-import { debounce } from "lodash";
 import QuestMine from "../../../public/svg/QuestMine.svg";
 import Dollar from "../../../public/svg/Dollar.svg";
 import Light from "../../../public/svg/Light.svg";
-import { useTelegram } from "@/lib/TelegramProvider";
-import { Flash } from "../Flash";
-import { imgs, User } from "@/lib/quest/type";
+import Boost from "../../../public/svg/Boost.svg";
 import Wolf from "../../../public/svg/H Vector.svg";
+import { imgs, User } from "@/lib/quest/type";
+import Link from "next/link";
 
 interface Click {
   x: number;
@@ -23,7 +22,7 @@ interface Click {
 
 const Quest = () => {
   const { user } = useTelegram();
-  const [userInfo, setUserInfo] = useState<any>();
+  const [userInfo, setUserInfo] = useState<User | null>(null);
   const [clicks, setClicks] = useState<Click[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -53,7 +52,6 @@ const Quest = () => {
             lastName: user.last_name,
           }
         );
-        console.log("User Data:", data);
         setUserInfo(data);
       }
     } catch (error) {
@@ -63,12 +61,10 @@ const Quest = () => {
 
   const fetchUserInfo = async () => {
     try {
-      if (user) {
+      if (user?.id) {
         const { data } = await axios.get<User>(
           `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-          {
-            params: { userId: user.id },
-          }
+          { params: { userId: user.id } }
         );
         setUserInfo(data);
       }
@@ -77,41 +73,41 @@ const Quest = () => {
     }
   };
 
-  const updateUser = async (
-    count: number,
-    boost: number,
-    user: User,
-    ranking: any
-  ) => {
+  const updateUser = async (count: number, boost: number, ranking: any) => {
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
-        userId: user.userId,
-        balance: count,
-        boost: { ...user.boost, used: boost },
-        ranking,
-      });
+      if (userInfo) {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/updateUser`, {
+          userId: userInfo.userId,
+          balance: count,
+          boost: { ...userInfo.boost, used: boost },
+          ranking,
+        });
+      }
     } catch (error) {
       console.error("Error updating user:", error);
     }
   };
 
   const debouncedUpdateUser = useCallback(
-    debounce((newBalance, boost, user, ranking) => {
-      updateUser(newBalance, boost, user, ranking);
+    debounce((newBalance: number, boost: number, ranking: any) => {
+      updateUser(newBalance, boost, ranking);
     }, 300),
-    []
+    [userInfo]
   );
 
   useEffect(() => {
     if (userInfo && userInfo.boost?.used < userInfo.boost?.total) {
       intervalRef.current = setInterval(() => {
-        setUserInfo((prev: any) => ({
-          ...prev!,
-          boost: {
-            ...prev!.boost,
-            used: prev!.boost.used + 1,
-          },
-        }));
+        setUserInfo(
+          (prev) =>
+            prev && {
+              ...prev,
+              boost: {
+                ...prev.boost,
+                used: prev.boost.used + 1,
+              },
+            }
+        );
       }, 1000);
 
       return () => {
@@ -122,10 +118,7 @@ const Quest = () => {
     }
   }, [userInfo]);
 
-  const handleQuestClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = rect.bottom - e.clientY;
+  const handleClick = (x: number, y: number) => {
     let ranking = userInfo?.ranking;
 
     if (userInfo && userInfo.boost.used > userInfo.tap) {
@@ -138,30 +131,49 @@ const Quest = () => {
         ranking = {
           rank: userInfo.ranking.rank + 1,
           less: 0,
-          greater: imgs.find((item) => item.rank === userInfo.ranking.rank + 1)
-            ?.greater,
+          greater:
+            imgs.find((item) => item.rank === userInfo.ranking.rank + 1)
+              ?.greater || 0,
         };
       }
 
       const newBalance = userInfo.balance + userInfo.tap;
       const newBoostUsed = userInfo.boost.used - userInfo.tap;
 
-      debouncedUpdateUser(newBalance, newBoostUsed, userInfo, ranking);
+      debouncedUpdateUser(newBalance, newBoostUsed, ranking);
 
-      setUserInfo((prev: any) => ({
-        ...prev!,
-        balance: newBalance,
-        boost: {
-          ...prev!.boost,
-          used: newBoostUsed,
-        },
-        ranking,
-      }));
+      setUserInfo(
+        (prev: any) =>
+          prev && {
+            ...prev,
+            balance: newBalance,
+            boost: {
+              ...prev.boost,
+              used: newBoostUsed,
+            },
+            ranking,
+          }
+      );
 
       setTimeout(() => {
         setClicks((prevClicks) => prevClicks.slice(1));
       }, 600);
     }
+  };
+
+  const handleQuestInteraction = (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x =
+      (e.type === "touchend"
+        ? (e as React.TouchEvent<HTMLDivElement>).touches[0].clientX
+        : (e as React.MouseEvent<HTMLDivElement>).clientX) - rect.left;
+    const y =
+      (e.type === "touchend"
+        ? (e as React.TouchEvent<HTMLDivElement>).touches[0].clientY
+        : (e as React.MouseEvent<HTMLDivElement>).clientY) - rect.top;
+    handleClick(x, y);
   };
 
   const img =
@@ -244,7 +256,11 @@ const Quest = () => {
                 alt="quest"
                 className="absolute h-5 w-full"
               />
-              <div className="relative" onClick={handleQuestClick}>
+              <div
+                className="relative"
+                onClick={handleQuestInteraction}
+                onTouchEnd={handleQuestInteraction}
+              >
                 <Image
                   src={img?.img || ""}
                   width={200}
