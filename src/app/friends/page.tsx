@@ -2,19 +2,21 @@
 import { Container } from "@/components/Container";
 import { Flash } from "@/components/Flash";
 import { Layout } from "@/components/Layout";
+import { CMSModal } from "@/context";
 import { User } from "@/lib/quest/type";
 import { useTelegram } from "@/lib/TelegramProvider";
 import { Button } from "@nextui-org/react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const FriendsPage = () => {
-  const { user, webApp } = useTelegram();
+  const { user } = useTelegram();
   const [userInfo, setUserInfo] = useState<User>();
   const [friends, setFriends] = useState<User[]>();
+  const { userCtx, setUserCtx } = useContext(CMSModal);
 
   useEffect(() => {
     if (user) {
@@ -35,6 +37,7 @@ const FriendsPage = () => {
       );
       if (data.data) {
         setUserInfo(data.data);
+        setUserCtx(data.data.userId);
       }
     }
   };
@@ -226,10 +229,10 @@ const FriendsPage = () => {
                   </svg>
                 </Button>
               </div>
-              {userInfo.userId && (
+              {userCtx && (
                 <Button className="text-white bg-[#00ACE6] w-full rounded mt-[10%]">
                   <Link
-                    href={`https://t.me/share/url?url=https://t.me/xda_1_bot?start=${userInfo.userId}`}
+                    href={`https://t.me/share/url?url=https://t.me/xda_1_bot?start=${userCtx}`}
                   >
                     Invite a Friend
                   </Link>
