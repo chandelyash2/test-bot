@@ -104,7 +104,7 @@ const Quest = () => {
   const debouncedUpdateUser = useCallback(
     debounce((newBalance, boost, user, ranking) => {
       updateUser(newBalance, boost, user, ranking);
-    }, 300),
+    }),
     []
   );
 
