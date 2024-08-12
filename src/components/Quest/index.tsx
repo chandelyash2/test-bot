@@ -9,7 +9,6 @@ import axios from "axios";
 import { useCallback, useEffect, useState, useRef } from "react";
 import { debounce } from "lodash";
 import QuestMine from "../../../public/svg/QuestMine.svg";
-import Question from "../../../public/svg/Question.svg";
 import Dollar from "../../../public/svg/Dollar.svg";
 import Light from "../../../public/svg/Light.svg";
 import { useTelegram } from "@/lib/TelegramProvider";
@@ -133,7 +132,7 @@ const Quest = () => {
     const x = e.clientX - rect.left;
     const y = rect.bottom - e.clientY;
     let ranking: any = userInfo?.ranking;
-    if (userInfo && userInfo.boost.used > 0) {
+    if (userInfo && userInfo.boost.used > userInfo.tap) {
       setClicks((prevClicks) => [...prevClicks, { x, y }]);
       if (
         userInfo.ranking.rank < 5 &&
