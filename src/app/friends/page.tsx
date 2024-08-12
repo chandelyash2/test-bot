@@ -9,6 +9,7 @@ import { Button } from "@nextui-org/react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -86,7 +87,7 @@ const FriendsPage = () => {
       console.log("User information is not available");
     }
   };
-
+  const router = useRouter();
   return (
     <>
       {userInfo ? (
@@ -230,12 +231,15 @@ const FriendsPage = () => {
                 </Button>
               </div>
               {userCtx && (
-                <Button className="text-white bg-[#00ACE6] w-full rounded mt-[10%]">
-                  <Link
-                    href={`https://t.me/share/url?url=https://t.me/xda_1_bot?start=${userCtx}`}
-                  >
-                    Invite a Friend
-                  </Link>
+                <Button
+                  className="text-white bg-[#00ACE6] w-full rounded mt-[10%]"
+                  onClick={() =>
+                    router.push(
+                      `https://t.me/share/url?url=https://t.me/xda_1_bot?start=${userCtx}`
+                    )
+                  }
+                >
+                  Invite a Friend
                 </Button>
               )}
             </div>
