@@ -230,18 +230,17 @@ const FriendsPage = () => {
                   </svg>
                 </Button>
               </div>
-              {userCtx && (
-                <Button
-                  className="text-white bg-[#00ACE6] w-full rounded mt-[10%]"
-                  onClick={() =>
-                    router.push(
-                      `https://t.me/share/url?url=https://t.me/xda_1_bot?start=${userCtx}`
-                    )
-                  }
-                >
-                  Invite a Friend
-                </Button>
-              )}
+
+              <Button
+                className="text-white bg-[#00ACE6] w-full rounded mt-[10%]"
+                onClick={() =>
+                  router.push(
+                    `https://t.me/share/url?url=https://t.me/xda_1_bot?start=${userCtx}&timestamp=${new Date().getTime()}`
+                  )
+                }
+              >
+                Invite a Friend
+              </Button>
             </div>
           </Container>
           <Toaster />
