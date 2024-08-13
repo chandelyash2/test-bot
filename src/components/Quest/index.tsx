@@ -26,6 +26,7 @@ const Quest = () => {
   const [userInfo, setUserInfo] = useState<User | null>(null);
   const [clicks, setClicks] = useState<Click[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const touchHandledRef = useRef(false); // Ref to track if a touch event is already handled
 
   useEffect(() => {
     if (user) {
@@ -122,7 +123,7 @@ const Quest = () => {
   const handleClick = (x: number, y: number) => {
     if (userInfo && userInfo.boost.used > 0) {
       setClicks((prevClicks) => [...prevClicks, { x, y }]);
-  
+
       let ranking = userInfo.ranking;
       if (
         userInfo.ranking.rank < 5 &&
@@ -136,13 +137,13 @@ const Quest = () => {
               ?.greater || 0,
         };
       }
-  
+
       const newBalance = userInfo.balance + userInfo.tap;
       // Ensure boost.used does not go below 0
       const newBoostUsed = Math.max(userInfo.boost.used - userInfo.tap, 0);
-  
+
       debouncedUpdateUser(newBalance, newBoostUsed, ranking);
-  
+
       setUserInfo(
         (prev: any) =>
           prev && {
@@ -155,28 +156,34 @@ const Quest = () => {
             ranking,
           }
       );
-  
+
       setTimeout(() => {
         setClicks((prevClicks) => prevClicks.slice(1));
       }, 600);
     }
   };
-  
 
   const handleQuestInteraction = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
+    if (touchHandledRef.current) return; // Prevent handling multiple touches simultaneously
+
+    touchHandledRef.current = true; // Mark that a touch event is being handled
     const rect = e.currentTarget.getBoundingClientRect();
     const x =
       (e.type === "touchend"
-        ? (e as React.TouchEvent<HTMLDivElement>).touches[0].clientX
+        ? (e as React.TouchEvent<HTMLDivElement>).changedTouches[0].clientX
         : (e as React.MouseEvent<HTMLDivElement>).clientX) - rect.left;
     const y =
       (e.type === "touchend"
-        ? (e as React.TouchEvent<HTMLDivElement>).touches[0].clientY
+        ? (e as React.TouchEvent<HTMLDivElement>).changedTouches[0].clientY
         : (e as React.MouseEvent<HTMLDivElement>).clientY) - rect.top;
 
     handleClick(x, y);
+
+    setTimeout(() => {
+      touchHandledRef.current = false; // Reset after handling the event
+    }, 300); // Delay reset to prevent rapid multiple handling
   };
 
   const img =
