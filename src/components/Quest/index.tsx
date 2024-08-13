@@ -120,9 +120,9 @@ const Quest = () => {
   }, [userInfo]);
 
   const handleClick = (x: number, y: number) => {
-    if (userInfo && userInfo.boost.used > userInfo.tap) {
+    if (userInfo && userInfo.boost.used > 0) {
       setClicks((prevClicks) => [...prevClicks, { x, y }]);
-
+  
       let ranking = userInfo.ranking;
       if (
         userInfo.ranking.rank < 5 &&
@@ -136,12 +136,13 @@ const Quest = () => {
               ?.greater || 0,
         };
       }
-
+  
       const newBalance = userInfo.balance + userInfo.tap;
-      const newBoostUsed = userInfo.boost.used - userInfo.tap;
-
+      // Ensure boost.used does not go below 0
+      const newBoostUsed = Math.max(userInfo.boost.used - userInfo.tap, 0);
+  
       debouncedUpdateUser(newBalance, newBoostUsed, ranking);
-
+  
       setUserInfo(
         (prev: any) =>
           prev && {
@@ -154,12 +155,13 @@ const Quest = () => {
             ranking,
           }
       );
-
+  
       setTimeout(() => {
         setClicks((prevClicks) => prevClicks.slice(1));
       }, 600);
     }
   };
+  
 
   const handleQuestInteraction = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
