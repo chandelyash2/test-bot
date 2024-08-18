@@ -26,6 +26,8 @@ const Quest = () => {
   const [userInfo, setUserInfo] = useState<User | null>(null);
   const [clicks, setClicks] = useState<Click[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [isZooming, setIsZooming] = useState(false);
+
   const touchHandledRef = useRef(false); // Ref to track if a touch event is already handled
 
   useEffect(() => {
@@ -124,7 +126,10 @@ const Quest = () => {
     if (userInfo && userInfo.boost.used > 0) {
       // Record the tap location
       setClicks((prevClicks) => [...prevClicks, { x, y }]);
-  
+      setIsZooming(true);
+      setTimeout(() => {
+        setIsZooming(false); // Reset after animation
+      }, 500);
       let ranking = userInfo.ranking;
       if (
         userInfo.ranking.rank < 5 &&
@@ -138,16 +143,16 @@ const Quest = () => {
               ?.greater || 0,
         };
       }
-  
+
       // Determine the number of taps detected (1 tap = 1 unit of boost used)
       const numTaps = Math.min(userInfo.boost.used, 1);
-  
+
       // Update balance and boost used based on number of taps
       const newBalance = userInfo.balance + userInfo.tap * numTaps;
       const newBoostUsed = Math.max(userInfo.boost.used - numTaps, 0);
-  
+
       debouncedUpdateUser(newBalance, newBoostUsed, ranking);
-  
+
       setUserInfo(
         (prev: any) =>
           prev && {
@@ -160,19 +165,19 @@ const Quest = () => {
             ranking,
           }
       );
-  
+
       setTimeout(() => {
         setClicks((prevClicks) => prevClicks.slice(1));
       }, 600);
     }
   };
-  
+
   // Handle multiple taps by calculating their positions
   const handleQuestInteraction = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
     const rect = e.currentTarget.getBoundingClientRect();
-  
+
     // If touch event, loop through all touch points
     if (e.type === "touchend") {
       const touches = (e as React.TouchEvent<HTMLDivElement>).touches;
@@ -188,7 +193,6 @@ const Quest = () => {
       handleClick(x, y);
     }
   };
-  
 
   const img =
     userInfo && imgs.find((item) => item.rank === userInfo.ranking.rank);
@@ -271,7 +275,7 @@ const Quest = () => {
                 className="absolute h-5 w-full"
               />
               <div
-                className="relative"
+                className="relative w-full flex justify-center"
                 onClick={handleQuestInteraction}
                 onTouchEnd={handleQuestInteraction}
               >
@@ -280,7 +284,9 @@ const Quest = () => {
                   width={200}
                   height={200}
                   alt="quest"
-                  className="h-[450px] w-full object-cover"
+                  className={`h-[300px] w-[300px] object-cover border rounded-full bg-[#FFF] ${
+                    isZooming ? "zoom-animation" : ""
+                  }`}
                 />
                 {clicks.map((click, index) => (
                   <div
@@ -298,13 +304,6 @@ const Quest = () => {
                 ))}
               </div>
 
-              <Image
-                src="/img/Quest/Vector 21.png"
-                width={200}
-                height={100}
-                alt="quest"
-                className="absolute bottom-8 h-[100px] w-full"
-              />
               <Container>
                 <div className="relative bottom-4 flex justify-between font-manrope font-medium text-xs items-center">
                   <span className="flex items-center gap-2">

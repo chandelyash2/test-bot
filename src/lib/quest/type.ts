@@ -64,7 +64,7 @@ export interface User {
 
 export const imgs = [
   {
-    img: "/img/Quest/Sigma.png",
+    img: "/img/Quest/OmegaMask.jpg",
     color: "#3E4A5A",
     name: "Sigma",
     icon: Sigma,
@@ -73,7 +73,7 @@ export const imgs = [
     rank: 1,
   },
   {
-    img: "/img/Quest/Omega.png",
+    img: "/img/Quest/SigmaMask.jpg",
     less: 5000000,
     greater: 9999999,
     color: "#5E4B1A",
@@ -82,7 +82,7 @@ export const imgs = [
     rank: 2,
   },
   {
-    img: "/img/Quest/Mid.png",
+    img: "/img/Quest/MidMask.jpg",
     less: 10000000,
     greater: 49999999,
     color: "#FF8717",
@@ -91,7 +91,7 @@ export const imgs = [
     rank: 3,
   },
   {
-    img: "/img/Quest/Beta.png",
+    img: "/img/Quest/BetaMask.jpg",
     less: 50000000,
     greater: 99999999,
     color: "#3F5A63",
@@ -101,7 +101,7 @@ export const imgs = [
   },
 
   {
-    img: "/img/Quest/Luna.png",
+    img: "/img/Quest/LunaMask.jpg",
     less: 100000000,
     greater: 100000000,
     color: "#7137ED",
