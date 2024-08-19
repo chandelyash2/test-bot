@@ -19,6 +19,7 @@ import Link from "next/link";
 interface Click {
   x: number;
   y: number;
+  animationId: number; // Unique identifier for the animation
 }
 
 const Quest = () => {
@@ -28,7 +29,7 @@ const Quest = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [isZooming, setIsZooming] = useState(false);
 
-  const touchHandledRef = useRef(false); // Ref to track if a touch event is already handled
+  const touchHandledRef = useRef(false);
 
   useEffect(() => {
     if (user) {
@@ -48,7 +49,7 @@ const Quest = () => {
   const createUser = async () => {
     try {
       if (user?.id) {
-        const { data } = await axios.post<User>(
+        const { data } = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/createUser`,
           {
             userId: user.id,
@@ -56,6 +57,7 @@ const Quest = () => {
             lastName: user.last_name,
           }
         );
+        console.log("User Data:", data);
         setUserInfo(data);
       }
     } catch (error) {
@@ -65,10 +67,14 @@ const Quest = () => {
 
   const fetchUserInfo = async () => {
     try {
-      if (user?.id) {
-        const { data } = await axios.get<User>(
+      if (user) {
+        const { data } = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/userInfo`,
-          { params: { userId: user.id } }
+          {
+            params: {
+              userId: user.id,
+            },
+          }
         );
         setUserInfo(data);
       }
@@ -124,12 +130,14 @@ const Quest = () => {
 
   const handleClick = (x: number, y: number) => {
     if (userInfo && userInfo.boost.used > 0) {
-      // Record the tap location
-      setClicks((prevClicks) => [...prevClicks, { x, y }]);
+      const animationId = Date.now(); // Unique identifier for each click animation
+
+      setClicks((prevClicks) => [...prevClicks, { x, y, animationId }]);
       setIsZooming(true);
       setTimeout(() => {
         setIsZooming(false); // Reset after animation
       }, 500);
+
       let ranking = userInfo.ranking;
       if (
         userInfo.ranking.rank < 5 &&
@@ -144,10 +152,7 @@ const Quest = () => {
         };
       }
 
-      // Determine the number of taps detected (1 tap = 1 unit of boost used)
       const numTaps = Math.min(userInfo.boost.used, 1);
-
-      // Update balance and boost used based on number of taps
       const newBalance = userInfo.balance + userInfo.tap * numTaps;
       const newBoostUsed = Math.max(userInfo.boost.used - numTaps, 0);
 
@@ -167,18 +172,18 @@ const Quest = () => {
       );
 
       setTimeout(() => {
-        setClicks((prevClicks) => prevClicks.slice(1));
-      }, 600);
+        setClicks((prevClicks) =>
+          prevClicks.filter((click) => click.animationId !== animationId)
+        );
+      }, 600); // Match duration to animation length
     }
   };
 
-  // Handle multiple taps by calculating their positions
   const handleQuestInteraction = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
     const rect = e.currentTarget.getBoundingClientRect();
 
-    // If touch event, loop through all touch points
     if (e.type === "touchend") {
       const touches = (e as React.TouchEvent<HTMLDivElement>).touches;
       for (let i = 0; i < touches.length; i++) {
@@ -187,7 +192,6 @@ const Quest = () => {
         handleClick(x, y);
       }
     } else {
-      // Handle single click for mouse events
       const x = (e as React.MouseEvent<HTMLDivElement>).clientX - rect.left;
       const y = (e as React.MouseEvent<HTMLDivElement>).clientY - rect.top;
       handleClick(x, y);
@@ -267,13 +271,6 @@ const Quest = () => {
               </div>
             </Container>
             <div className="relative">
-              <Image
-                src="/img/Quest/Vector 20.png"
-                width={200}
-                height={100}
-                alt="quest"
-                className="absolute h-5 w-full"
-              />
               <div
                 className="relative w-full flex justify-center"
                 onClick={handleQuestInteraction}
@@ -291,10 +288,10 @@ const Quest = () => {
                 {clicks.map((click, index) => (
                   <div
                     key={index}
-                    className="absolute animation-text text-[10px] flex gap-2 items-center"
+                    className="absolute animation-wolf flex gap-2 items-center"
                     style={{
                       left: `${click.x}px`,
-                      top: `calc(${click.y}px - 40px)`, // Adjust `40px` based on the height of the wolf image
+                      top: `${click.y}px`,
                       transform: "translate(-50%, 0)",
                     }}
                   >

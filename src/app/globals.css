@@ -30,6 +30,7 @@
     height: 40px;
     gap: 10px;
   }
+
 }
 .relative {
   position: relative;
@@ -53,4 +54,19 @@
 
 .zoom-animation {
   animation: zoomInAndOut 500ms ease-in-out; /* 1s for the duration, can be adjusted */
+}
+
+@keyframes moveToTop {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px); /* Adjust the value based on how far up you want the image to move */
+    opacity: 0;
+  }
+}
+
+.animation-wolf {
+  animation: moveToTop 0.6s ease forwards; /* Adjust timing to match the animation duration */
 }
